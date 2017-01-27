@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
-import { updateSong, deleteSong } from '../../actions/index';
 import { Link } from 'react-router';
 import _ from 'lodash';
+import { updateSong, deleteSong } from '../../actions/index';
+import rise from './rise';
 
 class Edit extends Component {
   static contextTypes = {
@@ -19,6 +20,7 @@ class Edit extends Component {
     this.props.updateSong(key, trimProps, this.props.auth.uid);
     this.context.router.push('/dashboard');
   }
+
   Change(input){
     const objective = this.state.input;
     _.map(this.props.fields,to => {
@@ -58,6 +60,17 @@ class Edit extends Component {
     const key = this.props.location.pathname.substring(8);
     this.props.deleteSong(key, this.props.auth.uid);
     this.context.router.push('/dashboard');
+  }
+
+  onRise(n) {
+    const objective = this.state.input;
+    _.map(this.props.fields,to => {
+      if (to.name === objective) {
+      if (to.value) {
+        to.onChange(rise(to.value,n))
+      }
+    }
+    });
   }
 
   componentDidMount() {
@@ -110,145 +123,145 @@ class Edit extends Component {
       <div>
 
         <div className="row">
-          <div className="col-xs-2">
-          <div className="btn btn-primary center-block" onClick={() => this.Change('C')}>C</div>
+            <div className="col-xs-2">
+            <div className="btn btn-primary center-block" onClick={() => this.Change('C')}>C</div>
+          </div>
+            <div className="col-xs-2">
+            <div className="btn btn-primary center-block" onClick={() => this.Change('C#')}>C#</div>
+          </div>
+            <div className="col-xs-2">
+            <div className="btn btn-primary center-block" onClick={() => this.Change('D')}>D</div>
+            </div>
+            <div className="col-xs-2">
+            <div className="btn btn-primary hidden"></div>
+          </div>
+          <div className="col-xs-4">
+          <div className="btn btn-primary center-block" onClick={()=>this.onRise(1)}>Subir 1 Tono</div>
+          </div>
         </div>
+        <br/>
+        <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block" onClick={() => this.Change('C#')}>C#</div>
-        </div>
+          <div className="btn btn-primary center-block" onClick={() => this.Change('D#')}>D#</div>
+          </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block" onClick={() => this.Change('D')}>D</div>
+          <div className="btn btn-primary center-block" onClick={() => this.Change('E')}>E</div>
+          </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary center-block" onClick={() => this.Change('F')}>F</div>
           </div>
           <div className="col-xs-2">
           <div className="btn btn-primary hidden"></div>
-        </div>
-        <div className="col-xs-4">
-        <div className="btn btn-primary center-block">Subir 1 Tono</div>
-        </div>
-        </div>
-        <br/>
-        <div className="row">
-        <div className="col-xs-2">
-        <div className="btn btn-primary center-block" onClick={() => this.Change('D#')}>D#</div>
-        </div>
-        <div className="col-xs-2">
-        <div className="btn btn-primary center-block" onClick={() => this.Change('E')}>E</div>
-        </div>
-        <div className="col-xs-2">
-        <div className="btn btn-primary center-block" onClick={() => this.Change('F')}>F</div>
-        </div>
-        <div className="col-xs-2">
-        <div className="btn btn-primary hidden"></div>
-        </div>
-        <div className="col-xs-4">
-        <div className="btn btn-primary center-block">Bajar 1 Tono</div>
-        </div>
+          </div>
+          <div className="col-xs-4">
+          <div className="btn btn-primary center-block"onClick={()=>this.onRise(-1)}>Bajar 1 Tono</div>
+          </div>
         </div>
         <br/>
         <div className="row">
-        <div className="col-xs-2">
-        <div className="btn btn-primary center-block" onClick={() => this.Change('F#')}>F#</div>
-        </div>
-        <div className="col-xs-2">
-        <div className="btn btn-primary center-block" onClick={() => this.Change('G')}>G</div>
-        </div>
-        <div className="col-xs-2">
-        <div className="btn btn-primary center-block" onClick={() => this.Change('G#')}>G#</div>
-        </div>
-        <div className="col-xs-2">
-        <div className="btn btn-primary hidden">Responsive</div>
-        </div>
-        <div className="col-xs-2">
-        <div className="btn btn-primary hidden">Responsive</div>
-        </div>
-        </div>
-        <br/>
-        <div className="row">
-        <div className="col-xs-2">
-        <div className="btn btn-primary center-block" onClick={() => this.Change('A')}>A</div>
-        </div>
-        <div className="col-xs-2">
-        <div className="btn btn-primary center-block" onClick={() => this.Change('A#')}>A#</div>
-        </div>
-        <div className="col-xs-2">
-        <div className="btn btn-primary center-block" onClick={() => this.Change('B')}>B</div>
-        </div>
-        <div className="col-xs-2">
-        <div className="btn btn-primary hidden">Responsive</div>
-        </div>
-        <div className="col-xs-2">
-        <div className="btn btn-primary hidden">Responsive</div>
-        </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary center-block" onClick={() => this.Change('F#')}>F#</div>
+          </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary center-block" onClick={() => this.Change('G')}>G</div>
+          </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary center-block" onClick={() => this.Change('G#')}>G#</div>
+          </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary hidden">Responsive</div>
+          </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary hidden">Responsive</div>
+          </div>
         </div>
         <br/>
         <div className="row">
-        <div className="col-xs-2">
-        <div className="btn btn-primary center-block" onClick={() => this.Change('\n')}>\n</div>
-        </div>
-        <div className="col-xs-2">
-        <div className="btn btn-primary center-block" onClick={() => this.Erase()}>{"<-"}</div>
-        </div>
-        <div className="col-xs-2">
-        <div className="btn btn-primary hidden"></div>
-        </div>
-        <div className="col-xs-2">
-        <div className="btn btn-primary hidden"></div>
-        </div>
-        <div className="col-xs-2">
-        <div className="btn btn-primary hidden"></div>
-        </div>
-        </div>
-        <br/>
-        <div className="row">
-        <div className="col-xs-2">
-        <div className="btn btn-primary center-block" onClick={() => this.Change(' ')}>[ ]</div>
-        </div>
-        <div className="col-xs-3">
-        <div className="btn btn-primary hidden">Ctr+Z</div>
-        </div>
-        <div className="col-xs-2">
-        <div className="btn btn-primary hidden"></div>
-        </div>
-        <div className="col-xs-2">
-        <div className="btn btn-primary hidden"></div>
-        </div>
-        <div className="col-xs-2">
-        <div className="btn btn-primary hidden">Responsive</div>
-        </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary center-block" onClick={() => this.Change('A')}>A</div>
+          </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary center-block" onClick={() => this.Change('A#')}>A#</div>
+          </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary center-block" onClick={() => this.Change('B')}>B</div>
+          </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary hidden">Responsive</div>
+          </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary hidden">Responsive</div>
+          </div>
         </div>
         <br/>
         <div className="row">
-        <div className="col-xs-2">
-        <div className="btn btn-primary hidden">[ ]</div>
-        </div>
-        <div className="col-xs-2">
-        <div className="btn btn-primary hidden">Ctrl+Z</div>
-        </div>
-        <div className="col-xs-4">
-        {/* <div type="submit"  className="btn btn-primary center-block">Submit</div> */}
-        <button type="submit" className="btn btn-primary btn-block">Submit</button>
-        </div>
-        <div className="col-xs-4">
-        <div className="btn btn-primary hidden"></div>
-        </div>
-        <div className="col-xs-4">
-        <div className="btn btn-danger center-block" onClick={() => this.removeSong()}>Delete</div>
-        </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary center-block" onClick={() => this.Change('\n')}>\n</div>
+          </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary center-block" onClick={() => this.Erase()}>{"<-"}</div>
+          </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary hidden"></div>
+          </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary hidden"></div>
+          </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary hidden"></div>
+          </div>
         </div>
         <br/>
         <div className="row">
-        <div className="col-xs-2">
-        <div className="btn btn-primary hidden">[ ]</div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary center-block" onClick={() => this.Change(' ')}>[ ]</div>
+          </div>
+          <div className="col-xs-3">
+          <div className="btn btn-primary hidden">Ctr+Z</div>
+          </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary hidden"></div>
+          </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary hidden"></div>
+          </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary hidden">Responsive</div>
+          </div>
         </div>
-        <div className="col-xs-2">
-        <div className="btn btn-primary hidden">Ctrl+Z</div>
+        <br/>
+        <div className="row">
+          <div className="col-xs-2">
+          <div className="btn btn-primary hidden">[ ]</div>
+          </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary hidden">Ctrl+Z</div>
+          </div>
+          <div className="col-xs-4">
+          {/* <div type="submit"  className="btn btn-primary center-block">Submit</div> */}
+          <button type="submit" className="btn btn-primary btn-block">Submit</button>
+          </div>
+          <div className="col-xs-4">
+          <div className="btn btn-primary hidden"></div>
+          </div>
+          <div className="col-xs-4">
+          <div className="btn btn-danger center-block" onClick={() => this.removeSong()}>Delete</div>
+          </div>
         </div>
-        <div className="col-xs-4">
-        <div className="btn btn-primary hidden">Ctrl+Z</div>
-        </div>
-        <div className="col-xs-4">
-          <Link to='/dashboard'><div className="btn btn-warning center-block">Cancel</div></Link>
-        </div>
+        <br/>
+        <div className="row">
+          <div className="col-xs-2">
+          <div className="btn btn-primary hidden">[ ]</div>
+          </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary hidden">Ctrl+Z</div>
+          </div>
+          <div className="col-xs-4">
+          <div className="btn btn-primary hidden">Ctrl+Z</div>
+          </div>
+          <div className="col-xs-4">
+            <Link to='/dashboard'><div className="btn btn-warning center-block">Cancel</div></Link>
+          </div>
         </div>
         <br/>
       </div>
@@ -273,6 +286,8 @@ function validate(values) {
 
   return errors;
 }
+// connect: first argument is mapstatetoprops, 2nd is mapdispatchtoprops
+// reduxform: 1st is form config, 2nd is mapstatetoprops, 3ds is mapdispatchtoprops
 
 function mapStateToProps(state) {
   return {
