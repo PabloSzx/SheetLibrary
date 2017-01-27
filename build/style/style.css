@@ -13,3 +13,11 @@ body {
 .blue {
   color: blue;
 }
+
+.loginButton {
+  width: 30vmax;
+}
+
+.hide {
+  display: none;
+}
