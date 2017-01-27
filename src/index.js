@@ -10,8 +10,6 @@ import { requireAuth } from './utils/secure';
 import * as reducers from './reducers'
 import App from './components/App'
 import Home from './components/Home'
-import Login from './components/auth/Login'
-import Register from './components/auth/Register'
 import Logout from './components/auth/Logout'
 import Dashboard from './components/secure/Dashboard'
 import Profile from './components/secure/Profile'
@@ -42,8 +40,6 @@ ReactDOM.render(
 		<Router history={history}>
 			<Route path='/' component={App}>
 				<IndexRoute component={Home}/>
-				<Route path='login' component={Login}/>
-				<Route path='register' component={Register}/>
 				<Route path='logout' component={Logout}/>
 				<Route path='dashboard' component={Dashboard} onEnter={secure}/>
 				<Route path='new' component={New} onEnter={secure}/>
