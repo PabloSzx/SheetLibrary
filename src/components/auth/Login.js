@@ -2,10 +2,6 @@ import React from 'react';
 import * as firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import facebookButton from '../../img/facebookButton.png';
-import googleButton from '../../img/googleButton.png';
-import twitterButton from '../../img/twitterButton.png';
-import githubButton from '../../img/githubButton.png';
 
 class Login extends React.Component {
 	state = {
@@ -13,6 +9,7 @@ class Login extends React.Component {
 		password: '',
 		error: null
 	};
+
 
 	handleSubmit(event) {
 		event.preventDefault();
@@ -87,6 +84,16 @@ class Login extends React.Component {
 			  // var credential = error.credential;
 		});
 	}
+
+	componentWillMount() {
+		this.setState({
+			facebookButton : "https://firebasestorage.googleapis.com/v0/b/sheetlibrary-bdca1.appspot.com/o/facebookButton.png?alt=media&token=8f82c6a4-a2e6-463a-8e3e-c3f1f151efeb",
+			googleButton : "https://firebasestorage.googleapis.com/v0/b/sheetlibrary-bdca1.appspot.com/o/googleButton.png?alt=media&token=84f6805a-10d5-4d0c-ae7d-61a6a76f25f6",
+			twitterButton : "https://firebasestorage.googleapis.com/v0/b/sheetlibrary-bdca1.appspot.com/o/twitterButton.png?alt=media&token=2f05728d-5e7d-42e4-ae3b-f6fb2d8e05d8",
+			githubButton : "https://firebasestorage.googleapis.com/v0/b/sheetlibrary-bdca1.appspot.com/o/githubButton.png?alt=media&token=51e2b8b7-a90d-46bf-8b6f-4e836e5a6bcd"
+		});
+	}
+
 	render() {
 		var errors = this.state.error ? <p> {this.state.error} </p> : '';
 		return (
@@ -109,13 +116,13 @@ class Login extends React.Component {
 					<br/>
 					<button className='btn btn-primary' type='submit'>Email Login</button>
 				</form>
-				<img src={facebookButton} alt="Sign in with Facebook" className='loginButton btn' onClick={()=> this.fblogin()}/>
+				<img src={this.state.facebookButton} alt="Sign in with Facebook" className='loginButton btn' onClick={()=> this.fblogin()}/>
 				<br/>
-				<img src={googleButton} alt="Sign in with Google" className='loginButton btn' onClick={()=> this.googlelogin()}/>
+				<img src={this.state.googleButton} alt="Sign in with Google" className='loginButton btn' onClick={()=> this.googlelogin()}/>
 				<br/>
-				<img src={twitterButton} alt="Sign in with Twitter" className='loginButton btn' onClick={()=> this.twitterlogin()}/>
+				<img src={this.state.twitterButton} alt="Sign in with Twitter" className='loginButton btn' onClick={()=> this.twitterlogin()}/>
 				<br/>
-				<img src={githubButton} alt="Sign in with GitHub" className='loginButton btn' onClick={()=> this.githublogin()}/>
+				<img src={this.state.githubButton} alt="Sign in with GitHub" className='loginButton btn' onClick={()=> this.githublogin()}/>
 
 				{/* <button className='btn btn-primary' onClick={()=> this.fblogin()}>Facebook Login</button> */}
 				<br/>
