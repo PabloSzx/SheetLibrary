@@ -273,8 +273,6 @@ function validate(values) {
 
   return errors;
 }
-// connect: first argument is mapstatetoprops, 2nd is mapdispatchtoprops
-// reduxform: 1st is form config, 2nd is mapstatetoprops, 3ds is mapdispatchtoprops
 
 function mapStateToProps(state) {
   return {

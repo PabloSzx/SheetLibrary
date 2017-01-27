@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// import { connect } from 'react-redux';
-// import { fetchLibrary } from '../../actions/index';
 import { Link } from 'react-router';
 import LibraryList from './LibraryList';
 
@@ -23,13 +21,4 @@ render() {
 
 }
 
-//
-// function mapStateToProps(state) {
-// 	return {
-// 		library: state.library,
-// 		auth: state.auth
-// 	}
-// }
-
-// export default connect(mapStateToProps, { fetchLibrary })(Dashboard);
 export default Dashboard;
