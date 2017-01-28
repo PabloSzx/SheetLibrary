@@ -28,6 +28,11 @@ class LibraryList extends Component {
     )
   }
 }
+else {
+  return (
+  <div><strong>You can start your library pressing "New Song"</strong></div>
+);
+}
 
 }
   render() {

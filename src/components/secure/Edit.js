@@ -12,13 +12,20 @@ class Edit extends Component {
 
   onSubmit(props) {
     let trimProps = Object.assign({}, props);
+    if (trimProps.title && trimProps.scale) {
     trimProps.title = trimProps.title.trim();
     trimProps.scale = trimProps.scale.trim();
+    if (trimProps.content){
     trimProps.content = trimProps.content.trim();
+    }
+    else {
+      trimProps.content = '';
+    }
 
     const key = this.props.routing.locationBeforeTransitions.pathname.substring(8);
     this.props.updateSong(key, trimProps, this.props.auth.uid);
     this.context.router.push('/dashboard');
+    }
   }
 
   Change(input){
@@ -73,6 +80,25 @@ class Edit extends Component {
     });
   }
 
+  componentWillMount() {
+    // var instance = axios.create({
+    //   baseURL: 'http://alloworigin.com/',
+    //   timeout: 5000,
+    //   headers: {'Access-Control-Allow-Origin': '192.168.1.1:3000'}
+    // });
+
+    // instance.get('v2/songs/?query="pillar"').then(function(response){
+    //   console.log(response.data.objects);
+    // })
+
+
+    // var asd = axios.get("http://alloworigin.com/get?url=http://acordes.lacuerda.net/marco_barrientos/de_gloria_en_gloria.shtml&callback=foo&tor=1")
+    // .then(function(response){
+    //   console.log(response.respondWith());
+    // });
+    // console.log(instance.get());
+  }
+
   componentDidMount() {
     this.setState({input: 'scale'});
     const songKey = this.props.routing.locationBeforeTransitions.pathname.substring(8);
@@ -96,7 +122,7 @@ class Edit extends Component {
 
         <div className={`form-group ${title.touched && title.value==='' ? 'has-error' : ''}`}>
           <label>Title</label>
-          <input {...title} type="text" className="form-control" value={title.value || ''} onFocus={()=> this.setState({input:'title'})} />
+          <input {...title} type="text" className="form-control" value={title.value || ''} />
           <div className="text-help">
             {title.touched ? title.error : ''}
           </div>
