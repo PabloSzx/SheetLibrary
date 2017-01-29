@@ -1,6 +1,8 @@
 export const FETCH_LIBRARY = 'FETCH_LIBRARY';
 // export const FETCH_SONG = 'FETCH_SONG';
 export const FETCH_LACUERDA = 'FETCH_LACUERDA';
+export const FETCH_ULTIMATEGUITAR = 'FETCH_ULTIMATEGUITAR';
+export const CLEAN_APIFETCH = 'CLEAN_APIFETCH';
 export const CREATE_SONG = 'CREATE_SONG';
 export const DELETE_SONG = 'DELETE_SONG';
 export const UPDATE_SONG = 'UPDATE_SONG';

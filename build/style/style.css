@@ -7,7 +7,13 @@ body {
 }
 
 .li {
-  width: 95vw;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+
+  margin-top: .2vw;
+  /*margin-right: 15px;*/
+  /*margin: 3vw;*/
 }
 
 .blue {
@@ -24,4 +30,8 @@ body {
 
 .preload {
   visibility: hidden;
+}
+
+.content-area {
+  height: 400px;
 }

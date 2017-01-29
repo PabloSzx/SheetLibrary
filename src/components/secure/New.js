@@ -2,11 +2,16 @@ import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import { Link } from 'react-router';
 import _ from 'lodash';
-import { createSong, fetchLacuerda } from '../../actions/index';
+import { createSong, fetchLacuerda, fetchUltimateguitar, cleanApiFetch } from '../../actions/index';
 import rise from './rise';
 
 
 class New extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {fetchName: 'Nombre de una cancion', fetchArtist: 'Ingresa el artista', input: 'scale'};
+  }
+
   static contextTypes = {
     router: PropTypes.object
   };
@@ -65,61 +70,65 @@ class New extends Component {
   }
 
   onRise(n) {
-    const objective = this.state.input;
-    _.map(this.props.fields,to => {
-      if (to.name === objective) {
-      if (to.value) {
-        to.onChange(rise(to.value,n))
-      }
+    // const objective = this.state.input;
+    // _.map(this.props.fields,to => {
+    //   if (to.name === objective) {
+    //   if (to.value) {
+    //     to.onChange(rise(to.value,n))
+    //   }
+    // }
+    // });
+
+    if (this.props.fields.scale) {
+      this.props.fields.scale.onChange(rise(this.props.fields.scale.value,n));
     }
-    });
+    if (this.props.fields.content) {
+      this.props.fields.content.onChange(rise(this.props.fields.content.value,n));
+    }
   }
 
   getLaCuerda() {
-
-    this.props.fetchLacuerda('prisioneros','sexo');
+    this.props.fields.content.onChange('')
+    const name = this.state.fetchName.toLowerCase().replace(/ /g,"_");
+    const artist = this.state.fetchArtist.toLowerCase().replace(/ /g,"_");
+    this.props.fetchLacuerda(name,artist);
     //EN LA CUERDA LAS NOTAS ESTAN ENTRE LOS <A></A> PARA QUE ASI EL SISTEMA SEPA
     //QUE SON NOTAS Y NO SON PALABRAS, PENDIENTE HACER ALGO PARECIDO
 
     // this.props.fields.content.onChange(this.props.lacuerda);
     // console.log(this.props);
-    if (this.context.n === 1) {
-      this.forceUpdate();
-    }
-    this.context.n = 0;
+
   }
 
-  componentWillMount() {
+  getUltimateguitar() {
+    this.props.fields.content.onChange('')
+    const name = this.state.fetchName.toLowerCase().replace(/ /g,"_");
+    const artist = this.state.fetchArtist.toLowerCase().replace(/ /g,"_");
+    this.props.fetchUltimateguitar(name,artist);
+    //EN LA CUERDA LAS NOTAS ESTAN ENTRE LOS <A></A> PARA QUE ASI EL SISTEMA SEPA
+    //QUE SON NOTAS Y NO SON PALABRAS, PENDIENTE HACER ALGO PARECIDO
+
+    // this.props.fields.content.onChange(this.props.lacuerda);
+    // console.log(this.props);
+
+  }
+
+
+  handleNameChange(event) {
     this.setState({
-      input: 'scale'
-  });
-
-
-    // $.getJSON('http://allorigins.us/get?url=' + encodeURIComponent('http://acordes.lacuerda.net/hillsong_united/how_great_is_our_god.shtml') + '&callback=?', function(data){
-    // // console.log(data.contents.split('<div id=t_body>')[1].split('</div>')[0]);
-    // console.log(data.contents.split('<PRE>')[1].split('</PRE>')[0]);
-    // });
-
-  }
-  componentDidUpdate() {
-    if (this.context.n === 0) {
-      if(this.props.fields.content.value){
-        this.props.fields.content.onChange(this.props.fields.content.value+(this.props.lacuerda));
-      }
-      else {
-      this.props.fields.content.onChange(this.props.lacuerda);
-      }
-      this.context.n = 1
-    }
+      fetchName : event.target.value
+    })
   }
 
-  // shouldComponentUpdate() {
-  //   if (this.props.fields.content.value || this.context.n===1) {
-  //     this.context.n = 0;
-  //     return false;
-  //   }
-  //   return true;
-  // }
+  handleArtistChange(event) {
+    this.setState({
+      fetchArtist : event.target.value
+    })
+  }
+
+  componentWillUnmount() {
+    this.props.cleanApiFetch();
+  }
 
   render() {
     const { fields: { title, scale, content }, handleSubmit } = this.props;
@@ -153,7 +162,7 @@ class New extends Component {
 
         <div className={`form-group`}>
           <label>Content</label>
-          <textarea {...content} className="form-control content-area" rows="5" onFocus={()=> this.setState({input:'content'})}/>
+          <textarea {...content} className="form-control content-area" rows="5" onFocus={()=> this.setState({input:'content'})} value={content.value || this.props.ultimateguitar || this.props.lacuerda}/>
           <div className="text-help">
             {content.touched ? content.error : ''}
           </div>
@@ -231,7 +240,7 @@ class New extends Component {
           <div className="btn btn-primary hidden">Responsive</div>
           </div>
           <div className="col-xs-4">
-          <div className="btn btn-primary center-block" onClick={() => this.getLaCuerda()}>lacuerda.net</div>
+          <input type="text" value={this.state.fetchName} onChange={this.handleNameChange.bind(this)} />
           </div>
         </div>
         <br/>
@@ -249,7 +258,7 @@ class New extends Component {
           <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden"></div>
+            <input type="text" value={this.state.fetchArtist} onChange={this.handleArtistChange.bind(this)} />
           </div>
         </div>
         <br/>
@@ -260,14 +269,14 @@ class New extends Component {
           <div className="col-xs-3">
           <div className="btn btn-primary hidden">Ctr+Z</div>
           </div>
-          <div className="col-xs-2">
+          <div className="col-xs-1">
           <div className="btn btn-primary hidden"></div>
           </div>
-          <div className="col-xs-2">
-          <div className="btn btn-primary hidden"></div>
+          <div className="col-xs-3">
+            <div className="btn btn-primary center-block" onClick={() => this.getUltimateguitar()}>ultimate-guitar.com</div>
           </div>
-          <div className="col-xs-2">
-          <div className="btn btn-primary hidden">Responsive</div>
+          <div className="col-xs-3">
+          <div className="btn btn-primary center-block" onClick={() => this.getLaCuerda()}>lacuerda.net</div>
           </div>
         </div>
         <br/>
@@ -333,7 +342,8 @@ function validate(values) {
 function mapStateToProps(state) {
   return {
     auth: state.auth.user,
-    lacuerda: state.library.lacuerda
+    lacuerda: state.library.lacuerda,
+    ultimateguitar: state.library.ultimateguitar
   }
 }
 
@@ -341,4 +351,4 @@ export default reduxForm({
   form: 'NewForm',
   fields: ['title', 'scale', 'content'],
   validate
-}, mapStateToProps, { createSong, fetchLacuerda })(New);
+}, mapStateToProps, { createSong, fetchLacuerda, fetchUltimateguitar, cleanApiFetch })(New);

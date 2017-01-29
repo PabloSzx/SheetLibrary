@@ -15,78 +15,65 @@ const notes = {
   "B" : 11
 }
 
+function cleanDigit(digit) {
+    let returnDigit = digit.trim().replace(/5/g,"").replace(/7/g,"").replace(/MAJ/g,"").replace(/M/g,"").replace(/SUS/g,"");
+    returnDigit = returnDigit.replace(/<A>/g,"").replace(/<\/A>/g,"").split('/')[0];
+    return returnDigit;
+}
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+
 function rise(value,n) {
-  let valueArray = value.split(' ');
+  try {
+  let valueArray = value.split('\n');
   var digit;
+  let lineArray = [];
   let returnArray = [];
+  let lineReturnArray = [];
   let toReturn;
   let entered = false;
-  _.map(valueArray, (v,k) => {
-    digit = v.toUpperCase();
-    entered = false;
-    if (_.map(notes, (note, key)=> {
-      if (key === digit) {
-        _.map(notes, (note2, key2) => {
-          if ((note+n)===note2){
-            toReturn = key2;
-            entered = true;
-            return key2;
+
+  _.map(valueArray, (l,indexdelinea) => {
+    lineReturnArray = [];
+    lineArray = l.split(' ');
+    if (l.trim()) {
+    _.map(lineArray, (v,indexdepalabraseparada) => {
+      digit = v.toUpperCase().trim();
+      entered = false;
+      _.map(notes, (notaennumero, notaenletra)=> {
+        if (notaenletra === cleanDigit(digit)) {
+          if ((notaennumero+n)===- 1){
+            toReturn = capitalizeFirstLetter(v.toUpperCase().replace(cleanDigit(digit),"B"));
           }
-          else if ((note+n) === -1){
-            toReturn = "B";
-            entered = true;
-            return "C";
+          else if ((notaennumero+n)=== 12){
+            toReturn = capitalizeFirstLetter(v.toUpperCase().replace(cleanDigit(digit),"C"));
           }
-          else if ((note+n) === 12) {
-            toReturn = "C";
-            entered = true;
-            return "C";
+          else {
+            toReturn = capitalizeFirstLetter(v.toUpperCase().replace(cleanDigit(digit),Object.keys(notes)[notaennumero+n]));
           }
-        })
-      }
-      else if ((note === 11) && (!entered)) {
-        toReturn = digit;
-        return digit
-      }
-    })){
-    returnArray[k] = toReturn;
+          entered = true;
+
+        }
+        else if ((notaennumero === 11) && (!entered)) {
+          toReturn = v;
+        }
+      });
+      lineReturnArray[indexdepalabraseparada] = toReturn;
+    });
+    returnArray[indexdelinea]= lineReturnArray.join(' ');
+    }
+    else {
+      returnArray[indexdelinea] = l;
     }
   });
-    return returnArray.join(' ');
+  return returnArray.join('\n');
+}
+catch (err) {
+  console.log('No se puede subir de tono un campo vacio');
+}
 
-
-  // for (var i = 0; i < valueArray.length; i++) {
-  //   digit = valueArray[i].toUpperCase();
-  //   entered = false;
-  //   if (_.map(notes, (note, key)=> {
-  //     if (key === digit) {
-  //       _.map(notes, (note2, key2) => {
-  //         if ((note+n)===note2){
-  //           toReturn = key2;
-  //           entered = true;
-  //           return key2;
-  //         }
-  //         else if ((note+n) === -1){
-  //           toReturn = "B";
-  //           entered = true;
-  //           return "C";
-  //         }
-  //         else if ((note+n) === 12) {
-  //           toReturn = "C";
-  //           entered = true;
-  //           return "C";
-  //         }
-  //       })
-  //     }
-  //     else if ((note === 11) && (!entered)) {
-  //       toReturn = digit;
-  //       return digit
-  //     }
-  //   })){
-  //   returnArray[i] = toReturn;
-  //   }
-  // }
-  // return returnArray.join(' ');
 }
 
 export default rise;
