@@ -13,7 +13,7 @@ render() {
       <LibraryList />
       <hr />
 			<br/>
-      <Link className='btn btn-success center-block dashboardButton' to='/view'>View Selected Songs</Link>
+      <Link className='btn btn-success center-block dashboardButton btn-fetch' to='/view'>View Selected Songs</Link>
       <br/>
       <br/>
 			<Link className='btn btn-info center-block dashboardButton' to='/new'>New Song</Link>

@@ -10,6 +10,34 @@ div {
   width: 100%;
   overflow-x: hidden;
 }
+@media only screen and (max-width: 500px) {
+    .btn-note {
+      width: 9vmax;
+    }
+    .btn-fetch {
+      font-size: 2.3vmin;
+    }
+    .field-fetch {
+      font-size: 2.4vmin;
+    }
+    .select-fetch {
+      font-size: 2.5vw !important;
+    }
+}
+@media only screen and (max-width: 500px) {
+    .btn-note {
+      width: 9vmax;
+    }
+    .btn-fetch {
+      font-size: 2.3vmin;
+    }
+    .field-fetch {
+      font-size: 2.4vmin;
+    }
+    .select-fetch {
+      font-size: 2.5vw !important;
+    }
+}
 .song-checkbox {
   position: absolute;
   left: 7vmin;
@@ -20,6 +48,10 @@ div {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 
+}
+.select-fetch {
+  width: calc(16.8vw + 100%);
+  font-size: 1.2em;
 }
 
 .dashboardButton {

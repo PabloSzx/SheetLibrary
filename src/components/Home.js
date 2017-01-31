@@ -12,7 +12,7 @@ class Home extends Component {
 				<h2 className="text-center">Puedes registrarte de forma rápida, fácil y gratuita</h2>
 				<Login />
 				<hr/>
-				<h6 style={{'text-align':'center'}}>Si desea contactarse con el desarrollador, favor de mandar un correo a admin@pablosz.me</h6>
+				<h6 className="text-center">Si desea contactarse con el desarrollador, favor de mandar un correo a admin@pablosz.me</h6>
 			</div>
 		)
 	}
