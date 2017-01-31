@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Login from './auth/Login';
+import Logo from '../imgs/logo-inverted.png';
 
 class Home extends Component {
 	render() {
 		return (
-			<div>
-				<strong><h1 className="text-center">Bienvenido a SheetLibrary</h1></strong>
+			<div className="formBody">
+				<strong><h1 className="text-center">Bienvenido a</h1></strong>
+				<img src={Logo} className="logo center-block" alt="SheetLibrary" />
 				<h2 className="text-center">Puedes registrarte de forma rápida, fácil y gratuita</h2>
 				<Login />
 				<hr/>

@@ -71,33 +71,13 @@ class Edit extends Component {
   }
 
   onRise(n) {
-    const objective = this.state.input;
-    _.map(this.props.fields,to => {
-      if (to.name === objective) {
-      if (to.value) {
-        to.onChange(rise(to.value,n))
-      }
+
+    if (this.props.fields.scale) {
+      this.props.fields.scale.onChange(rise(this.props.fields.scale.value,n));
     }
-    });
-  }
-
-  componentWillMount() {
-    // var instance = axios.create({
-    //   baseURL: 'http://alloworigin.com/',
-    //   timeout: 5000,
-    //   headers: {'Access-Control-Allow-Origin': '192.168.1.1:3000'}
-    // });
-
-    // instance.get('v2/songs/?query="pillar"').then(function(response){
-    //   console.log(response.data.objects);
-    // })
-
-
-    // var asd = axios.get("http://alloworigin.com/get?url=http://acordes.lacuerda.net/marco_barrientos/de_gloria_en_gloria.shtml&callback=foo&tor=1")
-    // .then(function(response){
-    //   console.log(response.respondWith());
-    // });
-    // console.log(instance.get());
+    if (this.props.fields.content) {
+      this.props.fields.content.onChange(rise(this.props.fields.content.value,n));
+    }
   }
 
   componentDidMount() {
@@ -140,7 +120,7 @@ class Edit extends Component {
 
         <div className={`form-group`}>
           <label>Content</label>
-          <textarea {...content} className="form-control" onFocus={()=> this.setState({input:'content'})} />
+          <textarea {...content} rows="6" className="form-control" onFocus={()=> this.setState({input:'content'})} />
           <div className="text-help">
             {content.touched ? content.error : ''}
           </div>
@@ -155,7 +135,7 @@ class Edit extends Component {
             <div className="btn btn-primary center-block" onClick={() => this.Change('C')}>C</div>
           </div>
             <div className="col-xs-2">
-            <div className="btn btn-primary center-block" onClick={() => this.Change('C#')}>C#</div>
+            <div className="btn btn-primary center-block" onClick={() => this.Change('C#')}>C♯</div>
           </div>
             <div className="col-xs-2">
             <div className="btn btn-primary center-block" onClick={() => this.Change('D')}>D</div>
@@ -164,13 +144,13 @@ class Edit extends Component {
             <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-4">
-          <div className="btn btn-primary center-block" onClick={()=>this.onRise(1)}>Subir 1 Tono</div>
+          <div className="btn btn-primary center-block" onClick={()=>this.onRise(1)}>⇧♪</div>
           </div>
         </div>
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block" onClick={() => this.Change('D#')}>D#</div>
+          <div className="btn btn-primary center-block" onClick={() => this.Change('D#')}>D♯</div>
           </div>
           <div className="col-xs-2">
           <div className="btn btn-primary center-block" onClick={() => this.Change('E')}>E</div>
@@ -182,19 +162,19 @@ class Edit extends Component {
           <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-4">
-          <div className="btn btn-primary center-block"onClick={()=>this.onRise(-1)}>Bajar 1 Tono</div>
+          <div className="btn btn-primary center-block"onClick={()=>this.onRise(-1)}>⇩♪</div>
           </div>
         </div>
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block" onClick={() => this.Change('F#')}>F#</div>
+          <div className="btn btn-primary center-block" onClick={() => this.Change('F#')}>F♯</div>
           </div>
           <div className="col-xs-2">
           <div className="btn btn-primary center-block" onClick={() => this.Change('G')}>G</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block" onClick={() => this.Change('G#')}>G#</div>
+          <div className="btn btn-primary center-block" onClick={() => this.Change('G#')}>G♯</div>
           </div>
           <div className="col-xs-2">
           <div className="btn btn-primary hidden">Responsive</div>
@@ -209,7 +189,7 @@ class Edit extends Component {
           <div className="btn btn-primary center-block" onClick={() => this.Change('A')}>A</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block" onClick={() => this.Change('A#')}>A#</div>
+          <div className="btn btn-primary center-block" onClick={() => this.Change('A#')}>A♯</div>
           </div>
           <div className="col-xs-2">
           <div className="btn btn-primary center-block" onClick={() => this.Change('B')}>B</div>
@@ -224,10 +204,10 @@ class Edit extends Component {
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block" onClick={() => this.Change('\n')}>\n</div>
+          <div className="btn btn-primary center-block" onClick={() => this.Change('\n')}>↵</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block" onClick={() => this.Erase()}>{"<-"}</div>
+          <div className="btn btn-primary center-block" onClick={() => this.Erase()}>{"⇦"}</div>
           </div>
           <div className="col-xs-2">
           <div className="btn btn-primary hidden"></div>
@@ -242,7 +222,7 @@ class Edit extends Component {
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block" onClick={() => this.Change(' ')}>[ ]</div>
+            <div className="btn btn-primary center-block" onClick={() => this.Change(' ')}>[&nbsp;&nbsp;&nbsp;&nbsp;]</div>
           </div>
           <div className="col-xs-3">
           <div className="btn btn-primary hidden">Ctr+Z</div>
@@ -267,7 +247,7 @@ class Edit extends Component {
           </div>
           <div className="col-xs-4">
           {/* <div type="submit"  className="btn btn-primary center-block">Submit</div> */}
-          <button type="submit" className="btn btn-primary btn-block">Submit</button>
+          <button type="submit" className="btn btn-success btn-block">Submit</button>
           </div>
           <div className="col-xs-4">
           <div className="btn btn-primary hidden"></div>
@@ -314,8 +294,6 @@ function validate(values) {
 
   return errors;
 }
-// connect: first argument is mapstatetoprops, 2nd is mapdispatchtoprops
-// reduxform: 1st is form config, 2nd is mapstatetoprops, 3ds is mapdispatchtoprops
 
 function mapStateToProps(state) {
   return {

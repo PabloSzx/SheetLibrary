@@ -5,7 +5,6 @@ import _ from 'lodash';
 import { createSong, fetchLacuerda, fetchUltimateguitar, cleanApiFetch } from '../../actions/index';
 import rise from './rise';
 
-
 class New extends Component {
   constructor(props) {
     super(props);
@@ -70,14 +69,6 @@ class New extends Component {
   }
 
   onRise(n) {
-    // const objective = this.state.input;
-    // _.map(this.props.fields,to => {
-    //   if (to.name === objective) {
-    //   if (to.value) {
-    //     to.onChange(rise(to.value,n))
-    //   }
-    // }
-    // });
 
     if (this.props.fields.scale) {
       this.props.fields.scale.onChange(rise(this.props.fields.scale.value,n));
@@ -173,14 +164,6 @@ class New extends Component {
 
   render() {
     const { fields: { title, scale, content }, handleSubmit } = this.props;
-
-  //   if(this.props.fields.content.value){
-  //     this.props.fields.content.onChange(this.props.fields.content.value+(this.props.lacuerda));
-  //
-  //   }
-  // else {
-  //   this.props.fields.content.onChange(this.props.lacuerda);
-  // }
     return (
     <form className="formBody" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
         <h3>Create a New Song</h3>
@@ -203,7 +186,7 @@ class New extends Component {
 
         <div className={`form-group`}>
           <label>Content</label>
-          <textarea {...content} className="form-control content-area" rows="5" onFocus={()=> this.setState({input:'content'})} value={content.value || this.props.ultimateguitar || this.props.lacuerda}/>
+          <textarea {...content} className="form-control content-area" rows="6" onFocus={()=> this.setState({input:'content'})} value={content.value || this.props.ultimateguitar || this.props.lacuerda}/>
           <div className="text-help">
             {content.touched ? content.error : ''}
           </div>
@@ -218,7 +201,7 @@ class New extends Component {
             <div className="btn btn-primary center-block" onClick={() => this.Change('C')}>C</div>
           </div>
             <div className="col-xs-2">
-            <div className="btn btn-primary center-block" onClick={() => this.Change('C#')}>C#</div>
+            <div className="btn btn-primary center-block" onClick={() => this.Change('C#')}>C♯</div>
           </div>
             <div className="col-xs-2">
             <div className="btn btn-primary center-block" onClick={() => this.Change('D')}>D</div>
@@ -227,13 +210,13 @@ class New extends Component {
             <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-4">
-          <div className="btn btn-primary center-block" onClick={()=>this.onRise(1)}>Subir 1 Tono</div>
+          <div className="btn btn-primary center-block" onClick={()=>this.onRise(1)}>⇧♪</div>
           </div>
         </div>
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block" onClick={() => this.Change('D#')}>D#</div>
+          <div className="btn btn-primary center-block" onClick={() => this.Change('D#')}>D♯</div>
           </div>
           <div className="col-xs-2">
           <div className="btn btn-primary center-block" onClick={() => this.Change('E')}>E</div>
@@ -245,19 +228,19 @@ class New extends Component {
           <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-4">
-          <div className="btn btn-primary center-block"onClick={()=>this.onRise(-1)}>Bajar 1 Tono</div>
+          <div className="btn btn-primary center-block"onClick={()=>this.onRise(-1)}>⇩♪</div>
           </div>
         </div>
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block" onClick={() => this.Change('F#')}>F#</div>
+          <div className="btn btn-primary center-block" onClick={() => this.Change('F#')}>F♯</div>
           </div>
           <div className="col-xs-2">
           <div className="btn btn-primary center-block" onClick={() => this.Change('G')}>G</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block" onClick={() => this.Change('G#')}>G#</div>
+          <div className="btn btn-primary center-block" onClick={() => this.Change('G#')}>G♯</div>
           </div>
           <div className="col-xs-2">
           <div className="btn btn-primary hidden">Responsive</div>
@@ -272,7 +255,7 @@ class New extends Component {
           <div className="btn btn-primary center-block" onClick={() => this.Change('A')}>A</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block" onClick={() => this.Change('A#')}>A#</div>
+          <div className="btn btn-primary center-block" onClick={() => this.Change('A#')}>A♯</div>
           </div>
           <div className="col-xs-2">
           <div className="btn btn-primary center-block" onClick={() => this.Change('B')}>B</div>
@@ -294,10 +277,10 @@ class New extends Component {
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block" onClick={() => this.Change('\n')}>\n</div>
+          <div className="btn btn-primary center-block" onClick={() => this.Change('\n')}>↵</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block" onClick={()=> this.Erase()}>{"<-"}</div>
+          <div className="btn btn-primary center-block" onClick={()=> this.Erase()}>{"⇦"}</div>
           </div>
           <div className="col-xs-2">
           <div className="btn btn-primary hidden"></div>
@@ -312,7 +295,7 @@ class New extends Component {
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block" onClick={() => this.Change(' ')}>[ ]</div>
+          <div className="btn btn-primary center-block" onClick={() => this.Change(' ')}>[&nbsp;&nbsp;&nbsp;&nbsp;]</div>
           </div>
           <div className="col-xs-3">
           <div className="btn btn-primary hidden">Ctr+Z</div>
@@ -338,8 +321,7 @@ class New extends Component {
           <div className="btn btn-primary hidden">Ctrl+Z</div>
           </div>
           <div className="col-xs-4">
-          {/* <div className="btn btn-primary center-block">Submit</div> */}
-          <button type="submit" className="btn btn-primary">Submit</button>
+          <button type="submit" className="btn btn-success">Submit</button>
           </div>
           <div className="col-xs-4">
           <div className="btn btn-primary hidden"></div>
@@ -351,7 +333,7 @@ class New extends Component {
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden">[ ]</div>
+          <div className="btn btn-primary hidden">Ctrl+Z</div>
           </div>
           <div className="col-xs-2">
           <div className="btn btn-primary hidden">Ctrl+Z</div>
@@ -365,7 +347,6 @@ class New extends Component {
         </div>
         <br/>
       </div>
-
     </form>
       );
     }
@@ -386,8 +367,6 @@ function validate(values) {
 
   return errors;
 }
-// connect: first argument is mapstatetoprops, 2nd is mapdispatchtoprops
-// reduxform: 1st is form config, 2nd is mapstatetoprops, 3ds is mapdispatchtoprops
 
 function mapStateToProps(state) {
   return {
