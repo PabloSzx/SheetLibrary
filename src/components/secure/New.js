@@ -201,7 +201,7 @@ class New extends Component {
             <div className="btn btn-primary center-block" onClick={() => this.Change('C')}>C</div>
           </div>
             <div className="col-xs-2">
-            <div className="btn btn-primary center-block" onClick={() => this.Change('C#')}>C♯</div>
+            <div className="btn btn-primary center-block" onClick={() => this.Change('C#')}>C#</div>
           </div>
             <div className="col-xs-2">
             <div className="btn btn-primary center-block" onClick={() => this.Change('D')}>D</div>
@@ -209,6 +209,7 @@ class New extends Component {
             <div className="col-xs-2">
             <div className="btn btn-primary hidden"></div>
           </div>
+
           <div className="col-xs-4">
           <div className="btn btn-primary center-block" onClick={()=>this.onRise(1)}>⇧♪</div>
           </div>
@@ -216,7 +217,7 @@ class New extends Component {
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block" onClick={() => this.Change('D#')}>D♯</div>
+          <div className="btn btn-primary center-block" onClick={() => this.Change('D#')}>D#</div>
           </div>
           <div className="col-xs-2">
           <div className="btn btn-primary center-block" onClick={() => this.Change('E')}>E</div>
@@ -234,13 +235,13 @@ class New extends Component {
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block" onClick={() => this.Change('F#')}>F♯</div>
+          <div className="btn btn-primary center-block" onClick={() => this.Change('F#')}>F#</div>
           </div>
           <div className="col-xs-2">
           <div className="btn btn-primary center-block" onClick={() => this.Change('G')}>G</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block" onClick={() => this.Change('G#')}>G♯</div>
+          <div className="btn btn-primary center-block" onClick={() => this.Change('G#')}>G#</div>
           </div>
           <div className="col-xs-2">
           <div className="btn btn-primary hidden">Responsive</div>
@@ -255,7 +256,7 @@ class New extends Component {
           <div className="btn btn-primary center-block" onClick={() => this.Change('A')}>A</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block" onClick={() => this.Change('A#')}>A♯</div>
+          <div className="btn btn-primary center-block" onClick={() => this.Change('A#')}>A#</div>
           </div>
           <div className="col-xs-2">
           <div className="btn btn-primary center-block" onClick={() => this.Change('B')}>B</div>
@@ -295,7 +296,7 @@ class New extends Component {
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block" onClick={() => this.Change(' ')}>[&nbsp;&nbsp;&nbsp;&nbsp;]</div>
+          <div className="btn btn-primary center-block" onClick={() => this.Change(' ')}>[&nbsp;&nbsp;&nbsp;]</div>
           </div>
           <div className="col-xs-3">
           <div className="btn btn-primary hidden">Ctr+Z</div>
