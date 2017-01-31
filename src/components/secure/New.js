@@ -9,7 +9,7 @@ import rise from './rise';
 class New extends Component {
   constructor(props) {
     super(props);
-    this.state = {fetchName: 'Nombre de una cancion', fetchArtist: 'Ingresa el artista', input: 'scale'};
+    this.state = {fetchName: '', fetchArtist: '', input: 'scale', version: '1'};
   }
 
   static contextTypes = {
@@ -88,8 +88,25 @@ class New extends Component {
   }
 
   getLaCuerda() {
+    let version;
+    switch (this.state.version) {
+      case "2":
+        version = "-2"
+        break;
+      case "3":
+        version = "-3"
+        break;
+      case "4":
+        version = "-4"
+        break;
+      case "5":
+        version = "-5"
+        break;
+      default:
+        version = ""
+    }
     this.props.fields.content.onChange('')
-    const name = this.state.fetchName.toLowerCase().replace(/ /g,"_");
+    let name = this.state.fetchName.toLowerCase().replace(/ /g,"_").concat(version);
     const artist = this.state.fetchArtist.toLowerCase().replace(/ /g,"_");
     this.props.fetchLacuerda(name,artist);
     //EN LA CUERDA LAS NOTAS ESTAN ENTRE LOS <A></A> PARA QUE ASI EL SISTEMA SEPA
@@ -97,12 +114,28 @@ class New extends Component {
 
     // this.props.fields.content.onChange(this.props.lacuerda);
     // console.log(this.props);
-
   }
 
   getUltimateguitar() {
-    this.props.fields.content.onChange('')
-    const name = this.state.fetchName.toLowerCase().replace(/ /g,"_");
+    let version;
+    switch (this.state.version) {
+      case "2":
+        version = "_ver2"
+        break;
+      case "3":
+        version = "_ver3"
+        break;
+      case "4":
+        version = "_ver4"
+        break;
+      case "5":
+        version = "_ver5"
+        break;
+      default:
+        version = ""
+    }
+    this.props.fields.content.onChange('');
+    const name = this.state.fetchName.toLowerCase().replace(/ /g,"_").concat(version);
     const artist = this.state.fetchArtist.toLowerCase().replace(/ /g,"_");
     this.props.fetchUltimateguitar(name,artist);
     //EN LA CUERDA LAS NOTAS ESTAN ENTRE LOS <A></A> PARA QUE ASI EL SISTEMA SEPA
@@ -126,8 +159,16 @@ class New extends Component {
     })
   }
 
+  handleVersionChange(event) {
+    this.setState({version: event.target.value});
+  }
+
   componentWillUnmount() {
     this.props.cleanApiFetch();
+  }
+
+  componentDidMount() {
+    window.scrollTo(0, 0);
   }
 
   render() {
@@ -141,7 +182,7 @@ class New extends Component {
   //   this.props.fields.content.onChange(this.props.lacuerda);
   // }
     return (
-    <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+    <form className="formBody" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
         <h3>Create a New Song</h3>
 
         <div className={`form-group ${title.touched && title.value==='' ? 'has-error' : ''}`}>
@@ -237,10 +278,17 @@ class New extends Component {
           <div className="btn btn-primary center-block" onClick={() => this.Change('B')}>B</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden">Responsive</div>
+            <select defaultValue="1" onChange={this.handleVersionChange.bind(this)} className="center-block form-control">
+              <option className="version-select" value='1'>Version 1</option>
+              <option className="version-select" value="2">Version 2</option>
+              <option className="version-select" value="3">Version 3</option>
+              <option className="version-select" value="4">Version 4</option>
+              <option className="version-select" value="5">Version 5</option>
+
+            </select>
           </div>
           <div className="col-xs-4">
-          <input type="text" value={this.state.fetchName} onChange={this.handleNameChange.bind(this)} />
+          <input type="text" className="form-control" value={this.state.fetchName} onChange={this.handleNameChange.bind(this)} placeholder="Nombre Cancion" />
           </div>
         </div>
         <br/>
@@ -257,8 +305,8 @@ class New extends Component {
           <div className="col-xs-2">
           <div className="btn btn-primary hidden"></div>
           </div>
-          <div className="col-xs-2">
-            <input type="text" value={this.state.fetchArtist} onChange={this.handleArtistChange.bind(this)} />
+          <div className="col-xs-4">
+          <input type="text" className="form-control" value={this.state.fetchArtist} onChange={this.handleArtistChange.bind(this)} placeholder="Artista" />
           </div>
         </div>
         <br/>
@@ -272,11 +320,13 @@ class New extends Component {
           <div className="col-xs-1">
           <div className="btn btn-primary hidden"></div>
           </div>
-          <div className="col-xs-3">
-            <div className="btn btn-primary center-block" onClick={() => this.getUltimateguitar()}>ultimate-guitar.com</div>
+          <div className="col-xs-2">
+            <div className="btn btn-primary hidden"></div>
           </div>
-          <div className="col-xs-3">
-          <div className="btn btn-primary center-block" onClick={() => this.getLaCuerda()}>lacuerda.net</div>
+          <div className="col-xs-4">
+            <div className="btn btn-primary center-block" onClick={() => this.getUltimateguitar()}>ultimate-guitar.com</div>
+            <br/>
+            <div className="btn btn-primary center-block" onClick={() => this.getLaCuerda()}>lacuerda.net</div>
           </div>
         </div>
         <br/>

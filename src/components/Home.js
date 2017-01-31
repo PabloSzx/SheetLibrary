@@ -6,10 +6,11 @@ class Home extends Component {
 	render() {
 		return (
 			<div>
-				<strong><h1>Bienvenido a SheetLibrary</h1></strong>
-				<h2>Puedes registrarte de forma rápida, fácil y gratuita</h2>
+				<strong><h1 className="text-center">Bienvenido a SheetLibrary</h1></strong>
+				<h2 className="text-center">Puedes registrarte de forma rápida, fácil y gratuita</h2>
 				<Login />
-				<h6>Si desea contactarse con el desarrollador, favor de mandar un correo a admin@pablosz.me</h6>
+				<hr/>
+				<h6 style={{'text-align':'center'}}>Si desea contactarse con el desarrollador, favor de mandar un correo a admin@pablosz.me</h6>
 			</div>
 		)
 	}

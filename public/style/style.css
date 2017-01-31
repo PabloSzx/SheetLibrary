@@ -1,19 +1,49 @@
 body {
 
 }
-
-.submitButton {
+.formBody {
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 100%;
+  overflow-x: hidden;
+}
+.song-checkbox {
+  position: absolute;
+  left: 7vmin;
+  width: 30px;
+  height: 20px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 
 }
 
+.dashboardButton {
+  width: 50%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.version-select {
+  text-align: center;
+}
+
+.selected-li {
+  white-space: pre;
+}
+.search-input {
+  width: 50vw;
+  text-align: center;
+}
 .li {
   width: 90%;
   margin-left: auto;
   margin-right: auto;
 
   margin-top: .2vw;
-  /*margin-right: 15px;*/
-  /*margin: 3vw;*/
 }
 
 .blue {
@@ -34,4 +64,8 @@ body {
 
 .content-area {
   height: 400px;
+}
+
+.no-margin {
+  margin: 0;
 }

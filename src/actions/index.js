@@ -1,7 +1,7 @@
 import Firebase from 'firebase';
 import _ from 'lodash';
 import {
-  FETCH_LIBRARY, FETCH_LACUERDA, FETCH_ULTIMATEGUITAR, CLEAN_APIFETCH
+  FETCH_LIBRARY, FETCH_LACUERDA, FETCH_ULTIMATEGUITAR, CLEAN_APIFETCH, SELECT_POST, DESELECT_POST
 } from './types';
 import $ from 'jquery';
 
@@ -121,6 +121,26 @@ export function fetchUltimateguitar(name,artist) {
       // });
     }
     // console.log(data.contents.split('<PRE>')[1].split('</PRE>')[0]);
+  });
+  }
+}
+
+export function selectPost(id) {
+  
+  return dispatch => {
+  dispatch({
+    type: SELECT_POST,
+    payload: id
+  });
+  }
+
+}
+
+export function deselectPost(id) {
+  return dispatch => {
+  dispatch({
+    type: DESELECT_POST,
+    payload: id
   });
   }
 }

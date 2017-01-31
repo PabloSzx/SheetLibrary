@@ -92,11 +92,11 @@ class Login extends React.Component {
 					<br/>
 					<button className='btn btn-primary' type='submit'>Email Login</button>
 				</form> */}
-				<img src={Facebook} alt="Sign in with Facebook" className='loginButton btn' onClick={()=> this.fblogin()}/>
+				<img src={Facebook} alt="Sign in with Facebook" className='loginButton btn center-block' onClick={()=> this.fblogin()}/>
 				<br/>
-				<img src={Google} alt="Sign in with Google" className='loginButton btn' onClick={()=> this.googlelogin()}/>
+				<img src={Google} alt="Sign in with Google" className='loginButton btn center-block' onClick={()=> this.googlelogin()}/>
 				<br/>
-				<img src={Twitter} alt="Sign in with Twitter" className='loginButton btn' onClick={()=> this.twitterlogin()}/>
+				<img src={Twitter} alt="Sign in with Twitter" className='loginButton btn center-block' onClick={()=> this.twitterlogin()}/>
 				<br/>
 				<br/>
 			</div>

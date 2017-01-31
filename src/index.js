@@ -15,6 +15,7 @@ import Dashboard from './components/secure/Dashboard'
 import Profile from './components/secure/Profile'
 import New from './components/secure/New'
 import Edit from './components/secure/Edit';
+import SelectedList from './components/secure/SelectedList';
 
 const reducer = combineReducers({
 	...reducers,
@@ -45,6 +46,7 @@ ReactDOM.render(
 				<Route path='new' component={New} onEnter={secure}/>
 				<Route path='profile' component={Profile} onEnter={secure}/>
 				<Route path='library/:id' component={Edit}/>
+				<Route path='view' component={SelectedList} onEnter={secure}/>
 			</Route>
 		</Router>
 	</Provider>,

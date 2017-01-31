@@ -6,3 +6,5 @@ export const CLEAN_APIFETCH = 'CLEAN_APIFETCH';
 export const CREATE_SONG = 'CREATE_SONG';
 export const DELETE_SONG = 'DELETE_SONG';
 export const UPDATE_SONG = 'UPDATE_SONG';
+export const SELECT_POST = 'select_post';
+export const DESELECT_POST = 'deslect_post';

@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import { Link } from 'react-router';
 import _ from 'lodash';
-import { updateSong, deleteSong } from '../../actions/index';
+import { updateSong, deleteSong, deselectPost } from '../../actions/index';
 import rise from './rise';
 
 class Edit extends Component {
@@ -66,6 +66,7 @@ class Edit extends Component {
   removeSong() {
     const key = this.props.location.pathname.substring(8);
     this.props.deleteSong(key, this.props.auth.uid);
+    this.props.deselectPost(key);
     this.context.router.push('/dashboard');
   }
 
@@ -111,13 +112,14 @@ class Edit extends Component {
     this.props.fields.title.onChange(thisSong.title);
     this.props.fields.scale.onChange(thisSong.scale);
     this.props.fields.content.onChange(thisSong.content);
+    window.scrollTo(0, 0);
 
   }
 
   render() {
     const { fields: { title, scale, content }, handleSubmit } = this.props;
     return (
-    <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+    <form className="formBody" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
         <h3>Edit Song</h3>
 
         <div className={`form-group ${title.touched && title.value==='' ? 'has-error' : ''}`}>
@@ -327,4 +329,4 @@ export default reduxForm({
   form: 'NewForm',
   fields: ['title', 'scale', 'content'],
   validate
-}, mapStateToProps, { updateSong, deleteSong })(Edit);
+}, mapStateToProps, { updateSong, deleteSong, deselectPost })(Edit);
