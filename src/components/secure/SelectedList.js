@@ -9,6 +9,7 @@ class SelectedList extends Component {
     window.scrollTo(0, 0);
   }
   render() {
+    const { dashboard } = this.props.language;
     return (
       <div>
       <ul className="list-group">
@@ -33,7 +34,8 @@ class SelectedList extends Component {
       </ul>
       <br/>
       <br/>
-      <Link className='btn btn-warning center-block dashboardButton' to='/dashboard'>Dashboard</Link>
+      <Link className='btn btn-warning center-block dashboardButton' to='/dashboard'>{dashboard}</Link>
+      <br/>
     </div>
     );
   }
@@ -43,7 +45,8 @@ class SelectedList extends Component {
 const mapStateToProps = state => {
   return {
     library: state.library.library,
-    selectedPostIds: state.library.selectedPostIds
+    selectedPostIds: state.library.selectedPostIds,
+    language: state.library.language.view
   };
 };
 

@@ -1,9 +1,10 @@
 import Firebase from 'firebase';
 import _ from 'lodash';
 import {
-  FETCH_LIBRARY, FETCH_LACUERDA, FETCH_ULTIMATEGUITAR, CLEAN_APIFETCH, SELECT_POST, DESELECT_POST
+  FETCH_LIBRARY, FETCH_LACUERDA, FETCH_ULTIMATEGUITAR, CLEAN_APIFETCH, SELECT_POST, DESELECT_POST, SELECT_LANGUAGE
 } from './types';
 import $ from 'jquery';
+import { english, spanish } from './language';
 
 var Posts = Firebase.database().ref();
 
@@ -126,7 +127,7 @@ export function fetchUltimateguitar(name,artist) {
 }
 
 export function selectPost(id) {
-  
+
   return dispatch => {
   dispatch({
     type: SELECT_POST,
@@ -142,5 +143,25 @@ export function deselectPost(id) {
     type: DESELECT_POST,
     payload: id
   });
+  }
+}
+
+export function selectLanguage(language) {
+  return dispatch => {
+    console.log('entro al selectLanguage');
+    console.log(language);
+    let data;
+    switch (language) {
+      case 'spanish':
+        data = spanish
+        break;
+      default:
+        data = english;
+
+    }
+    dispatch({
+      type: SELECT_LANGUAGE,
+      payload: data
+    });
   }
 }

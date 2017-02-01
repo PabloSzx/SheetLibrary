@@ -163,13 +163,14 @@ class New extends Component {
   }
 
   render() {
-    const { fields: { title, scale, content }, handleSubmit } = this.props;
+    const { fields: { title, scale, content }, handleSubmit, language } = this.props;
+    const { c, csharp, d, dsharp, e, f, fsharp, g, gsharp, a, asharp, b, linebreak, erase, space, riseup, risedown, submit, cancel } = language.buttons;
     return (
     <form className="formBody" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-        <h3>Create a New Song</h3>
+        <h3>{language.titleHeader}</h3>
 
         <div className={`form-group ${title.touched && title.value==='' ? 'has-error' : ''}`}>
-          <label>Title</label>
+          <label>{language.titleLabel}</label>
           <input {...title} type="text" className="form-control" value={title.value || ''} />
           <div className="text-help">
             {title.touched ? title.error : ''}
@@ -177,7 +178,7 @@ class New extends Component {
         </div>
 
         <div className={`form-group ${scale.touched && scale.value==='' ? 'has-error' : ''}`}>
-          <label>Scale</label>
+          <label>{language.scaleLabel}</label>
           <input {...scale} type="text" className="form-control" value={scale.value || ''} onFocus={()=> this.setState({input:'scale'})} />
           <div className="text-help">
             {scale.touched ? scale.error : ''}
@@ -185,7 +186,7 @@ class New extends Component {
         </div>
 
         <div className={`form-group`}>
-          <label>Content</label>
+          <label>{language.contentLabel}</label>
           <textarea {...content} className="form-control content-area" rows="6" onFocus={()=> this.setState({input:'content'})} value={content.value || this.props.ultimateguitar || this.props.lacuerda}/>
           <div className="text-help">
             {content.touched ? content.error : ''}
@@ -198,89 +199,89 @@ class New extends Component {
 
         <div className="row">
             <div className="col-xs-2">
-            <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('C')}>C</div>
+            <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(c)}>{c}</div>
           </div>
             <div className="col-xs-2">
-            <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('C#')}>C#</div>
+            <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(csharp)}>{csharp}</div>
           </div>
             <div className="col-xs-2">
-            <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('D')}>D</div>
+            <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(d)}>{d}</div>
             </div>
             <div className="col-xs-2">
             <div className="btn btn-primary hidden"></div>
           </div>
 
           <div className="col-xs-4">
-          <div className="btn btn-primary center-block" onClick={()=>this.onRise(1)}>⇧♪</div>
+          <div className="btn btn-primary center-block" onClick={()=>this.onRise(1)}>{riseup}</div>
           </div>
         </div>
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('D#')}>D#</div>
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(dsharp)}>{dsharp}</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('E')}>E</div>
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(e)}>{e}</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('F')}>F</div>
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(f)}>{f}</div>
           </div>
           <div className="col-xs-2">
           <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-4">
-          <div className="btn btn-primary center-block"onClick={()=>this.onRise(-1)}>⇩♪</div>
+          <div className="btn btn-primary center-block"onClick={()=>this.onRise(-1)}>{risedown}</div>
           </div>
         </div>
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('F#')}>F#</div>
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(fsharp)}>{fsharp}</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('G')}>G</div>
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(g)}>{g}</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('G#')}>G#</div>
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(gsharp)}>{gsharp}</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden">Responsive</div>
+          <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-2">
             <select defaultValue="1" onChange={this.handleVersionChange.bind(this)} className="form-control select-fetch">
-              <option className="version-select" value='1'>Version 1</option>
-              <option className="version-select" value="2">Version 2</option>
-              <option className="version-select" value="3">Version 3</option>
-              <option className="version-select" value="4">Version 4</option>
-              <option className="version-select" value="5">Version 5</option>
+              <option className="version-select" value='1'>{language.select.v1}</option>
+              <option className="version-select" value="2">{language.select.v2}</option>
+              <option className="version-select" value="3">{language.select.v3}</option>
+              <option className="version-select" value="4">{language.select.v4}</option>
+              <option className="version-select" value="5">{language.select.v5}</option>
             </select>
           </div>
         </div>
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('A')}>A</div>
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(a)}>{a}</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('A#')}>A#</div>
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(asharp)}>{asharp}</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('B')}>B</div>
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(b)}>{b}</div>
           </div>
           <div className="col-xs-2">
-            <div className="btn btn-primary hidden">Responsive</div>
+            <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-4">
-          <input type="text" className="form-control field-fetch" value={this.state.fetchName} onChange={this.handleNameChange.bind(this)} placeholder="Nombre Cancion" />
+          <input type="text" className="form-control field-fetch" value={this.state.fetchName} onChange={this.handleNameChange.bind(this)} placeholder={language.fetchNamePlaceholder} />
           </div>
         </div>
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('\n')}>↵</div>
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('\n')}>{linebreak}</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={()=> this.Erase()}>{"⇦"}</div>
+          <div className="btn btn-primary center-block btn-note" onClick={()=> this.Erase()}>{erase}</div>
           </div>
           <div className="col-xs-2">
           <div className="btn btn-primary hidden"></div>
@@ -289,16 +290,16 @@ class New extends Component {
           <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-4">
-          <input type="text" className="form-control field-fetch" value={this.state.fetchArtist} onChange={this.handleArtistChange.bind(this)} placeholder="Nombre Artista" />
+          <input type="text" className="form-control field-fetch" value={this.state.fetchArtist} onChange={this.handleArtistChange.bind(this)} placeholder={language.fetchArtistPlaceholder} />
           </div>
         </div>
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(' ')}>[&nbsp;&nbsp;&nbsp;]</div>
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(' ')}>{space}</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden">Ctr+Z</div>
+          <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-2">
           <div className="btn btn-primary hidden"></div>
@@ -307,42 +308,42 @@ class New extends Component {
             <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-4">
-            <div className="btn btn-primary center-block btn-fetch" onClick={() => this.getUltimateguitar()}>ultimate-guitar.com</div>
+            <div className="btn btn-primary center-block btn-fetch" onClick={() => this.getUltimateguitar()}>{language.ultimateguitarButton}</div>
             <br/>
-            <div className="btn btn-primary center-block btn-fetch" onClick={() => this.getLaCuerda()}>lacuerda.net</div>
+            <div className="btn btn-primary center-block btn-fetch" onClick={() => this.getLaCuerda()}>{language.lacuerdaButton}</div>
           </div>
         </div>
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden">[ ]</div>
+          <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden">Ctrl+Z</div>
+          <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-4">
-          <button type="submit" className="btn btn-success btn-block">Submit</button>
+          <button type="submit" className="btn btn-success btn-block">{submit}</button>
           </div>
           <div className="col-xs-4">
           <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-4">
-          <div className="btn btn-danger hidden">Borrar</div>
+          <div className="btn btn-danger hidden"></div>
           </div>
         </div>
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden">Ctrl+Z</div>
+          <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden">Ctrl+Z</div>
+          <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-4">
-          <div className="btn btn-primary hidden">Ctrl+Z</div>
+          <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-4">
-            <Link to='/dashboard'><div className="btn btn-warning center-block">Cancel</div></Link>
+            <Link to='/dashboard'><div className="btn btn-warning center-block">{cancel}</div></Link>
           </div>
         </div>
         <br/>
@@ -372,7 +373,8 @@ function mapStateToProps(state) {
   return {
     auth: state.auth.user,
     lacuerda: state.library.lacuerda,
-    ultimateguitar: state.library.ultimateguitar
+    ultimateguitar: state.library.ultimateguitar,
+    language: state.library.language.new
   }
 }
 

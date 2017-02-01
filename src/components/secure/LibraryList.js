@@ -84,13 +84,13 @@ class LibraryList extends Component {
 	}
   else {
     return (
-      <div>Loading...</div>
+      <div>{this.props.loading}</div>
     )
   }
 }
 else {
   return (
-  <div><strong>You can start your library pressing "New Song"</strong></div>
+  <div><strong>{this.props.empty}</strong></div>
 );
 }
 
@@ -104,7 +104,7 @@ else {
         className="center-block search-input"
         value={this.state.search}
         onChange={this.handleSearchChange.bind(this)}
-        placeholder="Search by song name" />
+        placeholder={this.props.search} />
       <hr/>
       <ul className="list-group">
         {this.renderSongs()}

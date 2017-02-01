@@ -97,13 +97,14 @@ class Edit extends Component {
   }
 
   render() {
-    const { fields: { title, scale, content }, handleSubmit } = this.props;
+    const { fields: { title, scale, content }, handleSubmit, language } = this.props;
+    const { c, csharp, d, dsharp, e, f, fsharp, g, gsharp, a, asharp, b, linebreak, erase, space, riseup, risedown, submit, cancel } = language.buttons;
     return (
     <form className="formBody" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-        <h3>Edit Song</h3>
+        <h3>{language.titleHeader}</h3>
 
         <div className={`form-group ${title.touched && title.value==='' ? 'has-error' : ''}`}>
-          <label>Title</label>
+          <label>{language.titleLabel}</label>
           <input {...title} type="text" className="form-control" value={title.value || ''} />
           <div className="text-help">
             {title.touched ? title.error : ''}
@@ -111,7 +112,7 @@ class Edit extends Component {
         </div>
 
         <div className={`form-group ${scale.touched && scale.value==='' ? 'has-error' : ''}`}>
-          <label>Scale</label>
+          <label>{language.scaleLabel}</label>
           <input {...scale} type="text" className="form-control" value={scale.value || ''} onFocus={()=> this.setState({input:'scale'})} />
           <div className="text-help">
             {scale.touched ? scale.error : ''}
@@ -119,7 +120,7 @@ class Edit extends Component {
         </div>
 
         <div className={`form-group`}>
-          <label>Content</label>
+          <label>{language.contentLabel}</label>
           <textarea {...content} rows="6" className="form-control" onFocus={()=> this.setState({input:'content'})} />
           <div className="text-help">
             {content.touched ? content.error : ''}
@@ -132,82 +133,82 @@ class Edit extends Component {
 
         <div className="row">
             <div className="col-xs-2">
-            <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('C')}>C</div>
+            <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(c)}>{c}</div>
           </div>
             <div className="col-xs-2">
-            <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('C#')}>C#</div>
+            <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(csharp)}>{csharp}</div>
           </div>
             <div className="col-xs-2">
-            <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('D')}>D</div>
+            <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(d)}>{d}</div>
             </div>
             <div className="col-xs-2">
             <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-4">
-          <div className="btn btn-primary center-block" onClick={()=>this.onRise(1)}>⇧♪</div>
+          <div className="btn btn-primary center-block" onClick={()=>this.onRise(1)}>{riseup}</div>
           </div>
         </div>
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('D#')}>D#</div>
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(dsharp)}>{dsharp}</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('E')}>E</div>
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(e)}>{e}</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('F')}>F</div>
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(f)}>{f}</div>
           </div>
           <div className="col-xs-2">
           <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-4">
-          <div className="btn btn-primary center-block"onClick={()=>this.onRise(-1)}>⇩♪</div>
+          <div className="btn btn-primary center-block"onClick={()=>this.onRise(-1)}>{risedown}</div>
           </div>
         </div>
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('F#')}>F#</div>
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(fsharp)}>{fsharp}</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('G')}>G</div>
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(g)}>{g}</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('G#')}>G#</div>
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(gsharp)}>{gsharp}</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden">Responsive</div>
+          <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden">Responsive</div>
-          </div>
-        </div>
-        <br/>
-        <div className="row">
-          <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('A')}>A</div>
-          </div>
-          <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('A#')}>A#</div>
-          </div>
-          <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('B')}>B</div>
-          </div>
-          <div className="col-xs-2">
-          <div className="btn btn-primary hidden">Responsive</div>
-          </div>
-          <div className="col-xs-2">
-          <div className="btn btn-primary hidden">Responsive</div>
+          <div className="btn btn-primary hidden"></div>
           </div>
         </div>
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('\n')}>↵</div>
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(a)}>{a}</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Erase()}>{"⇦"}</div>
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(asharp)}>{asharp}</div>
+          </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(b)}>{b}</div>
+          </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary hidden"></div>
+          </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary hidden"></div>
+          </div>
+        </div>
+        <br/>
+        <div className="row">
+          <div className="col-xs-2">
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('\n')}>{linebreak}</div>
+          </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Erase()}>{erase}</div>
           </div>
           <div className="col-xs-2">
           <div className="btn btn-primary hidden"></div>
@@ -222,53 +223,52 @@ class Edit extends Component {
         <br/>
         <div className="row">
           <div className="col-xs-2">
-            <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(' ')}>[&nbsp;&nbsp;&nbsp;]</div>
+            <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(' ')}>{space}</div>
           </div>
           <div className="col-xs-3">
-          <div className="btn btn-primary hidden">Ctr+Z</div>
-          </div>
-          <div className="col-xs-2">
           <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-2">
           <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden">Responsive</div>
+          <div className="btn btn-primary hidden"></div>
+          </div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary hidden"></div>
           </div>
         </div>
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden">[ ]</div>
+          <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden">Ctrl+Z</div>
+          <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-4">
-          {/* <div type="submit"  className="btn btn-primary center-block">Submit</div> */}
-          <button type="submit" className="btn btn-success btn-block">Submit</button>
+          <button type="submit" className="btn btn-success btn-block">{submit}</button>
           </div>
           <div className="col-xs-4">
           <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-4">
-          <div className="btn btn-danger center-block" onClick={() => this.removeSong()}>Delete</div>
+          <div className="btn btn-danger center-block" onClick={() => this.removeSong()}>{language.deleteButton}</div>
           </div>
         </div>
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden">[ ]</div>
+          <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden">Ctrl+Z</div>
+          <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-4">
-          <div className="btn btn-primary hidden">Ctrl+Z</div>
+          <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-4">
-            <Link to='/dashboard'><div className="btn btn-warning center-block">Cancel</div></Link>
+            <Link to='/dashboard'><div className="btn btn-warning center-block">{cancel}</div></Link>
           </div>
         </div>
         <br/>
@@ -299,7 +299,8 @@ function mapStateToProps(state) {
   return {
     auth: state.auth.user,
     library: state.library,
-    routing: state.routing
+    routing: state.routing,
+    language: state.library.language.edit
   }
 }
 
