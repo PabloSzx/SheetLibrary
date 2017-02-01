@@ -22,9 +22,9 @@ class SelectedList extends Component {
 
           return (
           <li className="list-group-item selected-li" key={index}>
-            <h3 className="text-center">{selectedSong.title}</h3>
+            <h3 className="text-center"><strong><u>{selectedSong.title}</u></strong></h3>
             <br/>
-            <h4>{selectedSong.scale}</h4>
+            <h4><strong>{selectedSong.scale}</strong></h4>
             <br/>
             <h5>{selectedSong.content}</h5>
           </li>
