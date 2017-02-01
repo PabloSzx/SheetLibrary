@@ -30,7 +30,7 @@ class Login extends React.Component {
 
 	fblogin() {
 		var provider = new firebase.auth.FacebookAuthProvider();
-		firebase.auth().signInWithRedirect(provider).then(function(result) {
+		firebase.auth().signInWithPopup(provider).then(function(result) {
 		  // var token = result.credential.accessToken;
 			// var user = result.user;
 		  // this.setState({ 'asd' : user });
@@ -46,7 +46,7 @@ class Login extends React.Component {
 
 	googlelogin() {
 		var provider = new firebase.auth.GoogleAuthProvider();
-		firebase.auth().signInWithRedirect(provider).then(function(result) {
+		firebase.auth().signInWithPopup(provider).then(function(result) {
 			// var token = result.credential.accessToken;
 			// var user = result.user;
 		}).catch(function(error) {
@@ -59,7 +59,7 @@ class Login extends React.Component {
 
 	twitterlogin() {
 		var provider = new firebase.auth.TwitterAuthProvider();
-		firebase.auth().signInWithRedirect(provider).then(function(result) {
+		firebase.auth().signInWithPopup(provider).then(function(result) {
 		  // var token = result.credential.accessToken;
 		  // var secret = result.credential.secret;
 		  // var user = result.user;
