@@ -9,3 +9,4 @@ export const UPDATE_SONG = 'UPDATE_SONG';
 export const SELECT_POST = 'SELECT_POST';
 export const DESELECT_POST = 'DESELECT_POST';
 export const SELECT_LANGUAGE = 'SELECT_LANGUAGE';
+export const FETCH_ERROR = 'FETCH_ERROR';

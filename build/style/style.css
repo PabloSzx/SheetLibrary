@@ -15,7 +15,7 @@ div {
 }
 @media only screen and (max-width: 500px) {
     .btn-note {
-      width: 9vmax;
+      width: 15.5vw;
     }
     .btn-fetch {
       font-size: 2.3vmin;
@@ -29,20 +29,21 @@ div {
     .select-fetch {
       font-size: 2.5vw !important;
     }
+    .fetch-label {
+      width: 16vw !important;
+      font-size: 2.3vw !important;
+    }
 }
-@media only screen and (max-width: 500px) {
-    .btn-note {
-      width: 9vmax;
-    }
-    .btn-fetch {
-      font-size: 2.3vmin;
-    }
-    .field-fetch {
-      font-size: 2.4vmin;
-    }
-    .select-fetch {
-      font-size: 2.5vw !important;
-    }
+@media only screen and (max-width: 1050px) {
+  .fetch-label {
+    padding: 1vw;
+    width: 16vw;
+    font-size: 1.5vw;
+  }
+}
+.clean-label {
+  padding: 1vw;
+  font-size: 1.5vw;
 }
 .song-checkbox {
   position: absolute;

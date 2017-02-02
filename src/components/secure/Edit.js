@@ -10,6 +10,11 @@ class Edit extends Component {
     router: PropTypes.object
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {cleanLabel: ''};
+  }
+
   onSubmit(props) {
     let trimProps = Object.assign({}, props);
     if (trimProps.title && trimProps.scale) {
@@ -80,6 +85,60 @@ class Edit extends Component {
     }
   }
 
+  findUnknownCharacter(event) {
+    try{
+    if(event.target.value.search("�") !== -1){
+      this.setState({ cleanLabel: this.props.language.cleanLabel })
+    }
+    else {
+      this.setState({ cleanLabel: '' })
+    }
+    }
+    catch (err) {
+
+    }
+  }
+
+  focusFindUnknownCharacter() {
+    try {
+      if (this.props.fields.content.value === "⇄"){
+        if (this.props.ultimateguitar) {
+          if(this.props.ultimateguitar.search("�") !== -1){
+            this.setState({ cleanLabel: this.props.language.cleanLabel })
+          }
+          else {
+            this.setState({ cleanLabel: '' })
+          }
+        }
+        else if (this.props.lacuerda) {
+          if(this.props.lacuerda.search("�") !== -1){
+            this.setState({ cleanLabel: this.props.language.cleanLabel })
+          }
+          else {
+            this.setState({ cleanLabel: '' })
+          }
+        }
+
+      }
+      else {
+        if(this.props.fields.content.value.search("�") !== -1){
+          this.setState({ cleanLabel: this.props.language.cleanLabel });
+        }
+        else {
+          this.setState({ cleanLabel: '' });
+        }
+      }
+    }
+    catch (err) {
+
+    }
+  }
+
+  handleContentChange(event) {
+    this.findUnknownCharacter(event);
+    this.props.fields.content.onChange(event.target.value);
+  }
+
   componentDidMount() {
     this.setState({input: 'scale'});
     const songKey = this.props.routing.locationBeforeTransitions.pathname.substring(8);
@@ -92,6 +151,8 @@ class Edit extends Component {
     this.props.fields.title.onChange(thisSong.title);
     this.props.fields.scale.onChange(thisSong.scale);
     this.props.fields.content.onChange(thisSong.content);
+
+
     window.scrollTo(0, 0);
 
   }
@@ -105,7 +166,8 @@ class Edit extends Component {
 
         <div className={`form-group ${title.touched && title.value==='' ? 'has-error' : ''}`}>
           <label>{language.titleLabel}</label>
-          <input {...title} type="text" className="form-control" value={title.value || ''} />
+          <input type="text" className="form-control" value={title.value || ''}
+            defaultChecked={title.defaultChecked} name={title.name} onBlur={title.onBlur} onChange={title.onChange} onDragStart={title.onDragStart} onDrop={title.onDrop} onFocus={title.onFocus} />
           <div className="text-help">
             {title.touched ? title.error : ''}
           </div>
@@ -113,7 +175,8 @@ class Edit extends Component {
 
         <div className={`form-group ${scale.touched && scale.value==='' ? 'has-error' : ''}`}>
           <label>{language.scaleLabel}</label>
-          <input {...scale} type="text" className="form-control" value={scale.value || ''} onFocus={()=> this.setState({input:'scale'})} />
+          <input type="text" className="form-control" value={scale.value || ''} onFocus={()=> this.setState({input:'scale'})}
+            defaultChecked={scale.defaultChecked} name={scale.name} onBlur={scale.onBlur} onChange={scale.onChange} onDragStart={scale.onDragStart} onDrop={scale.onDrop} />
           <div className="text-help">
             {scale.touched ? scale.error : ''}
           </div>
@@ -121,7 +184,8 @@ class Edit extends Component {
 
         <div className={`form-group`}>
           <label>{language.contentLabel}</label>
-          <textarea {...content} rows="6" className="form-control" onFocus={()=> this.setState({input:'content'})} />
+          <textarea rows="6" className="form-control" onFocus={()=> {this.setState({input:'content'}); this.focusFindUnknownCharacter()}} onChange={this.handleContentChange.bind(this)}
+            defaultChecked={content.defaultChecked} name={content.name} onBlur={content.onBlur} onDragStart={content.onDragStart} onDrop={content.onDrop} value={content.value}/>
           <div className="text-help">
             {content.touched ? content.error : ''}
           </div>
@@ -265,7 +329,7 @@ class Edit extends Component {
           <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-4">
-          <div className="btn btn-primary hidden"></div>
+          <div className="text-center">{this.state.cleanLabel ? <div className="alert alert-danger text-center clean-label">{this.state.cleanLabel}</div> : '' } </div>
           </div>
           <div className="col-xs-4">
             <Link to='/dashboard'><div className="btn btn-warning center-block">{cancel}</div></Link>

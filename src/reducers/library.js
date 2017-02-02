@@ -1,18 +1,20 @@
-import { FETCH_LIBRARY, FETCH_LACUERDA, FETCH_ULTIMATEGUITAR, CLEAN_APIFETCH, SELECT_POST, DESELECT_POST, SELECT_LANGUAGE } from '../actions/types.js';
+import { FETCH_LIBRARY, FETCH_LACUERDA, FETCH_ULTIMATEGUITAR, CLEAN_APIFETCH, SELECT_POST, DESELECT_POST, SELECT_LANGUAGE, FETCH_ERROR } from '../actions/types.js';
 import _ from 'lodash';
 import { spanish } from '../actions/language';
-const INITIAL_STATE = { library:[], selectedPostIds:[], language: spanish };
+const INITIAL_STATE = { library:[], selectedPostIds:[], language: spanish, fetchError: '' };
 
 export function library(state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_LIBRARY:
       return { ...state, library: action.payload }
     case FETCH_LACUERDA:
-      return { ...state, lacuerda: action.payload, ultimateguitar: null }
+      return { ...state, lacuerda: action.payload, ultimateguitar: '' }
     case FETCH_ULTIMATEGUITAR:
-      return { ...state, ultimateguitar: action.payload, lacuerda: null }
+      return { ...state, ultimateguitar: action.payload, lacuerda: '' }
+    case FETCH_ERROR:
+      return { ...state, fetchError: action.payload }
     case CLEAN_APIFETCH:
-      return { ...state, lacuerda: null, ultimateguitar: null}
+      return { ...state, lacuerda: '', ultimateguitar: '', fetchError: ''}
     case SELECT_POST:
       return { ...state, selectedPostIds: [...(state.selectedPostIds), action.payload]}
     case DESELECT_POST:

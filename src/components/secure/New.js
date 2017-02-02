@@ -27,7 +27,19 @@ class New extends Component {
       trimProps.content = '';
     }
 
+    if (this.props.fields.content.value === "⇄"){
+      if (this.props.ultimateguitar){
+        trimProps.content = this.props.ultimateguitar;
+      }
+      else if(this.props.lacuerda){
+        trimProps.content = this.props.lacuerda;
+      }
+
+      this.props.createSong(trimProps, this.props.auth.uid);
+    }
+    else {
     this.props.createSong(trimProps, this.props.auth.uid);
+    }
     this.context.router.push('/dashboard');
     }
 
@@ -80,6 +92,7 @@ class New extends Component {
 
   getLaCuerda() {
     let version;
+    this.props.cleanApiFetch();
     switch (this.state.version) {
       case "2":
         version = "-2"
@@ -96,19 +109,19 @@ class New extends Component {
       default:
         version = ""
     }
-    this.props.fields.content.onChange('')
+    this.props.fields.content.onChange('⇄');
     let name = this.state.fetchName.toLowerCase().replace(/ /g,"_").concat(version);
     const artist = this.state.fetchArtist.toLowerCase().replace(/ /g,"_");
     this.props.fetchLacuerda(name,artist);
     //EN LA CUERDA LAS NOTAS ESTAN ENTRE LOS <A></A> PARA QUE ASI EL SISTEMA SEPA
     //QUE SON NOTAS Y NO SON PALABRAS, PENDIENTE HACER ALGO PARECIDO
 
-    // this.props.fields.content.onChange(this.props.lacuerda);
-    // console.log(this.props);
+
   }
 
   getUltimateguitar() {
     let version;
+    this.props.cleanApiFetch();
     switch (this.state.version) {
       case "2":
         version = "_ver2"
@@ -125,15 +138,14 @@ class New extends Component {
       default:
         version = ""
     }
-    this.props.fields.content.onChange('');
+    this.props.fields.content.onChange('⇄');
     const name = this.state.fetchName.toLowerCase().replace(/ /g,"_").concat(version);
     const artist = this.state.fetchArtist.toLowerCase().replace(/ /g,"_");
     this.props.fetchUltimateguitar(name,artist);
     //EN LA CUERDA LAS NOTAS ESTAN ENTRE LOS <A></A> PARA QUE ASI EL SISTEMA SEPA
     //QUE SON NOTAS Y NO SON PALABRAS, PENDIENTE HACER ALGO PARECIDO
 
-    // this.props.fields.content.onChange(this.props.lacuerda);
-    // console.log(this.props);
+
 
   }
 
@@ -154,6 +166,60 @@ class New extends Component {
     this.setState({version: event.target.value});
   }
 
+  findUnknownCharacter(event) {
+    try{
+    if(event.target.value.search("�") !== -1){
+      this.setState({ cleanLabel: this.props.language.cleanLabel })
+    }
+    else {
+      this.setState({ cleanLabel: '' })
+    }
+    }
+    catch (err) {
+
+    }
+  }
+
+  focusFindUnknownCharacter() {
+    try {
+      if (this.props.fields.content.value === "⇄"){
+        if (this.props.ultimateguitar) {
+          if(this.props.ultimateguitar.search("�") !== -1){
+            this.setState({ cleanLabel: this.props.language.cleanLabel })
+          }
+          else {
+            this.setState({ cleanLabel: '' })
+          }
+        }
+        else if (this.props.lacuerda) {
+          if(this.props.lacuerda.search("�") !== -1){
+            this.setState({ cleanLabel: this.props.language.cleanLabel })
+          }
+          else {
+            this.setState({ cleanLabel: '' })
+          }
+        }
+
+      }
+      else {
+        if(this.props.fields.content.value.search("�") !== -1){
+          this.setState({ cleanLabel: this.props.language.cleanLabel })
+        }
+        else {
+          this.setState({ cleanLabel: '' })
+        }
+      }
+    }
+    catch (err) {
+
+    }
+  }
+
+  handleContentChange(event) {
+    this.findUnknownCharacter(event);
+    this.props.fields.content.onChange(event.target.value);
+  }
+
   componentWillUnmount() {
     this.props.cleanApiFetch();
   }
@@ -171,7 +237,8 @@ class New extends Component {
 
         <div className={`form-group ${title.touched && title.value==='' ? 'has-error' : ''}`}>
           <label>{language.titleLabel}</label>
-          <input {...title} type="text" className="form-control" value={title.value || ''} />
+          <input type="text" className="form-control" value={title.value || ''}
+            defaultChecked={title.defaultChecked} name={title.name} onBlur={title.onBlur} onChange={title.onChange} onDragStart={title.onDragStart} onDrop={title.onDrop} onFocus={title.onFocus} />
           <div className="text-help">
             {title.touched ? title.error : ''}
           </div>
@@ -179,7 +246,8 @@ class New extends Component {
 
         <div className={`form-group ${scale.touched && scale.value==='' ? 'has-error' : ''}`}>
           <label>{language.scaleLabel}</label>
-          <input {...scale} type="text" className="form-control" value={scale.value || ''} onFocus={()=> this.setState({input:'scale'})} />
+          <input type="text" className="form-control" value={scale.value || ''} onFocus={()=> this.setState({input:'scale'})}
+            defaultChecked={scale.defaultChecked} name={scale.name} onBlur={scale.onBlur} onChange={scale.onChange} onDragStart={scale.onDragStart} onDrop={scale.onDrop} />
           <div className="text-help">
             {scale.touched ? scale.error : ''}
           </div>
@@ -187,7 +255,10 @@ class New extends Component {
 
         <div className={`form-group`}>
           <label>{language.contentLabel}</label>
-          <textarea {...content} className="form-control content-area" rows="6" onFocus={()=> this.setState({input:'content'})} value={content.value || this.props.ultimateguitar || this.props.lacuerda}/>
+          <textarea className="form-control content-area" rows="6"
+            value={(content.value === "⇄") ? (this.props.ultimateguitar || this.props.lacuerda) : (content.value)}
+            onFocus={()=> {this.setState({input:'content'}); this.focusFindUnknownCharacter()}} onChange={this.handleContentChange.bind(this)}
+            defaultChecked={content.defaultChecked} name={content.name} onBlur={content.onBlur} onDragStart={content.onDragStart} onDrop={content.onDrop} />
           <div className="text-help">
             {content.touched ? content.error : ''}
           </div>
@@ -230,7 +301,7 @@ class New extends Component {
           <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-4">
-          <div className="btn btn-primary center-block"onClick={()=>this.onRise(-1)}>{risedown}</div>
+          <div className="btn btn-primary center-block" onClick={()=>this.onRise(-1)}>{risedown}</div>
           </div>
         </div>
         <br/>
@@ -305,12 +376,12 @@ class New extends Component {
           <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-2">
-            <div className="btn btn-primary hidden"></div>
+          <div className="alert alert-info text-center fetch-label">{this.props.fetchError ? (language.errorLabel+this.props.fetchError) : language.fetchLabel}</div>
           </div>
           <div className="col-xs-4">
-            <div className="btn btn-primary center-block btn-fetch" onClick={() => this.getUltimateguitar()}>{language.ultimateguitarButton}</div>
+            <div className="btn btn-info center-block btn-fetch" onClick={() => this.getUltimateguitar()}>{language.ultimateguitarButton}</div>
             <br/>
-            <div className="btn btn-primary center-block btn-fetch" onClick={() => this.getLaCuerda()}>{language.lacuerdaButton}</div>
+            <div className="btn btn-info center-block btn-fetch" onClick={() => this.getLaCuerda()}>{language.lacuerdaButton}</div>
           </div>
         </div>
         <br/>
@@ -340,7 +411,7 @@ class New extends Component {
           <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-4">
-          <div className="btn btn-primary hidden"></div>
+          <div className="text-center">{this.state.cleanLabel ? <div className="alert alert-danger text-center clean-label">{this.state.cleanLabel}</div> : '' } </div>
           </div>
           <div className="col-xs-4">
             <Link to='/dashboard'><div className="btn btn-warning center-block">{cancel}</div></Link>
@@ -374,7 +445,8 @@ function mapStateToProps(state) {
     auth: state.auth.user,
     lacuerda: state.library.lacuerda,
     ultimateguitar: state.library.ultimateguitar,
-    language: state.library.language.new
+    language: state.library.language.new,
+    fetchError: state.library.fetchError
   }
 }
 
