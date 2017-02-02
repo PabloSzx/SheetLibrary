@@ -25,6 +25,7 @@ export const english = {
     scaleLabel: "Scale",
     contentLabel: "Content",
     deleteButton: "Delete",
+    cleanLabel: "There is an unknown character in song content, please fix it manually",
     buttons: {
       c: "C",
       csharp: "C#",
@@ -52,6 +53,9 @@ export const english = {
     titleLabel: "Title",
     scaleLabel: "Scale",
     contentLabel: "Content",
+    fetchLabel: "You can search a song and insert it on the content of this song",
+    errorLabel: "Song not found in ",
+    cleanLabel: "There is an unknown character in song content, please fix it manually",
     select: {
       v1: "Version 1",
       v2: "Version 2",
@@ -117,6 +121,7 @@ export const spanish = {
     scaleLabel: "Escala",
     contentLabel: "Contenido",
     deleteButton: "Eliminar",
+    cleanLabel: "Hay un símbolo desconocido en el contenido de la canción, favor de arreglarlo manualmente",
     buttons: {
       c: "C",
       csharp: "C#",
@@ -144,6 +149,9 @@ export const spanish = {
     titleLabel: "Título",
     scaleLabel: "Escala",
     contentLabel: "Contenido",
+    fetchLabel: "Puede buscar una canción e insertarla en el contenido de esta canción",
+    errorLabel: "Canción no encontrada en ",
+    cleanLabel: "Hay un símbolo desconocido en el contenido de la canción, favor de arreglarlo manualmente",
     select: {
       v1: "Version 1",
       v2: "Version 2",
@@ -173,8 +181,8 @@ export const spanish = {
       space: "[   ]",
       riseup: "⇧♪",
       risedown: "⇩♪",
-      submit: "Submit",
-      cancel: "Cancel"
+      submit: "Enviar",
+      cancel: "Cancelar"
     }
   },
   view: {
