@@ -166,10 +166,6 @@ class Edit extends Component {
     this.props.fields.content.onChange(event.target.value);
   }
 
-  componentWillMount() {
-    this.state = { selection: 0 }
-  }
-
   componentDidMount() {
     this.setState({input: 'scale'});
     const songKey = this.props.routing.locationBeforeTransitions.pathname.substring(8);
@@ -183,6 +179,7 @@ class Edit extends Component {
     this.props.fields.scale.onChange(thisSong.scale);
     this.props.fields.content.onChange(thisSong.content);
 
+    this.setState({ selection: thisSong.scale.length })
 
     window.scrollTo(0, 0);
 

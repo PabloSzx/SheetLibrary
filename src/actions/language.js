@@ -44,7 +44,7 @@ export const english = {
       space: "[   ]",
       riseup: "⇧♪",
       risedown: "⇩♪",
-      submit: "Submit",
+      submit: "Save",
       cancel: "Cancel"
     }
   },
@@ -85,7 +85,7 @@ export const english = {
       space: "[   ]",
       riseup: "⇧♪",
       risedown: "⇩♪",
-      submit: "Submit",
+      submit: "Save",
       cancel: "Cancel"
     }
   },
@@ -140,7 +140,7 @@ export const spanish = {
       space: "[   ]",
       riseup: "⇧♪",
       risedown: "⇩♪",
-      submit: "Enviar",
+      submit: "Guardar",
       cancel: "Cancelar"
     }
   },
@@ -181,7 +181,7 @@ export const spanish = {
       space: "[   ]",
       riseup: "⇧♪",
       risedown: "⇩♪",
-      submit: "Enviar",
+      submit: "Guardar",
       cancel: "Cancelar"
     }
   },

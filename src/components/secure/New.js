@@ -146,8 +146,8 @@ class New extends Component {
         version = ""
     }
     this.props.fields.content.onChange('⇄');
-    let name = this.state.fetchName.toLowerCase().replace(/ /g,"_").concat(version);
-    const artist = this.state.fetchArtist.toLowerCase().replace(/ /g,"_");
+    let name = this.state.fetchName.trim().toLowerCase().replace(/ /g,"_").concat(version);
+    const artist = this.state.fetchArtist.trim().toLowerCase().replace(/ /g,"_");
     this.props.fetchLacuerda(name,artist);
     //EN LA CUERDA LAS NOTAS ESTAN ENTRE LOS <A></A> PARA QUE ASI EL SISTEMA SEPA
     //QUE SON NOTAS Y NO SON PALABRAS, PENDIENTE HACER ALGO PARECIDO
@@ -175,8 +175,8 @@ class New extends Component {
         version = ""
     }
     this.props.fields.content.onChange('⇄');
-    const name = this.state.fetchName.toLowerCase().replace(/ /g,"_").concat(version);
-    const artist = this.state.fetchArtist.toLowerCase().replace(/ /g,"_");
+    const name = this.state.fetchName.trim().toLowerCase().replace(/ /g,"_").concat(version);
+    const artist = this.state.fetchArtist.trim().toLowerCase().replace(/ /g,"_");
     this.props.fetchUltimateguitar(name,artist);
     //EN LA CUERDA LAS NOTAS ESTAN ENTRE LOS <A></A> PARA QUE ASI EL SISTEMA SEPA
     //QUE SON NOTAS Y NO SON PALABRAS, PENDIENTE HACER ALGO PARECIDO
