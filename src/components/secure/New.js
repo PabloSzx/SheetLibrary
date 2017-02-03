@@ -6,10 +6,9 @@ import { createSong, fetchLacuerda, fetchUltimateguitar, cleanApiFetch } from '.
 import rise from './rise';
 
 class New extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {fetchName: '', fetchArtist: '', input: 'scale', version: '1'};
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   static contextTypes = {
     router: PropTypes.object
@@ -45,19 +44,31 @@ class New extends Component {
 
   }
 
-  Change(input){
+  Change(value){
+    const zero = String.fromCharCode(8203);
     const objective = this.state.input;
+    const input = zero+value+zero;
+    const selected = this.state.selection;
+    let partOne, partTwo;
     _.map(this.props.fields,to => {
       if (to.name === objective) {
       if (!to.value) {
         to.onChange(input);
+        this.setState({ selection: (selected + input.length) })
       }
       else {
         if (to.value.substring(to.value.length-1)!== ' ' && to.value.substring(to.value.length-1)!== '\n'){
-          to.onChange(to.value+' '+input);
+          partOne = to.value.slice(0, selected)+' '+input;
+          partTwo = to.value.slice(selected, to.value.length);
+          to.onChange(partOne+partTwo);
+          this.setState({ selection: (selected + input.length + 1) })
+
         }
         else {
-          to.onChange(to.value+input);
+          partOne = to.value.slice(0, selected)+input;
+          partTwo = to.value.slice(selected, to.value.length);
+          to.onChange(partOne+partTwo);
+          this.setState({ selection: (selected + input.length) })
         }
       }
     }
@@ -66,16 +77,31 @@ class New extends Component {
 
   Erase(){
     const objective = this.state.input;
+    const selected = this.state.selection;
+    let partOne, partTwo;
+
     _.map(this.props.fields,to => {
       if (to.name === objective) {
+
       if (to.value) {
-        if (to.value.trim().substring(to.value.trim().length-1) === '#') {
-          to.onChange(to.value.trim().substring(0,to.value.trim().length-2));
+        partOne = to.value.slice(0, selected);
+        partTwo = to.value.slice(selected, to.value.length);
+
+
+        if (partOne.trim().replace(/[\u200B-\u200D\uFEFF]/g, '').substring(partOne.trim().replace(/[\u200B-\u200D\uFEFF]/g, '').length-1) === '#') {
+          partOne = (partOne.trim().replace(/[\u200B-\u200D\uFEFF]$/, '').substring(0,partOne.trim().replace(/[\u200B-\u200D\uFEFF]$/, '').length-2));
+          this.setState({ selection: (selected - (to.value.length - (partOne.length + partTwo.length))) });
+
+          to.onChange(partOne+partTwo);
         }
         else {
-          to.onChange(to.value.trim().substring(0,to.value.trim().length-1));
+          partOne = (partOne.trim().replace(/[\u200B-\u200D\uFEFF]$/, '').substring(0,partOne.trim().replace(/[\u200B-\u200D\uFEFF]$/, '').length-1));
+          this.setState({ selection: (selected - (to.value.length - (partOne.length + partTwo.length))) });
+          to.onChange(partOne+partTwo);
         }
+
       }
+
     }
     });
   }
@@ -86,7 +112,17 @@ class New extends Component {
       this.props.fields.scale.onChange(rise(this.props.fields.scale.value,n));
     }
     if (this.props.fields.content) {
-      this.props.fields.content.onChange(rise(this.props.fields.content.value,n));
+      if (this.props.fields.content.value === '⇄'){
+        if (this.props.ultimateguitar) {
+          this.props.fields.content.onChange(rise(this.props.ultimateguitar,n));
+        }
+        else if (this.props.lacuerda) {
+          this.props.fields.content.onChange(rise(this.props.lacuerda,n));
+        }
+      }
+      else {
+        this.props.fields.content.onChange(rise(this.props.fields.content.value,n));
+      }
     }
   }
 
@@ -220,6 +256,22 @@ class New extends Component {
     this.props.fields.content.onChange(event.target.value);
   }
 
+  isNote(string) {
+    if (string) {
+    if (string.indexOf("<A>") !== -1) {
+      return true;
+    }
+    else if (string.indexOf("<span>") !== -1) {
+      return true;
+    }
+    }
+    return false;
+  }
+
+  componentWillMount() {
+    this.state = {fetchName: '', fetchArtist: '', input: 'scale', version: '1', selection: 0};
+  }
+
   componentWillUnmount() {
     this.props.cleanApiFetch();
   }
@@ -228,8 +280,20 @@ class New extends Component {
     window.scrollTo(0, 0);
   }
 
+
+
   render() {
     const { fields: { title, scale, content }, handleSubmit, language } = this.props;
+
+    // if (this.isNote(content.value)) {
+    //   console.log('entro al if');
+    //   console.log(content.value);
+    //   this.context.dirtyContent = content.value;
+    //   content.onChange(content.value.replace(/<A>/g,"").replace(/<\/A>/g,"").replace(/<span>/g,"").replace(/<\/span>/g,""));
+    // }
+    // if (this.context.dirtyContent) {
+    //   console.log(this.context.dirtyContent);
+    // }
     const { c, csharp, d, dsharp, e, f, fsharp, g, gsharp, a, asharp, b, linebreak, erase, space, riseup, risedown, submit, cancel } = language.buttons;
     return (
     <form className="formBody" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
@@ -246,8 +310,8 @@ class New extends Component {
 
         <div className={`form-group ${scale.touched && scale.value==='' ? 'has-error' : ''}`}>
           <label>{language.scaleLabel}</label>
-          <input type="text" className="form-control" value={scale.value || ''} onFocus={()=> this.setState({input:'scale'})}
-            defaultChecked={scale.defaultChecked} name={scale.name} onBlur={scale.onBlur} onChange={scale.onChange} onDragStart={scale.onDragStart} onDrop={scale.onDrop} />
+          <input type="text" alt="scaleee" className="form-control" value={scale.value || ''} onFocus={(event)=> {this.setState({input:'scale'});}}
+            onSelect={(event) => {this.setState({ selection: event.target.selectionEnd });}} defaultChecked={scale.defaultChecked} name={scale.name} onBlur={scale.onBlur} onChange={scale.onChange} onDragStart={scale.onDragStart} onDrop={scale.onDrop} />
           <div className="text-help">
             {scale.touched ? scale.error : ''}
           </div>
@@ -256,9 +320,9 @@ class New extends Component {
         <div className={`form-group`}>
           <label>{language.contentLabel}</label>
           <textarea className="form-control content-area" rows="6"
-            value={(content.value === "⇄") ? (this.props.ultimateguitar || this.props.lacuerda) : (content.value)}
-            onFocus={()=> {this.setState({input:'content'}); this.focusFindUnknownCharacter()}} onChange={this.handleContentChange.bind(this)}
-            defaultChecked={content.defaultChecked} name={content.name} onBlur={content.onBlur} onDragStart={content.onDragStart} onDrop={content.onDrop} />
+            value={(content.value === "⇄") ? (this.props.ultimateguitar || this.props.lacuerda) : content.value}
+            onFocus={(event)=> {this.setState({input:'content'}); this.focusFindUnknownCharacter();}} onChange={this.handleContentChange.bind(this)}
+            onSelect={(event) => {this.setState({ selection: event.target.selectionEnd });}} defaultChecked={content.defaultChecked} name={content.name} onBlur={content.onBlur} onDragStart={content.onDragStart} onDrop={content.onDrop} />
           <div className="text-help">
             {content.touched ? content.error : ''}
           </div>

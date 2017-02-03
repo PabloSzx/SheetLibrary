@@ -1,79 +1,143 @@
 import _ from 'lodash';
 
-const notes = {
-  "C" : 0,
-  "C#" : 1,
-  "D" : 2,
-  "D#" : 3,
-  "E" : 4,
-  "F" : 5,
-  "F#" : 6,
-  "G" : 7,
-  "G#" : 8,
-  "A" : 9,
-  "A#" : 10,
-  "B" : 11
+const up = {
+  c : "c#",
+  "c#" : "d",
+  d : "d#",
+  "d#" : "e",
+  e : "f",
+  f : "f#",
+  "f#" : "g",
+  g : "g#",
+  "g#" : "a",
+  a : "a#",
+  "a#" : "b",
+  b : "c",
+  do : "do#",
+  "do#" : "re",
+  re : "re#",
+  "re#" : "mi",
+  mi : "fa",
+  fa : "fa#",
+  "fa#" : "sol",
+  sol : "sol#",
+  "sol#" : "la",
+  la : "la#",
+  "la#" : "si",
+  si : "do"
 }
 
-function cleanDigit(digit) {
-    let returnDigit = digit.trim().replace(/5/g,"").replace(/7/g,"").replace(/MAJ/g,"").replace(/M/g,"").replace(/SUS/g,"");
-    returnDigit = returnDigit.replace(/<A>/g,"").replace(/<\/A>/g,"").split('/')[0];
-    return returnDigit;
+const down = {
+  c : "b",
+  "c#" : "c",
+  d : "c#",
+  "d#" : "d",
+  e : "d#",
+  f : "e",
+  "f#" : "f",
+  g : "f#",
+  "g#" : "g",
+  a : "g#",
+  "a#" : "a",
+  b : "a#",
+  do : "si",
+  "do#" : "do",
+  re : "do#",
+  "re#" : "re",
+  mi : "re#",
+  fa : "mi",
+  "fa#" : "fa",
+  sol : "fa#",
+  "sol#" : "sol",
+  la : "sol#",
+  "la#" : "la",
+  si : "la#"
 }
+
+
+// "DO" : 0,
+// "DO#" : 1,
+// "REB" : 1,
+// "DB" : 1,
+// "RE" : 2,
+// "RE#" : 3,
+// "MIB" : 3,
+// "EB" : 3,
+// "MI" : 4,
+// "FA" : 5,
+// "FA#" : 6,
+// "SOLB" : 6,
+// "GB" : 6,
+// "SOL" : 7,
+// "SOL#" : 8,
+// "LAB" : 8,
+// "AB" : 8,
+// "LA" : 9,
+// "LA#" : 10,
+// "SIB" : 10,
+// "BB" : 10,
+// "SI" : 11
+
+const zero = String.fromCharCode(8203);
+
+const trans = String.fromCharCode(8594);
 
 function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  if (string.charAt(0) === zero) {
+    const str = string.charAt(1).toUpperCase() + string.slice(2).toLowerCase();
+    return str;
+  }
+    const str = string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+
+    return str;
 }
 
-function rise(value,n) {
-  try {
-  let valueArray = value.split('\n');
-  var digit;
-  let lineArray = [];
-  let returnArray = [];
-  let lineReturnArray = [];
-  let toReturn;
-  let entered = false;
+function isNote(string) {
+  if (string.indexOf(zero) !== -1) {
+    return true;
+  }
+  return false;
+}
 
-  _.map(valueArray, (l,indexdelinea) => {
+function riseSong(value, n) {
+
+  if (value) {
+
+  let lineArray = [];
+  let lineReturnArray = [];
+  let valueArray = value.split('\n');
+  let returnArray = [];
+
+  _.map(valueArray, (l,indexdelinea)=> {
     lineReturnArray = [];
     lineArray = l.split(' ');
     if (l.trim()) {
-    _.map(lineArray, (v,indexdepalabraseparada) => {
-      digit = v.toUpperCase().trim();
-      entered = false;
-      _.map(notes, (notaennumero, notaenletra)=> {
-        if (notaenletra === cleanDigit(digit)) {
-          if ((notaennumero+n)===- 1){
-            toReturn = capitalizeFirstLetter(v.toUpperCase().replace(cleanDigit(digit),"B"));
+      _.map(lineArray, (v,indexdepalabraseparada) => {
+        if (isNote(v)) {
+          if (n === 1) {
+          lineReturnArray[indexdepalabraseparada] = v.replace(/maj/ig,trans).replace(/do#|do|re#|re|mi|fa#|fa|sol#|sol|la#|la|si|c#|c|d#|d|e|f#|f|g#|g|a#|a|b/ig, function(matched){ return capitalizeFirstLetter(up[matched.toLowerCase()]); })
+          .replace(/→/g,'maj');
           }
-          else if ((notaennumero+n)=== 12){
-            toReturn = capitalizeFirstLetter(v.toUpperCase().replace(cleanDigit(digit),"C"));
+          else if (n === -1) {
+          lineReturnArray[indexdepalabraseparada] = v.replace(/maj/ig,trans).replace(/do#|do|re#|re|mi|fa#|fa|sol#|sol|la#|la|si|c#|c|d#|d|e|f#|f|g#|g|a#|a|b/ig, function(matched){ return capitalizeFirstLetter(down[matched.toLowerCase()]); })
+          .replace(/→/g,'maj');
           }
-          else {
-            toReturn = capitalizeFirstLetter(v.toUpperCase().replace(cleanDigit(digit),Object.keys(notes)[notaennumero+n]));
-          }
-          entered = true;
-
         }
-        else if ((notaennumero === 11) && (!entered)) {
-          toReturn = v;
+        else {
+          lineReturnArray[indexdepalabraseparada] = v
         }
       });
-      lineReturnArray[indexdepalabraseparada] = toReturn;
-    });
-    returnArray[indexdelinea]= lineReturnArray.join(' ');
+      returnArray[indexdelinea]= lineReturnArray.join(' ');
+
     }
     else {
       returnArray[indexdelinea] = l;
     }
   });
   return returnArray.join('\n');
-}
-catch (err) {
-  console.log('No se puede subir de tono un campo vacio');
-}
+
+  }
 
 }
 
-export default rise;
+export default riseSong;

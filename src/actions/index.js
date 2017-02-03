@@ -40,13 +40,17 @@ export function updateSong(key, song, id) {
   }
 }
 
+const zero = String.fromCharCode(8203)
+
 export function fetchLacuerda(name,artist) {
   return dispatch => {
+    console.log(zero);
     $.getJSON('http://allorigins.us/get?url=' + encodeURIComponent(`http://acordes.lacuerda.net/${artist}/${name}.shtml`) + '&callback=?', function(data){
     try {
     dispatch({
       type: FETCH_LACUERDA,
-      payload: (data.contents.split('<PRE>')[1].split('</PRE>')[0]).replace(/<A>/g,"").replace(/<\/A>/g,"")
+      payload: (data.contents.split('<PRE>')[1].split('</PRE>')[0]).replace(/<A>/g,zero).replace(/<\/A>/g,zero)
+      // payload: (data.contents.split('<PRE>')[1].split('</PRE>')[0])
     });
     }
     catch (err) {
@@ -65,7 +69,8 @@ export function fetchUltimateguitar(name,artist) {
     try {
     dispatch({
       type: FETCH_ULTIMATEGUITAR,
-      payload: (data.contents.split('<pre class="js-tab-content">')[1].split('</pre>')[0]).replace(/<span>/g,"").replace(/<\/span>/g,"")
+      payload: (data.contents.split('<pre class="js-tab-content">')[1].split('</pre>')[0]).replace(/<span>/g,zero).replace(/<\/span>/g,zero)
+      // payload: (data.contents.split('<pre class="js-tab-content">')[1].split('</pre>')[0])
     });
     }
     catch (err) {

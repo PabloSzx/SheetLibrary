@@ -33,19 +33,31 @@ class Edit extends Component {
     }
   }
 
-  Change(input){
+  Change(value){
+    const zero = String.fromCharCode(8203);
     const objective = this.state.input;
+    const input = zero+value+zero;
+    const selected = this.state.selection;
+    let partOne, partTwo;
     _.map(this.props.fields,to => {
       if (to.name === objective) {
       if (!to.value) {
         to.onChange(input);
+        this.setState({ selection: (selected + input.length) })
       }
       else {
         if (to.value.substring(to.value.length-1)!== ' ' && to.value.substring(to.value.length-1)!== '\n'){
-          to.onChange(to.value+' '+input);
+          partOne = to.value.slice(0, selected)+' '+input;
+          partTwo = to.value.slice(selected, to.value.length);
+          to.onChange(partOne+partTwo);
+          this.setState({ selection: (selected + input.length + 1) })
+
         }
         else {
-          to.onChange(to.value+input);
+          partOne = to.value.slice(0, selected)+input;
+          partTwo = to.value.slice(selected, to.value.length);
+          to.onChange(partOne+partTwo);
+          this.setState({ selection: (selected + input.length) })
         }
       }
     }
@@ -54,16 +66,31 @@ class Edit extends Component {
 
   Erase(){
     const objective = this.state.input;
+    const selected = this.state.selection;
+    let partOne, partTwo;
+
     _.map(this.props.fields,to => {
       if (to.name === objective) {
+
       if (to.value) {
-        if (to.value.trim().substring(to.value.trim().length-1) === '#') {
-          to.onChange(to.value.trim().substring(0,to.value.trim().length-2));
+        partOne = to.value.slice(0, selected);
+        partTwo = to.value.slice(selected, to.value.length);
+
+
+        if (partOne.trim().replace(/[\u200B-\u200D\uFEFF]/g, '').substring(partOne.trim().replace(/[\u200B-\u200D\uFEFF]/g, '').length-1) === '#') {
+          partOne = (partOne.trim().replace(/[\u200B-\u200D\uFEFF]$/, '').substring(0,partOne.trim().replace(/[\u200B-\u200D\uFEFF]$/, '').length-2));
+          this.setState({ selection: (selected - (to.value.length - (partOne.length + partTwo.length))) });
+
+          to.onChange(partOne+partTwo);
         }
         else {
-          to.onChange(to.value.trim().substring(0,to.value.trim().length-1));
+          partOne = (partOne.trim().replace(/[\u200B-\u200D\uFEFF]$/, '').substring(0,partOne.trim().replace(/[\u200B-\u200D\uFEFF]$/, '').length-1));
+          this.setState({ selection: (selected - (to.value.length - (partOne.length + partTwo.length))) });
+          to.onChange(partOne+partTwo);
         }
+
       }
+
     }
     });
   }
@@ -139,6 +166,10 @@ class Edit extends Component {
     this.props.fields.content.onChange(event.target.value);
   }
 
+  componentWillMount() {
+    this.state = { selection: 0 }
+  }
+
   componentDidMount() {
     this.setState({input: 'scale'});
     const songKey = this.props.routing.locationBeforeTransitions.pathname.substring(8);
@@ -176,7 +207,7 @@ class Edit extends Component {
         <div className={`form-group ${scale.touched && scale.value==='' ? 'has-error' : ''}`}>
           <label>{language.scaleLabel}</label>
           <input type="text" className="form-control" value={scale.value || ''} onFocus={()=> this.setState({input:'scale'})}
-            defaultChecked={scale.defaultChecked} name={scale.name} onBlur={scale.onBlur} onChange={scale.onChange} onDragStart={scale.onDragStart} onDrop={scale.onDrop} />
+            onSelect={(event) => {this.setState({ selection: event.target.selectionEnd });}} defaultChecked={scale.defaultChecked} name={scale.name} onBlur={scale.onBlur} onChange={scale.onChange} onDragStart={scale.onDragStart} onDrop={scale.onDrop} />
           <div className="text-help">
             {scale.touched ? scale.error : ''}
           </div>
@@ -185,7 +216,7 @@ class Edit extends Component {
         <div className={`form-group`}>
           <label>{language.contentLabel}</label>
           <textarea rows="6" className="form-control" onFocus={()=> {this.setState({input:'content'}); this.focusFindUnknownCharacter()}} onChange={this.handleContentChange.bind(this)}
-            defaultChecked={content.defaultChecked} name={content.name} onBlur={content.onBlur} onDragStart={content.onDragStart} onDrop={content.onDrop} value={content.value}/>
+            onSelect={(event) => {this.setState({ selection: event.target.selectionEnd });}} defaultChecked={content.defaultChecked} name={content.name} onBlur={content.onBlur} onDragStart={content.onDragStart} onDrop={content.onDrop} value={content.value}/>
           <div className="text-help">
             {content.touched ? content.error : ''}
           </div>
