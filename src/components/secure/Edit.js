@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
-import { Link } from 'react-router';
 import _ from 'lodash';
+import Confirm from 'react-confirm-bootstrap';
 import { updateSong, deleteSong, deselectPost } from '../../actions/index';
 import rise from './rise';
+
 
 class Edit extends Component {
   static contextTypes = {
@@ -13,6 +14,10 @@ class Edit extends Component {
   constructor(props) {
     super(props);
     this.state = {cleanLabel: ''};
+  }
+
+  onCancelConfirm() {
+    this.context.router.push('/dashboard');
   }
 
   onSubmit(props) {
@@ -350,7 +355,14 @@ class Edit extends Component {
           <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-4">
-          <div className="btn btn-danger center-block" onClick={() => this.removeSong()}>{language.deleteButton}</div>
+            <Confirm
+              onConfirm={this.removeSong.bind(this)}
+              body={language.deleteQuestionLabel}
+              confirmText={language.deleteButtonConfirm}
+              cancelText={language.deleteButtonCancel}
+              title={language.deleteLabel}>
+              <div className="btn btn-danger center-block">{language.deleteButton}</div>
+            </Confirm>
           </div>
         </div>
         <br/>
@@ -365,7 +377,14 @@ class Edit extends Component {
           <div className="text-center">{this.state.cleanLabel ? <div className="alert alert-danger text-center clean-label">{this.state.cleanLabel}</div> : '' } </div>
           </div>
           <div className="col-xs-4">
-            <Link to='/dashboard'><div className="btn btn-warning center-block">{cancel}</div></Link>
+            <Confirm
+              onConfirm={this.onCancelConfirm.bind(this)}
+              body={language.cancelQuestionLabel}
+              confirmText={language.cancelButtonConfirm}
+              cancelText={language.cancelButtonCancel}
+              title={language.cancelLabel}>
+              <div className="btn btn-warning center-block">{cancel}</div>
+            </Confirm>
           </div>
         </div>
         <br/>

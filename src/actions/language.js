@@ -26,6 +26,17 @@ export const english = {
     contentLabel: "Content",
     deleteButton: "Delete",
     cleanLabel: "There is an unknown character in song content, please fix it manually",
+
+    cancelLabel: "Back into dashboard",
+    cancelQuestionLabel: "Are you sure you want to lose the progress and go back to the dashboard?",
+    cancelButtonCancel: "Cancel",
+    cancelButtonConfirm: "Yes, i'm sure",
+
+    deleteLabel: "Deleting song",
+    deleteQuestionLabel: "Are you sure you want to delete the song?",
+    deleteButtonCancel: "Cancel",
+    deleteButtonConfirm: "Yes, i'm sure",
+
     buttons: {
       c: "C",
       csharp: "C#",
@@ -57,6 +68,12 @@ export const english = {
     fetchLabel: "You can search a song and insert it on the content of this song",
     errorLabel: "Song not found in ",
     cleanLabel: "There is an unknown character in song content, please fix it manually",
+
+    cancelLabel: "Back into dashboard",
+    cancelQuestionLabel: "Are you sure you want to lose the progress and go back to the dashboard?",
+    cancelButtonCancel: "Cancel",
+    cancelButtonConfirm: "Yes, i'm sure",
+
     select: {
       v1: "Version 1",
       v2: "Version 2",
@@ -124,6 +141,17 @@ export const spanish = {
     contentLabel: "Contenido",
     deleteButton: "Eliminar",
     cleanLabel: "Hay un símbolo desconocido en el contenido de la canción, favor de arreglarlo manualmente",
+
+    cancelLabel: "Volviendo al inicio",
+    cancelQuestionLabel: "¿Seguro que quieres perder el progreso y volver al inico?",
+    cancelButtonCancel: "Cancelar",
+    cancelButtonConfirm: "Si, estoy seguro",
+
+    deleteLabel: "Eliminando cancion",
+    deleteQuestionLabel: "¿Seguro que quieres eliminar la canción?",
+    deleteButtonCancel: "Cancelar",
+    deleteButtonConfirm: "Si, estoy seguro",
+
     buttons: {
       c: "C",
       csharp: "C#",
@@ -155,6 +183,12 @@ export const spanish = {
     fetchLabel: "Puede buscar una canción e insertarla en el contenido de esta canción",
     errorLabel: "Canción no encontrada en ",
     cleanLabel: "Hay un símbolo desconocido en el contenido de la canción, favor de arreglarlo manualmente",
+
+    cancelLabel: "Volviendo al inicio",
+    cancelQuestionLabel: "¿Seguro que quieres perder el progreso y volver al inico?",
+    cancelButtonCancel: "Cancelar",
+    cancelButtonConfirm: "Si, estoy seguro",
+
     select: {
       v1: "Version 1",
       v2: "Version 2",

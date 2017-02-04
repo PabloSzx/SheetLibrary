@@ -1,9 +1,29 @@
 import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
-import { Link } from 'react-router';
 import _ from 'lodash';
 import { createSong, fetchLacuerda, fetchUltimateguitar, cleanApiFetch } from '../../actions/index';
 import rise from './rise';
+import Confirm from 'react-confirm-bootstrap';
+
+// var Confirm = require('react-confirm-bootstrap');
+
+// var ConfirmAction = React.createClass({
+//         onConfirm() {
+//             // Preform your action.
+//         },
+//
+//         render() {
+//             return (
+//                 <Confirm
+//                     onConfirm={this.onConfirm}
+//                     body="Are you sure you want to delete this?"
+//                     confirmText="Confirm Delete"
+//                     title="Deleting Stuff">
+//                     <button>Delete Stuff</button>
+//                 </Confirm>
+//             )
+//         },
+//     });
 
 class New extends Component {
   // constructor(props) {
@@ -13,6 +33,10 @@ class New extends Component {
   static contextTypes = {
     router: PropTypes.object
   };
+
+  onCancelConfirm() {
+    this.context.router.push('/dashboard');
+  }
 
   onSubmit(props) {
     let trimProps = Object.assign({}, props);
@@ -516,7 +540,14 @@ class New extends Component {
           <div className="text-center">{this.state.cleanLabel ? <div className="alert alert-danger text-center clean-label">{this.state.cleanLabel}</div> : '' } </div>
           </div>
           <div className="col-xs-4">
-            <Link to='/dashboard'><div className="btn btn-warning center-block">{cancel}</div></Link>
+            <Confirm
+              onConfirm={this.onCancelConfirm.bind(this)}
+              body={language.cancelQuestionLabel}
+              confirmText={language.cancelButtonConfirm}
+              cancelText={language.cancelButtonCancel}
+              title={language.cancelLabel}>
+              <div className="btn btn-warning center-block">{cancel}</div>
+            </Confirm>
           </div>
         </div>
         <br/>
