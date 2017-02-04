@@ -11,7 +11,7 @@ class SelectedList extends Component {
   render() {
     const { dashboard } = this.props.language;
     return (
-      <div>
+      <div className="viewBody">
       <ul className="list-group">
         {
         this.props.selectedPostIds.map((key, index) => {
@@ -24,9 +24,9 @@ class SelectedList extends Component {
           <li className="list-group-item selected-li" key={index}>
             <h3 className="text-center"><strong><u>{selectedSong.title}</u></strong></h3>
             <br/>
-            <h4><strong>{selectedSong.scale}</strong></h4>
+            <h4><strong>{selectedSong.scale.replace(/⋄/g,'')}</strong></h4>
             <br/>
-            <h5>{selectedSong.content}</h5>
+            <h5 className="ellipsis">{selectedSong.content.replace(/⋄/g,'')}</h5>
           </li>
         );
         })

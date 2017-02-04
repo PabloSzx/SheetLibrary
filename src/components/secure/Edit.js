@@ -34,9 +34,11 @@ class Edit extends Component {
   }
 
   Change(value){
-    const zero = String.fromCharCode(8203);
+    const zero = String.fromCharCode(8900);
     const objective = this.state.input;
-    const input = zero+value+zero;
+    let input;
+    if (value !== zero) {input = zero+value+zero}
+    else {input = value}
     const selected = this.state.selection;
     let partOne, partTwo;
     _.map(this.props.fields,to => {
@@ -47,7 +49,8 @@ class Edit extends Component {
       }
       else {
         if (to.value.substring(to.value.length-1)!== ' ' && to.value.substring(to.value.length-1)!== '\n'){
-          partOne = to.value.slice(0, selected)+' '+input;
+          if (value !== zero) partOne = to.value.slice(0, selected)+' '+input;
+          else partOne = to.value.slice(0, selected)+input;
           partTwo = to.value.slice(selected, to.value.length);
           to.onChange(partOne+partTwo);
           this.setState({ selection: (selected + input.length + 1) })
@@ -68,6 +71,7 @@ class Edit extends Component {
     const objective = this.state.input;
     const selected = this.state.selection;
     let partOne, partTwo;
+    const zero = String.fromCharCode(8900);
 
     _.map(this.props.fields,to => {
       if (to.name === objective) {
@@ -77,14 +81,15 @@ class Edit extends Component {
         partTwo = to.value.slice(selected, to.value.length);
 
 
-        if (partOne.trim().replace(/[\u200B-\u200D\uFEFF]/g, '').substring(partOne.trim().replace(/[\u200B-\u200D\uFEFF]/g, '').length-1) === '#') {
-          partOne = (partOne.trim().replace(/[\u200B-\u200D\uFEFF]$/, '').substring(0,partOne.trim().replace(/[\u200B-\u200D\uFEFF]$/, '').length-2));
+        if (partOne.trim().replace(/⋄/g, '').substring(partOne.trim().replace(/⋄/g, '').length-1) === '#') {
+          partOne = (partOne.trim().replace(/⋄$/, '').substring(0,partOne.trim().replace(/⋄$/, '').length-2));  //.replace(/⋄$/, ''));
+          if ((partOne.charAt(partOne.length-1))===zero){ partOne = partOne.slice(0,-1);}
           this.setState({ selection: (selected - (to.value.length - (partOne.length + partTwo.length))) });
-
           to.onChange(partOne+partTwo);
         }
         else {
-          partOne = (partOne.trim().replace(/[\u200B-\u200D\uFEFF]$/, '').substring(0,partOne.trim().replace(/[\u200B-\u200D\uFEFF]$/, '').length-1));
+          partOne = (partOne.trim().replace(/⋄$/, '').substring(0,partOne.trim().replace(/⋄$/, '').length-1));  //.replace(/⋄$/, ''));
+          if ((partOne.charAt(partOne.length-1))===zero){ partOne = partOne.slice(0,-1);}
           this.setState({ selection: (selected - (to.value.length - (partOne.length + partTwo.length))) });
           to.onChange(partOne+partTwo);
         }
@@ -187,7 +192,7 @@ class Edit extends Component {
 
   render() {
     const { fields: { title, scale, content }, handleSubmit, language } = this.props;
-    const { c, csharp, d, dsharp, e, f, fsharp, g, gsharp, a, asharp, b, linebreak, erase, space, riseup, risedown, submit, cancel } = language.buttons;
+    const { c, csharp, d, dsharp, e, f, fsharp, g, gsharp, a, asharp, b, linebreak, erase, space, diamond, riseup, risedown, submit, cancel } = language.buttons;
     return (
     <form className="formBody" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
         <h3>{language.titleHeader}</h3>
@@ -315,10 +320,10 @@ class Edit extends Component {
         <br/>
         <div className="row">
           <div className="col-xs-2">
-            <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(' ')}>{space}</div>
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(' ')}>{space}</div>
           </div>
-          <div className="col-xs-3">
-          <div className="btn btn-primary hidden"></div>
+          <div className="col-xs-2">
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(diamond)}>{diamond}</div>
           </div>
           <div className="col-xs-2">
           <div className="btn btn-primary hidden"></div>

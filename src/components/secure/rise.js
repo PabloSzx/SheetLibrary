@@ -78,7 +78,7 @@ const down = {
 // "BB" : 10,
 // "SI" : 11
 
-const zero = String.fromCharCode(8203);
+const zero = String.fromCharCode(8900);
 
 const trans = String.fromCharCode(8594);
 

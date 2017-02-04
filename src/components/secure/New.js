@@ -45,9 +45,11 @@ class New extends Component {
   }
 
   Change(value){
-    const zero = String.fromCharCode(8203);
+    const zero = String.fromCharCode(8900);
     const objective = this.state.input;
-    const input = zero+value+zero;
+    let input;
+    if (value !== zero) {input = zero+value+zero}
+    else {input = value}
     const selected = this.state.selection;
     let partOne, partTwo;
     _.map(this.props.fields,to => {
@@ -58,7 +60,8 @@ class New extends Component {
       }
       else {
         if (to.value.substring(to.value.length-1)!== ' ' && to.value.substring(to.value.length-1)!== '\n'){
-          partOne = to.value.slice(0, selected)+' '+input;
+          if (value !== zero) partOne = to.value.slice(0, selected)+' '+input;
+          else partOne = to.value.slice(0, selected)+input;
           partTwo = to.value.slice(selected, to.value.length);
           to.onChange(partOne+partTwo);
           this.setState({ selection: (selected + input.length + 1) })
@@ -79,6 +82,7 @@ class New extends Component {
     const objective = this.state.input;
     const selected = this.state.selection;
     let partOne, partTwo;
+    const zero = String.fromCharCode(8900);
 
     _.map(this.props.fields,to => {
       if (to.name === objective) {
@@ -88,14 +92,15 @@ class New extends Component {
         partTwo = to.value.slice(selected, to.value.length);
 
 
-        if (partOne.trim().replace(/[\u200B-\u200D\uFEFF]/g, '').substring(partOne.trim().replace(/[\u200B-\u200D\uFEFF]/g, '').length-1) === '#') {
-          partOne = (partOne.trim().replace(/[\u200B-\u200D\uFEFF]$/, '').substring(0,partOne.trim().replace(/[\u200B-\u200D\uFEFF]$/, '').length-2));
+        if (partOne.trim().replace(/⋄/g, '').substring(partOne.trim().replace(/⋄/g, '').length-1) === '#') {
+          partOne = (partOne.trim().replace(/⋄$/, '').substring(0,partOne.trim().replace(/⋄$/, '').length-2));  //.replace(/⋄$/, ''));
+          if ((partOne.charAt(partOne.length-1))===zero){ partOne = partOne.slice(0,-1);}
           this.setState({ selection: (selected - (to.value.length - (partOne.length + partTwo.length))) });
-
           to.onChange(partOne+partTwo);
         }
         else {
-          partOne = (partOne.trim().replace(/[\u200B-\u200D\uFEFF]$/, '').substring(0,partOne.trim().replace(/[\u200B-\u200D\uFEFF]$/, '').length-1));
+          partOne = (partOne.trim().replace(/⋄$/, '').substring(0,partOne.trim().replace(/⋄$/, '').length-1));  //.replace(/⋄$/, ''));
+          if ((partOne.charAt(partOne.length-1))===zero){ partOne = partOne.slice(0,-1);}
           this.setState({ selection: (selected - (to.value.length - (partOne.length + partTwo.length))) });
           to.onChange(partOne+partTwo);
         }
@@ -268,8 +273,23 @@ class New extends Component {
     return false;
   }
 
+  // handleEditorChange(e) {
+  //   // console.log(e.target.getContent());
+  //   // console.log(this.props.fields.content.value);
+  //   // e.target.setContent(this.props.fields.content.value);
+  //   // e.target.setContent(e.target.getContent());
+  //   // e.target.setContent('penesito')
+  //   this.props.fields.content.onChange(e.target.getContent());
+  //   try{
+  //   e.target.setContent(this.props.fields.content.value);
+  //   }
+  //   catch (err){
+  //
+  //   }
+  // }
+
   componentWillMount() {
-    this.state = {fetchName: '', fetchArtist: '', input: 'scale', version: '1', selection: 0};
+    this.state = {fetchName: '', fetchArtist: '', input: 'scale', version: '1', selection: 0 };
   }
 
   componentWillUnmount() {
@@ -280,9 +300,8 @@ class New extends Component {
     window.scrollTo(0, 0);
   }
 
-
-
   render() {
+
     const { fields: { title, scale, content }, handleSubmit, language } = this.props;
 
     // if (this.isNote(content.value)) {
@@ -294,7 +313,7 @@ class New extends Component {
     // if (this.context.dirtyContent) {
     //   console.log(this.context.dirtyContent);
     // }
-    const { c, csharp, d, dsharp, e, f, fsharp, g, gsharp, a, asharp, b, linebreak, erase, space, riseup, risedown, submit, cancel } = language.buttons;
+    const { c, csharp, d, dsharp, e, f, fsharp, g, gsharp, a, asharp, b, linebreak, erase, space, diamond, riseup, risedown, submit, cancel } = language.buttons;
     return (
     <form className="formBody" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
         <h3>{language.titleHeader}</h3>
@@ -327,6 +346,25 @@ class New extends Component {
             {content.touched ? content.error : ''}
           </div>
         </div>
+
+        {/* <TinyMCE
+          id="tiny"
+          className="selected-li"
+          content=""
+          config={{
+            plugins: 'autolink link image lists print preview',
+            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright'
+          }}
+          onChange={this.handleEditorChange.bind(this)}
+          onNodeChange={this.handleEditorChange.bind(this)}
+          onKeyUp={this.handleEditorChange.bind(this)}
+          onFocus={(event)=> {this.setState({input:'content'});try{this.setState({ selection: event.target.selection.selectedRange.endOffset });}catch(err){ }}}
+          // onSelect={(event) => {this.setState({ selection: event.target.selectionEnd });}}
+          onBlur={content.onBlur}
+          onInit={(event)=>this.setState({ content: event.target })}
+          onClick={(event)=>{try{if (this.state.selection !== this.state.content.selectedRange.endOffset)(this.setState({ selection: this.state.content.selectedRange.endOffset }));}catch(err){}}}
+          // onSetContent={(event)=>event.target.focus()}
+        /> */}
 
       {/* Buttons */}
 
@@ -434,7 +472,7 @@ class New extends Component {
           <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(' ')}>{space}</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden"></div>
+          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(diamond)}>{diamond}</div>
           </div>
           <div className="col-xs-2">
           <div className="btn btn-primary hidden"></div>

@@ -40,7 +40,7 @@ export function updateSong(key, song, id) {
   }
 }
 
-const zero = String.fromCharCode(8203)
+const zero = String.fromCharCode(8900)
 
 export function fetchLacuerda(name,artist) {
   return dispatch => {

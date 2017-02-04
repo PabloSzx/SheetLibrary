@@ -48,7 +48,7 @@ class LibraryList extends Component {
                 <Link to={"library/"+key}>
                 <p className="text-center"><strong>{song.title}</strong></p>
                 </Link>
-                <p className="text-center">{song.scale}</p>
+                <p className="text-center">{song.scale.replace(/⋄/g, '')}</p>
               </li>
       			);
           }
@@ -77,7 +77,7 @@ class LibraryList extends Component {
           <Link to={"library/"+key}>
           <p className="text-center"><strong>{song.title}</strong></p>
           </Link>
-          <p className="text-center">{song.scale}</p>
+          <p className="text-center">{song.scale.replace(/⋄/g, '')}</p>
         </li>
 			);
 		});

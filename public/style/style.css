@@ -1,6 +1,8 @@
 div {
   font-family: SanFrancisco;
 }
+body {
+}
 .logo {
   width: 95vmin;
 }
@@ -10,9 +12,19 @@ div {
   width: 100%;
   overflow-x: hidden;
 }
+.viewBody {
+  width: 100vw;
+  overflow-x: hidden;
+
+}
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .language {
   cursor: pointer;
 }
+
 @media only screen and (max-width: 500px) {
     .btn-note {
       width: 15.5vw;
