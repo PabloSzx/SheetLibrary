@@ -17,7 +17,7 @@ class Edit extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {cleanLabel: '', fetchArtist: '', video: {id: '' , allow: false} };
+    this.state = {cleanLabel: '', fetchArtist: '', video: {id: '' , allow: false} , changed: false };
   }
 
   onCancelConfirm() {
@@ -201,9 +201,24 @@ class Edit extends Component {
 
   handleContentChange(event) {
     this.findUnknownCharacter(event);
+    if (!this.state.changed) {
+      this.setState({ changed: true });
+    }
     this.props.fields.content.onChange(event.target.value);
   }
 
+  handleTitleChange(event) {
+    if (!this.state.changed) {
+      this.setState({ changed: true });
+    }
+    this.props.fields.title.onChange(event.target.value);
+  }
+  handleScaleChange(event) {
+    if (!this.state.changed) {
+      this.setState({ changed: true });
+    }
+    this.props.fields.scale.onChange(event.target.value);
+  }
   handleArtistChange(event) {
     this.setState({
       fetchArtist : event.target.value
@@ -240,7 +255,7 @@ class Edit extends Component {
         <div className={`form-group ${title.touched && title.value==='' ? 'has-error' : ''}`}>
           <label>{language.titleLabel}</label>
           <input type="text" className="form-control" value={title.value || ''}
-            defaultChecked={title.defaultChecked} name={title.name} onBlur={title.onBlur} onChange={title.onChange} onDragStart={title.onDragStart} onDrop={title.onDrop} onFocus={title.onFocus} />
+            defaultChecked={title.defaultChecked} name={title.name} onBlur={title.onBlur} onChange={this.handleTitleChange.bind(this)} onDragStart={title.onDragStart} onDrop={title.onDrop} onFocus={title.onFocus} />
           <div className="text-help">
             {title.touched ? title.error : ''}
           </div>
@@ -249,7 +264,7 @@ class Edit extends Component {
         <div className={`form-group ${scale.touched && scale.value==='' ? 'has-error' : ''}`}>
           <label>{language.scaleLabel}</label>
           <input type="text" className="form-control" value={scale.value || ''} onFocus={()=> this.setState({input:'scale'})}
-            onSelect={(event) => {this.setState({ selection: event.target.selectionEnd });}} defaultChecked={scale.defaultChecked} name={scale.name} onBlur={scale.onBlur} onChange={scale.onChange} onDragStart={scale.onDragStart} onDrop={scale.onDrop} />
+            onSelect={(event) => {this.setState({ selection: event.target.selectionEnd });}} defaultChecked={scale.defaultChecked} name={scale.name} onBlur={scale.onBlur} onChange={this.handleScaleChange.bind(this)} onDragStart={scale.onDragStart} onDrop={scale.onDrop} />
           <div className="text-help">
             {scale.touched ? scale.error : ''}
           </div>
@@ -333,7 +348,7 @@ class Edit extends Component {
           <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(b)}>{b}</div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden"></div>
+            <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-4">
           <input type="text" className="form-control field-fetch" value={this.state.fetchArtist} onChange={this.handleArtistChange.bind(this)} placeholder={language.fetchArtistPlaceholder} />
@@ -412,14 +427,20 @@ class Edit extends Component {
           <div className="text-center">{this.state.cleanLabel ? <div className="alert alert-danger text-center clean-label">{this.state.cleanLabel}</div> : '' } </div>
           </div>
           <div className="col-xs-4">
-            <Confirm
-              onConfirm={this.onCancelConfirm.bind(this)}
-              body={language.cancelQuestionLabel}
-              confirmText={language.cancelButtonConfirm}
-              cancelText={language.cancelButtonCancel}
-              title={language.cancelLabel}>
-              <div className="btn btn-warning center-block">{cancel}</div>
-            </Confirm>
+            {
+              !this.state.changed
+              ?
+              <div className="btn btn-warning center-block" onClick={()=>this.onCancelConfirm()}>{cancel}</div>
+              :
+              <Confirm
+                onConfirm={this.onCancelConfirm.bind(this)}
+                body={language.cancelQuestionLabel}
+                confirmText={language.cancelButtonConfirm}
+                cancelText={language.cancelButtonCancel}
+                title={language.cancelLabel}>
+                <div className="btn btn-warning center-block">{cancel}</div>
+              </Confirm>
+            }
           </div>
         </div>
         <hr/>

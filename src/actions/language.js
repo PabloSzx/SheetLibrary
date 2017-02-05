@@ -28,7 +28,7 @@ export const english = {
     cleanLabel: "There is an unknown character in song content, please fix it manually",
 
     cancelLabel: "Back into dashboard",
-    cancelQuestionLabel: "Are you sure you want to lose the progress and go back to the dashboard?",
+    cancelQuestionLabel: "Are you sure you want to lose the not saved progress and go back to the dashboard?",
     cancelButtonCancel: "Cancel",
     cancelButtonConfirm: "Yes, i'm sure",
 
@@ -147,7 +147,7 @@ export const spanish = {
     cleanLabel: "Hay un símbolo desconocido en el contenido de la canción, favor de arreglarlo manualmente",
 
     cancelLabel: "Volviendo al inicio",
-    cancelQuestionLabel: "¿Seguro que quieres perder el progreso y volver al inico?",
+    cancelQuestionLabel: "¿Seguro que quieres perder el progreso no guardado y volver al inico?",
     cancelButtonCancel: "Cancelar",
     cancelButtonConfirm: "Si, estoy seguro",
 
@@ -158,7 +158,6 @@ export const spanish = {
 
     fetchArtistPlaceholder: "Nombre Artista",
     youtubeButton: "YouTube",
-
 
     buttons: {
       c: "C",

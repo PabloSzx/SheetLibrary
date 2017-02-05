@@ -11,6 +11,9 @@
   width: 100%;
   overflow-x: hidden;
 }
+.no-padding {
+  padding: 0;
+}
 .viewBody {
   width: 100vw;
   overflow-x: hidden;
