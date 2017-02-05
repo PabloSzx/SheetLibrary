@@ -46,7 +46,7 @@ class Edit extends Component {
     const zero = String.fromCharCode(8900);
     const objective = this.state.input;
     let input;
-    if (value !== zero) {input = zero+value+zero}
+    if ((value !== zero) && (value !== '\n') && (value !== " ")) {input = zero+value+zero}
     else {input = value}
     const selected = this.state.selection;
     let partOne, partTwo;
