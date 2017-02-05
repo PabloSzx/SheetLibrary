@@ -1,8 +1,7 @@
-div {
+* {
   font-family: SanFrancisco;
 }
-body {
-}
+
 .logo {
   width: 95vmin;
 }
@@ -25,34 +24,7 @@ body {
   cursor: pointer;
 }
 
-@media only screen and (max-width: 500px) {
-    .btn-note {
-      width: 15.5vw;
-    }
-    .btn-fetch {
-      font-size: 2.3vmin;
-    }
-    .view-button {
-      font-size: 3.2vmin;
-    }
-    .field-fetch {
-      font-size: 2.4vmin;
-    }
-    .select-fetch {
-      font-size: 2.5vw !important;
-    }
-    .fetch-label {
-      width: 16vw !important;
-      font-size: 2.3vw !important;
-    }
-}
-@media only screen and (max-width: 1050px) {
-  .fetch-label {
-    padding: 1vw;
-    width: 16vw;
-    font-size: 1.5vw;
-  }
-}
+
 .clean-label {
   padding: 1vw;
   font-size: 1.5vw;
@@ -79,7 +51,12 @@ body {
 
 .text-center {
   text-align: center;
-  font-family: SanFrancisco;
+}
+.x-right {
+  font-size: 2em;
+}
+.fullwidth {
+  width: 100%;
 }
 
 .version-select {
@@ -92,9 +69,10 @@ body {
 .search-input {
   width: 50vw;
   text-align: center;
+  font-size: 0.9em;
 }
 .li {
-  width: 90%;
+  width: 90% !important;
   margin-left: auto;
   margin-right: auto;
 
@@ -128,4 +106,33 @@ body {
 @font-face {
     font-family: SanFrancisco;
     src: url(SF.otf);
+}
+
+@media only screen and (max-width: 500px) {
+    .btn-note {
+      width: 15.5vw;
+    }
+    .btn-fetch {
+      font-size: 2.3vmin;
+    }
+    .view-button {
+      font-size: 3.2vmin;
+    }
+    .field-fetch {
+      font-size: 2.4vmin;
+    }
+    .select-fetch {
+      font-size: 2.5vw !important;
+    }
+    .fetch-label {
+      width: 16vw !important;
+      font-size: 2.3vw !important;
+    }
+}
+@media only screen and (max-width: 1050px) {
+  .fetch-label {
+    padding: 1vw;
+    width: 16vw;
+    font-size: 1.5vw;
+  }
 }
