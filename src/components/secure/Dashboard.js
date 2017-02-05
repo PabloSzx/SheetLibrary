@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { selectLanguage } from '../../actions/index';
+import { selectLanguage, toggleHelp } from '../../actions/index';
 import LibraryList from './LibraryList';
 
 
@@ -10,7 +10,7 @@ class Dashboard extends Component {
     window.scrollTo(0, 0);
   }
 render() {
-  const { searchPlaceholder, selectedButton, newButton, logout, contact, empty, loading, language, spanish, english } = this.props.language;
+  const { searchPlaceholder, selectedButton, newButton, logout, contact, help, empty, loading, language, spanish, english } = this.props.language;
   return (
     <div className="formBody">
       <LibraryList search={searchPlaceholder} empty={empty} loading={loading}/>
@@ -30,6 +30,8 @@ render() {
         <strong><a className="language" onClick={()=>this.props.selectLanguage('spanish')}>{spanish}</a></strong>
          / 
         <strong><a className="language" onClick={()=>this.props.selectLanguage('english')}>{english}</a></strong>
+        &thinsp;&thinsp;⋅&thinsp;&thinsp;
+        <strong><a className="language" onClick={()=>this.props.toggleHelp(true)}>{help}</a></strong>
       </h5>
       <h6 className="text-center">{contact}</h6>
     </div>
@@ -43,4 +45,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { selectLanguage })(Dashboard);
+export default connect(mapStateToProps, { selectLanguage, toggleHelp })(Dashboard);

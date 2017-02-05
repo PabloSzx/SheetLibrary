@@ -11,6 +11,24 @@
   width: 100%;
   overflow-x: hidden;
 }
+
+.img-tutorial-1 {
+  position: relative;
+  left: 12.5%;
+  width: 75%;
+}
+.img-tutorial-2 {
+  position: relative;
+  left: 40%;
+  width: 20%;
+}
+.img-tutorial-3 {
+  position: relative;
+  left: 30%;
+  width: 40%;
+}
+
+
 .no-padding {
   padding: 0;
 }
@@ -18,6 +36,9 @@
   width: 100vw;
   overflow-x: hidden;
 
+}
+.white-space-pre {
+  white-space: pre;
 }
 .ellipsis {
   overflow: hidden;

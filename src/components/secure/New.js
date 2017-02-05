@@ -309,8 +309,27 @@ class New extends Component {
   }
 
   YoutubeSearch(event) {
-    // console.log(event);
-    this.setState({ video: { allow: this.state.video.allow, id: event[0].id.videoId } })
+    let n = 0;
+    switch (this.state.version) {
+      case '1':
+        n = 0;
+        break;
+      case '2':
+        n = 1;
+        break;
+      case '3':
+        n = 2;
+        break;
+      case '4':
+        n = 3;
+        break;
+      case '5':
+        n = 4;
+        break;
+      default:
+        n = 0;
+    }
+    this.setState({ video: { allow: this.state.video.allow, id: event[n].id.videoId } })
   }
 
   toggleYoutube() {
@@ -323,7 +342,7 @@ class New extends Component {
     YTSearch({
        key: API_KEY,
        query: this.state.fetchName+' '+artist,
-       maxResults: 1
+       maxResults: 5
      },
          this.YoutubeSearch.bind(this)
      );

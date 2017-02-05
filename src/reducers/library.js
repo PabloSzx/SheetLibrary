@@ -1,7 +1,7 @@
-import { FETCH_LIBRARY, FETCH_LACUERDA, FETCH_ULTIMATEGUITAR, CLEAN_APIFETCH, SELECT_POST, DESELECT_POST, SELECT_LANGUAGE, FETCH_ERROR } from '../actions/types.js';
+import { FETCH_LIBRARY, FETCH_LACUERDA, FETCH_ULTIMATEGUITAR, CLEAN_APIFETCH, SELECT_POST, DESELECT_POST, SELECT_LANGUAGE, FETCH_ERROR, TOGGLE_HELP } from '../actions/types.js';
 import _ from 'lodash';
 import { spanish } from '../actions/language';
-const INITIAL_STATE = { library:[], selectedPostIds:[], language: spanish, fetchError: '' };
+const INITIAL_STATE = { library:[], selectedPostIds:[], language: spanish, fetchError: '', help: false };
 
 export function library(state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -21,6 +21,8 @@ export function library(state = INITIAL_STATE, action) {
       return { ...state, selectedPostIds: _.without(state.selectedPostIds, action.payload)}
     case SELECT_LANGUAGE:
       return { ...state, language: action.payload }
+    case TOGGLE_HELP:
+      return {  ...state, help: action.payload }
     default:
       return state;
   }

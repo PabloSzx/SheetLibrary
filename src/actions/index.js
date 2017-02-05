@@ -1,7 +1,7 @@
 import Firebase from 'firebase';
 import _ from 'lodash';
 import {
-  FETCH_LIBRARY, FETCH_LACUERDA, FETCH_ULTIMATEGUITAR, CLEAN_APIFETCH, SELECT_POST, DESELECT_POST, SELECT_LANGUAGE, FETCH_ERROR
+  FETCH_LIBRARY, FETCH_LACUERDA, FETCH_ULTIMATEGUITAR, CLEAN_APIFETCH, SELECT_POST, DESELECT_POST, SELECT_LANGUAGE, FETCH_ERROR, TOGGLE_HELP
 } from './types';
 import $ from 'jquery';
 import { english, spanish } from './language';
@@ -126,6 +126,16 @@ export function selectLanguage(language) {
     dispatch({
       type: SELECT_LANGUAGE,
       payload: data
+    });
+  }
+}
+
+export function toggleHelp(bool) {
+  return dispatch => {
+    console.log('toggleo');
+    dispatch({
+      type: TOGGLE_HELP,
+      payload: bool
     });
   }
 }
