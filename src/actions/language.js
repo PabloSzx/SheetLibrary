@@ -37,6 +37,9 @@ export const english = {
     deleteButtonCancel: "Cancel",
     deleteButtonConfirm: "Yes, i'm sure",
 
+    fetchArtistPlaceholder: "Artist Name",
+    youtubeButton: "YouTube",
+
     buttons: {
       c: "C",
       csharp: "C#",
@@ -85,6 +88,7 @@ export const english = {
     fetchArtistPlaceholder: "Artist Name",
     ultimateguitarButton: "ultimate-guitar.com",
     lacuerdaButton: "lacuerda.net",
+    youtubeButton: "YouTube",
     buttons: {
       c: "C",
       csharp: "C#",
@@ -152,6 +156,10 @@ export const spanish = {
     deleteButtonCancel: "Cancelar",
     deleteButtonConfirm: "Si, estoy seguro",
 
+    fetchArtistPlaceholder: "Nombre Artista",
+    youtubeButton: "YouTube",
+
+
     buttons: {
       c: "C",
       csharp: "C#",
@@ -200,6 +208,8 @@ export const spanish = {
     fetchArtistPlaceholder: "Nombre Artista",
     ultimateguitarButton: "ultimate-guitar.com",
     lacuerdaButton: "lacuerda.net",
+    youtubeButton: "YouTube",
+
     buttons: {
       c: "C",
       csharp: "C#",

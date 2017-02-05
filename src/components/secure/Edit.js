@@ -4,6 +4,10 @@ import _ from 'lodash';
 import Confirm from 'react-confirm-bootstrap';
 import { updateSong, deleteSong, deselectPost } from '../../actions/index';
 import rise from './rise';
+import YTSearch from 'youtube-simple-search';
+
+const API_KEY = 'AIzaSyDDjF0K9vkZRndsg59p7b5f4H5D77YUyyw';
+
 
 
 class Edit extends Component {
@@ -13,7 +17,7 @@ class Edit extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {cleanLabel: ''};
+    this.state = {cleanLabel: '', fetchArtist: '', video: {id: '' , allow: false} };
   }
 
   onCancelConfirm() {
@@ -171,9 +175,39 @@ class Edit extends Component {
     }
   }
 
+  YoutubeSearch(event) {
+    // console.log(event);
+    this.setState({ video: { allow: this.state.video.allow, id: event[0].id.videoId } })
+  }
+
+  toggleYoutube() {
+    let artist = "";
+
+    if(this.props.fields.title.value){
+      if (this.state.fetchArtist) {
+        artist = this.state.fetchArtist;
+      }
+    YTSearch({
+       key: API_KEY,
+       query: this.props.fields.title.value+' '+artist,
+       maxResults: 1
+     },
+         this.YoutubeSearch.bind(this)
+     );
+
+     this.setState({ video: { id: this.state.video.id, allow: true } });
+    }
+  }
+
   handleContentChange(event) {
     this.findUnknownCharacter(event);
     this.props.fields.content.onChange(event.target.value);
+  }
+
+  handleArtistChange(event) {
+    this.setState({
+      fetchArtist : event.target.value
+    });
   }
 
   componentDidMount() {
@@ -196,6 +230,7 @@ class Edit extends Component {
   }
 
   render() {
+    const url = `https://www.youtube.com/embed/${this.state.video.id}`;
     const { fields: { title, scale, content }, handleSubmit, language } = this.props;
     const { c, csharp, d, dsharp, e, f, fsharp, g, gsharp, a, asharp, b, linebreak, erase, space, diamond, riseup, risedown, submit, cancel } = language.buttons;
     return (
@@ -265,7 +300,7 @@ class Edit extends Component {
           <div className="btn btn-primary hidden"></div>
           </div>
           <div className="col-xs-4">
-          <div className="btn btn-primary center-block"onClick={()=>this.onRise(-1)}>{risedown}</div>
+          <div className="btn btn-primary center-block" onClick={()=>this.onRise(-1)}>{risedown}</div>
           </div>
         </div>
         <br/>
@@ -300,8 +335,8 @@ class Edit extends Component {
           <div className="col-xs-2">
           <div className="btn btn-primary hidden"></div>
           </div>
-          <div className="col-xs-2">
-          <div className="btn btn-primary hidden"></div>
+          <div className="col-xs-4">
+          <input type="text" className="form-control field-fetch" value={this.state.fetchArtist} onChange={this.handleArtistChange.bind(this)} placeholder={language.fetchArtistPlaceholder} />
           </div>
         </div>
         <br/>
@@ -318,8 +353,8 @@ class Edit extends Component {
           <div className="col-xs-2">
           <div className="btn btn-primary hidden"></div>
           </div>
-          <div className="col-xs-2">
-          <div className="btn btn-primary hidden"></div>
+          <div className="col-xs-4">
+            <div className="btn btn-info center-block btn-fetch" onClick={() => this.toggleYoutube()}>{language.youtubeButton}</div>
           </div>
         </div>
         <br/>
@@ -387,7 +422,23 @@ class Edit extends Component {
             </Confirm>
           </div>
         </div>
-        <br/>
+        <hr/>
+
+        {
+          this.state.video.allow
+          ?
+          <div>
+          <span className="glyphicon glyphicon-remove pull-right x-right" aria-hidden="true" onClick={() => this.setState({ video: { id: this.state.video.id, allow: false } })}/>
+          <div className="embed-responsive embed-responsive-16by9">
+            <iframe className="embed-responsive-item" src={url}/>
+          </div>
+          <hr/>
+          </div>
+
+          :
+          <div />
+
+        }
       </div>
 
     </form>

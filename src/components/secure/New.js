@@ -4,26 +4,10 @@ import _ from 'lodash';
 import { createSong, fetchLacuerda, fetchUltimateguitar, cleanApiFetch } from '../../actions/index';
 import rise from './rise';
 import Confirm from 'react-confirm-bootstrap';
+import YTSearch from 'youtube-simple-search';
 
-// var Confirm = require('react-confirm-bootstrap');
+const API_KEY = 'AIzaSyDDjF0K9vkZRndsg59p7b5f4H5D77YUyyw';
 
-// var ConfirmAction = React.createClass({
-//         onConfirm() {
-//             // Preform your action.
-//         },
-//
-//         render() {
-//             return (
-//                 <Confirm
-//                     onConfirm={this.onConfirm}
-//                     body="Are you sure you want to delete this?"
-//                     confirmText="Confirm Delete"
-//                     title="Deleting Stuff">
-//                     <button>Delete Stuff</button>
-//                 </Confirm>
-//             )
-//         },
-//     });
 
 class New extends Component {
   // constructor(props) {
@@ -218,13 +202,13 @@ class New extends Component {
   handleNameChange(event) {
     this.setState({
       fetchName : event.target.value
-    })
+    });
   }
 
   handleArtistChange(event) {
     this.setState({
       fetchArtist : event.target.value
-    })
+    });
   }
 
   handleVersionChange(event) {
@@ -313,7 +297,7 @@ class New extends Component {
   // }
 
   componentWillMount() {
-    this.state = {fetchName: '', fetchArtist: '', input: 'scale', version: '1', selection: 0 };
+    this.state = {fetchName: '', fetchArtist: '', input: 'scale', version: '1', selection: 0, video: {id: '' , allow: false} };
   }
 
   componentWillUnmount() {
@@ -324,20 +308,37 @@ class New extends Component {
     window.scrollTo(0, 0);
   }
 
+  YoutubeSearch(event) {
+    // console.log(event);
+    this.setState({ video: { allow: this.state.video.allow, id: event[0].id.videoId } })
+  }
+
+  toggleYoutube() {
+    let artist = "";
+
+    if(this.state.fetchName){
+      if (this.state.fetchArtist) {
+        artist = this.state.fetchArtist;
+      }
+    YTSearch({
+       key: API_KEY,
+       query: this.state.fetchName+' '+artist,
+       maxResults: 1
+     },
+         this.YoutubeSearch.bind(this)
+     );
+
+     this.setState({ video: { id: this.state.video.id, allow: true } });
+    }
+  }
+
   render() {
+    const url = `https://www.youtube.com/embed/${this.state.video.id}`;
 
     const { fields: { title, scale, content }, handleSubmit, language } = this.props;
 
-    // if (this.isNote(content.value)) {
-    //   console.log('entro al if');
-    //   console.log(content.value);
-    //   this.context.dirtyContent = content.value;
-    //   content.onChange(content.value.replace(/<A>/g,"").replace(/<\/A>/g,"").replace(/<span>/g,"").replace(/<\/span>/g,""));
-    // }
-    // if (this.context.dirtyContent) {
-    //   console.log(this.context.dirtyContent);
-    // }
     const { c, csharp, d, dsharp, e, f, fsharp, g, gsharp, a, asharp, b, linebreak, erase, space, diamond, riseup, risedown, submit, cancel } = language.buttons;
+
     return (
     <form className="formBody" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
         <h3>{language.titleHeader}</h3>
@@ -370,25 +371,6 @@ class New extends Component {
             {content.touched ? content.error : ''}
           </div>
         </div>
-
-        {/* <TinyMCE
-          id="tiny"
-          className="selected-li"
-          content=""
-          config={{
-            plugins: 'autolink link image lists print preview',
-            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright'
-          }}
-          onChange={this.handleEditorChange.bind(this)}
-          onNodeChange={this.handleEditorChange.bind(this)}
-          onKeyUp={this.handleEditorChange.bind(this)}
-          onFocus={(event)=> {this.setState({input:'content'});try{this.setState({ selection: event.target.selection.selectedRange.endOffset });}catch(err){ }}}
-          // onSelect={(event) => {this.setState({ selection: event.target.selectionEnd });}}
-          onBlur={content.onBlur}
-          onInit={(event)=>this.setState({ content: event.target })}
-          onClick={(event)=>{try{if (this.state.selection !== this.state.content.selectedRange.endOffset)(this.setState({ selection: this.state.content.selectedRange.endOffset }));}catch(err){}}}
-          // onSetContent={(event)=>event.target.focus()}
-        /> */}
 
       {/* Buttons */}
 
@@ -508,6 +490,8 @@ class New extends Component {
             <div className="btn btn-info center-block btn-fetch" onClick={() => this.getUltimateguitar()}>{language.ultimateguitarButton}</div>
             <br/>
             <div className="btn btn-info center-block btn-fetch" onClick={() => this.getLaCuerda()}>{language.lacuerdaButton}</div>
+            <br/>
+            <div className="btn btn-info center-block btn-fetch" onClick={() => this.toggleYoutube()}>{language.youtubeButton}</div>
           </div>
         </div>
         <br/>
@@ -531,8 +515,7 @@ class New extends Component {
         <br/>
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden"></div>
-          </div>
+            </div>
           <div className="col-xs-2">
           <div className="btn btn-primary hidden"></div>
           </div>
@@ -540,18 +523,44 @@ class New extends Component {
           <div className="text-center">{this.state.cleanLabel ? <div className="alert alert-danger text-center clean-label">{this.state.cleanLabel}</div> : '' } </div>
           </div>
           <div className="col-xs-4">
-            <Confirm
-              onConfirm={this.onCancelConfirm.bind(this)}
-              body={language.cancelQuestionLabel}
-              confirmText={language.cancelButtonConfirm}
-              cancelText={language.cancelButtonCancel}
-              title={language.cancelLabel}>
-              <div className="btn btn-warning center-block">{cancel}</div>
-            </Confirm>
+            {
+              (!(title.value) && !(scale.value) && !(content.value))
+              ?
+              <div className="btn btn-warning center-block" onClick={()=>this.onCancelConfirm()}>{cancel}</div>
+              :
+              <Confirm
+                onConfirm={this.onCancelConfirm.bind(this)}
+                body={language.cancelQuestionLabel}
+                confirmText={language.cancelButtonConfirm}
+                cancelText={language.cancelButtonCancel}
+                title={language.cancelLabel}>
+                <div className="btn btn-warning center-block">{cancel}</div>
+              </Confirm>
+            }
+
           </div>
         </div>
-        <br/>
+        <hr/>
+
+        {
+          this.state.video.allow
+          ?
+          <div>
+          <span className="glyphicon glyphicon-remove pull-right x-right" aria-hidden="true" onClick={() => this.setState({ video: { id: this.state.video.id, allow: false } })}/>
+          <div className="embed-responsive embed-responsive-16by9">
+            <iframe className="embed-responsive-item" src={url} />
+          </div>
+          <hr/>
+          </div>
+
+          :
+          <div />
+
+        }
+
       </div>
+
+
     </form>
       );
     }
