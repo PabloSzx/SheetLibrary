@@ -2,12 +2,14 @@ import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import _ from 'lodash';
 import Confirm from 'react-confirm-bootstrap';
-import { updateSong, deleteSong, deselectPost } from '../../actions/index';
-import rise from './rise';
 import YTSearch from 'youtube-simple-search';
 
-const API_KEY = 'AIzaSyDDjF0K9vkZRndsg59p7b5f4H5D77YUyyw';
+import { updateSong, deleteSong, deselectPost } from '../../actions/index';
+import rise from './rise';
+import { sortMap, bubbleSort } from './Sort';
 
+
+const API_KEY = 'AIzaSyDDjF0K9vkZRndsg59p7b5f4H5D77YUyyw';
 
 
 class Edit extends Component {
@@ -199,6 +201,34 @@ class Edit extends Component {
     }
   }
 
+  Sort() {
+    try {
+    const zero = String.fromCharCode(8900);
+    let a = this.props.fields.scale.value.trim().replace(/⋄/g,'').split(' ');
+    const tonica = a[0].toLowerCase();
+    let map = sortMap[tonica];
+
+    _.map(a,(value,index)=>{
+      a[index] = map[value.toLowerCase()];
+    });
+
+
+    a = _.filter(a, (n) => n !== undefined);
+    
+    bubbleSort(a);
+    _.map(a,(value,index)=>{
+      _.map(map, (val,key)=>{
+        if (val === a[index]) a[index]=zero+key.toUpperCase()+zero;
+      })
+    });
+    this.props.fields.scale.onChange(a.join(' '));
+    }
+    catch (err) {
+
+    }
+
+  }
+
   handleContentChange(event) {
     this.findUnknownCharacter(event);
     if (!this.state.changed) {
@@ -213,12 +243,14 @@ class Edit extends Component {
     }
     this.props.fields.title.onChange(event.target.value);
   }
+
   handleScaleChange(event) {
     if (!this.state.changed) {
       this.setState({ changed: true });
     }
     this.props.fields.scale.onChange(event.target.value);
   }
+
   handleArtistChange(event) {
     this.setState({
       fetchArtist : event.target.value
@@ -247,7 +279,7 @@ class Edit extends Component {
   render() {
     const url = `https://www.youtube.com/embed/${this.state.video.id}`;
     const { fields: { title, scale, content }, handleSubmit, language } = this.props;
-    const { c, csharp, d, dsharp, e, f, fsharp, g, gsharp, a, asharp, b, linebreak, erase, space, diamond, riseup, risedown, submit, cancel } = language.buttons;
+    const { c, csharp, d, dsharp, e, f, fsharp, g, gsharp, a, asharp, b, linebreak, erase, space, diamond, riseup, risedown, scaleSort, submit, cancel } = language.buttons;
     return (
     <form className="formBody" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
         <h3>{language.titleHeader}</h3>
@@ -294,7 +326,7 @@ class Edit extends Component {
             <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(d)}>{d}</div>
             </div>
             <div className="col-xs-2">
-            <div className="btn btn-primary hidden"></div>
+            <div className="btn btn-primary center-block btn-note" onClick={() => this.Sort()}>{scaleSort}</div>
           </div>
           <div className="col-xs-4">
           <div className="btn btn-primary center-block" onClick={()=>this.onRise(1)}>{riseup}</div>

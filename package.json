@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "css-loader": "^0.26.1",
+    "eslint-config-rallycoding": "^3.2.0",
     "npm": "^4.1.2",
     "react-scripts": "0.7.0",
     "style-loader": "^0.13.1"

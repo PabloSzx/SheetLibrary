@@ -78,6 +78,7 @@ export const english = {
       diamond: "⋄",
       riseup: "⇧♪",
       risedown: "⇩♪",
+      scaleSort: "Scale Sorting",
       submit: "Save",
       cancel: "Cancel"
     }
@@ -127,6 +128,7 @@ export const english = {
       diamond: "⋄",
       riseup: "⇧♪",
       risedown: "⇩♪",
+      scaleSort: "Scale Sorting",
       submit: "Save",
       cancel: "Cancel"
     }
@@ -218,6 +220,7 @@ export const spanish = {
       diamond: "⋄",
       riseup: "⇧♪",
       risedown: "⇩♪",
+      scaleSort: "Ordenar escala",
       submit: "Guardar",
       cancel: "Cancelar"
     }
@@ -268,6 +271,7 @@ export const spanish = {
       diamond: "⋄",
       riseup: "⇧♪",
       risedown: "⇩♪",
+      scaleSort: "Ordenar escala",
       submit: "Guardar",
       cancel: "Cancelar"
     }
