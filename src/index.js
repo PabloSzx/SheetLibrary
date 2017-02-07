@@ -7,13 +7,12 @@ import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-rou
 import thunk from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
 import { requireAuth } from './utils/secure';
-import * as reducers from './reducers'
-import App from './components/App'
-import Home from './components/Home'
-import Logout from './components/auth/Logout'
-import Dashboard from './components/secure/Dashboard'
-import Profile from './components/secure/Profile'
-import New from './components/secure/New'
+import * as reducers from './reducers';
+import App from './components/App';
+import Home from './components/Home';
+import Logout from './components/auth/Logout';
+import Dashboard from './components/secure/Dashboard';
+import New from './components/secure/New';
 import Edit from './components/secure/Edit';
 import SelectedList from './components/secure/SelectedList';
 
@@ -40,13 +39,12 @@ ReactDOM.render(
 	<Provider store={store}>
 		<Router history={history}>
 			<Route path='/' component={App}>
-				<IndexRoute component={Home}/>
-				<Route path='logout' component={Logout}/>
-				<Route path='dashboard' component={Dashboard} onEnter={secure}/>
-				<Route path='new' component={New} onEnter={secure}/>
-				<Route path='profile' component={Profile} onEnter={secure}/>
-				<Route path='library/:id' component={Edit}/>
-				<Route path='view' component={SelectedList} onEnter={secure}/>
+				<IndexRoute component={Home} />
+				<Route path='logout' component={Logout} />
+				<Route path='dashboard' component={Dashboard} onEnter={secure} />
+				<Route path='new' component={New} onEnter={secure} />
+				<Route path='library/:id' component={Edit} onEnter={secure} />
+				<Route path='view' component={SelectedList} onEnter={secure} />
 			</Route>
 		</Router>
 	</Provider>,

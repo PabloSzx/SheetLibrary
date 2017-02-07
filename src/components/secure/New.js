@@ -214,7 +214,7 @@ class New extends Component {
     a = _.filter(a, (n) => n !== undefined);
 
 
-    bubbleSort(a);
+    a = bubbleSort(a);
     _.map(a, (value, index) => {
       _.map(map, (val, key) => {
         if (val === a[index]) a[index] = zero + key.toUpperCase() + zero;
@@ -489,37 +489,76 @@ class New extends Component {
         <br />
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(dsharp)}>{dsharp}</div>
+          <div
+            className="btn btn-primary center-block btn-note"
+            onClick={() => this.Change(dsharp)}
+          >
+              {dsharp}
+          </div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(e)}>{e}</div>
+          <div
+            className="btn btn-primary center-block btn-note"
+            onClick={() => this.Change(e)}
+          >
+            {e}
+          </div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(f)}>{f}</div>
+          <div
+            className="btn btn-primary center-block btn-note"
+            onClick={() => this.Change(f)}
+          >
+            {f}
+          </div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden"></div>
+          <div className="btn btn-primary hidden" />
           </div>
           <div className="col-xs-4">
-          <div className="btn btn-primary center-block" onClick={()=>this.onRise(-1)}>{risedown}</div>
+          <div
+            className="btn btn-primary center-block"
+            onClick={() => this.onRise(-1)}
+          >
+            {risedown}
+          </div>
           </div>
         </div>
-        <br/>
+        <br />
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(fsharp)}>{fsharp}</div>
+          <div
+            className="btn btn-primary center-block btn-note"
+            onClick={() => this.Change(fsharp)}
+          >
+            {fsharp}
+          </div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(g)}>{g}</div>
+          <div
+            className="btn btn-primary center-block btn-note"
+            onClick={() => this.Change(g)}
+          >
+            {g}
+          </div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(gsharp)}>{gsharp}</div>
+          <div
+            className="btn btn-primary center-block btn-note"
+            onClick={() => this.Change(gsharp)}
+          >
+            {gsharp}
+          </div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden"></div>
+          <div className="btn btn-primary hidden" />
           </div>
           <div className="col-xs-2">
-            <select defaultValue="1" onChange={this.handleVersionChange.bind(this)} className="form-control select-fetch">
+            <select
+              defaultValue="1"
+              onChange={this.handleVersionChange.bind(this)}
+              className="form-control select-fetch"
+            >
               <option className="version-select" value='1'>{language.select.v1}</option>
               <option className="version-select" value="2">{language.select.v2}</option>
               <option className="version-select" value="3">{language.select.v3}</option>
@@ -528,130 +567,217 @@ class New extends Component {
             </select>
           </div>
         </div>
-        <br/>
+        <br />
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(a)}>{a}</div>
+          <div
+            className="btn btn-primary center-block btn-note"
+            onClick={() => this.Change(a)}
+          >
+            {a}
+          </div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(asharp)}>{asharp}</div>
+          <div
+            className="btn btn-primary center-block btn-note"
+            onClick={() => this.Change(asharp)}
+          >
+            {asharp}
+          </div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(b)}>{b}</div>
+          <div
+            className="btn btn-primary center-block btn-note"
+            onClick={() => this.Change(b)}
+          >
+            {b}
+          </div>
           </div>
           <div className="col-xs-2">
-            <div className="btn btn-primary hidden"></div>
+            <div className="btn btn-primary hidden" />
           </div>
           <div className="col-xs-4">
-          <input type="text" className="form-control field-fetch" value={this.state.fetchName} onChange={this.handleNameChange.bind(this)} placeholder={language.fetchNamePlaceholder} />
+          <input
+            type="text"
+            className="form-control field-fetch"
+            value={this.state.fetchName}
+            onChange={this.handleNameChange.bind(this)}
+            placeholder={language.fetchNamePlaceholder}
+          />
           </div>
         </div>
-        <br/>
+        <br />
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change('\n')}>{linebreak}</div>
+          <div
+            className="btn btn-primary center-block btn-note"
+            onClick={() => this.Change('\n')}
+          >
+            {linebreak}
+          </div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={()=> this.Erase()}>{erase}</div>
+          <div
+            className="btn btn-primary center-block btn-note"
+            onClick={() => this.Erase()}
+          >
+            {erase}
+          </div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden"></div>
+          <div className="btn btn-primary hidden" />
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden"></div>
+          <div className="btn btn-primary hidden" />
           </div>
           <div className="col-xs-4">
-          <input type="text" className="form-control field-fetch" value={this.state.fetchArtist} onChange={this.handleArtistChange.bind(this)} placeholder={language.fetchArtistPlaceholder} />
+          <input
+            type="text"
+            className="form-control field-fetch"
+            value={this.state.fetchArtist}
+            onChange={this.handleArtistChange.bind(this)}
+            placeholder={language.fetchArtistPlaceholder}
+          />
           </div>
         </div>
-        <br/>
+        <br />
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(' ')}>{space}</div>
+          <div
+            className="btn btn-primary center-block btn-note"
+            onClick={() => this.Change(' ')}
+          >
+            {space}
+          </div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary center-block btn-note" onClick={() => this.Change(diamond)}>{diamond}</div>
+          <div
+            className="btn btn-primary center-block btn-note"
+            onClick={() => this.Change(diamond)}
+          >
+            {diamond}
+          </div>
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden"></div>
+          <div className="btn btn-primary hidden" />
           </div>
           <div className="col-xs-2">
-          <div className="alert alert-info text-center fetch-label">{this.props.fetchError ? (language.errorLabel+this.props.fetchError) : language.fetchLabel}</div>
+          <div
+            className="alert alert-info text-center fetch-label"
+          >
+            {
+              this.props.fetchError
+              ?
+              (language.errorLabel + this.props.fetchError)
+              :
+              language.fetchLabel
+            }
+          </div>
           </div>
           <div className="col-xs-4">
-            <div className="btn btn-info center-block btn-fetch" onClick={() => this.getUltimateguitar()}>{language.ultimateguitarButton}</div>
-            <br/>
-            <div className="btn btn-info center-block btn-fetch" onClick={() => this.getLaCuerda()}>{language.lacuerdaButton}</div>
-            <br/>
-            <div className="btn btn-info center-block btn-fetch" onClick={() => this.toggleYoutube()}>{language.youtubeButton}</div>
+            <div
+              className="btn btn-info center-block btn-fetch"
+              onClick={() => this.getUltimateguitar()}
+            >
+              {language.ultimateguitarButton}
+            </div>
+            <br />
+            <div
+              className="btn btn-info center-block btn-fetch"
+              onClick={() => this.getLaCuerda()}
+            >
+              {language.lacuerdaButton}
+            </div>
+            <br />
+            <div
+              className="btn btn-info center-block btn-fetch"
+              onClick={() => this.toggleYoutube()}
+            >
+              {language.youtubeButton}
+            </div>
           </div>
         </div>
-        <br/>
+        <br />
         <div className="row">
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden"></div>
+          <div className="btn btn-primary hidden" />
           </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden"></div>
+          <div className="btn btn-primary hidden" />
           </div>
           <div className="col-xs-4">
           <button type="submit" className="btn btn-success btn-block">{submit}</button>
           </div>
           <div className="col-xs-4">
-          <div className="btn btn-primary hidden"></div>
+          <div className="btn btn-primary hidden" />
           </div>
           <div className="col-xs-4">
-          <div className="btn btn-danger hidden"></div>
+          <div className="btn btn-danger hidden" />
           </div>
         </div>
-        <br/>
+        <br />
         <div className="row">
           <div className="col-xs-2">
+            <div className="btn btn-primary hidden" />
             </div>
           <div className="col-xs-2">
-          <div className="btn btn-primary hidden"></div>
+          <div className="btn btn-primary hidden" />
           </div>
           <div className="col-xs-4">
-          <div className="text-center">{this.state.cleanLabel ? <div className="alert alert-danger text-center clean-label">{this.state.cleanLabel}</div> : '' } </div>
+          <div className="text-center">
+            {
+              this.state.cleanLabel
+              ?
+              <div className="alert alert-danger text-center clean-label">
+                {this.state.cleanLabel}
+              </div>
+              :
+              ''
+            }
+          </div>
           </div>
           <div className="col-xs-4">
             {
               (!(title.value) && !(scale.value) && !(content.value))
               ?
-              <div className="btn btn-warning center-block" onClick={()=>this.onCancelConfirm()}>{cancel}</div>
+              <div className="btn btn-warning center-block" onClick={() => this.onCancelConfirm()}>
+                {cancel}
+              </div>
               :
               <Confirm
                 onConfirm={this.onCancelConfirm.bind(this)}
                 body={language.cancelQuestionLabel}
                 confirmText={language.cancelButtonConfirm}
                 cancelText={language.cancelButtonCancel}
-                title={language.cancelLabel}>
+                title={language.cancelLabel}
+              >
                 <div className="btn btn-warning center-block">{cancel}</div>
               </Confirm>
             }
 
           </div>
         </div>
-        <hr/>
+        <hr />
 
         {
           this.state.video.allow
           ?
           <div>
-          <span className="glyphicon glyphicon-remove pull-right x-right" aria-hidden="true" onClick={() => this.setState({ video: { id: this.state.video.id, allow: false } })}/>
+          <span
+            className="glyphicon glyphicon-remove pull-right x-right"
+            aria-hidden="true"
+            onClick={() => this.setState({ video: { id: this.state.video.id, allow: false } })}
+          />
           <div className="embed-responsive embed-responsive-16by9">
             <iframe className="embed-responsive-item" src={url} />
           </div>
-          <hr/>
+          <hr />
           </div>
-
           :
           <div />
-
         }
 
       </div>
-
 
     </form>
       );

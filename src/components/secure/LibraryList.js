@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchLibrary, selectPost, deselectPost, toggleHelp } from '../../actions/index';
 import _ from 'lodash';
 import { Link } from 'react-router';
 import Modal from 'react-bootstrap-modal';
+import { fetchLibrary, selectPost, deselectPost, toggleHelp } from '../../actions/index';
 import img1 from '../../imgs/tutorial1.png';
 import fields from '../../imgs/fields.png';
 import buttons from '../../imgs/buttons.png';
@@ -15,11 +15,6 @@ import riseup from '../../imgs/riseup.png';
 import risedown from '../../imgs/risedown.png';
 import fetch from '../../imgs/fetch.png';
 
-
-
-
-
-
 class LibraryList extends Component {
   constructor(props) {
     super(props);
@@ -27,9 +22,11 @@ class LibraryList extends Component {
       search: '', emptyTrigger: true
     };
   }
-  componentWillMount(){
+
+  componentWillMount() {
     this.props.fetchLibrary(this.props.auth.user.uid);
   }
+
   componentDidUpdate() {
     if (!this.props.library.library && !this.props.help && this.state.emptyTrigger) {
       this.props.toggleHelp(true);
@@ -40,12 +37,16 @@ class LibraryList extends Component {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
+
     this.setState({
       [name]: value
-    })
-  const { selectPost, deselectPost } = this.props;
+    });
 
-   target.checked ? selectPost(name) : deselectPost(name);
+    if (target.checked) {
+      this.props.selectPost(name);
+    } else {
+      this.props.deselectPost(name);
+    }
   }
 
   handleSearchChange(event) {
@@ -54,93 +55,93 @@ class LibraryList extends Component {
 
   renderSongs() {
     if (this.props.library.library) {
-		if(this.props.library.library.length !== 0){
-      if (this.state.search !== ''){
-        return _.map(this.props.library.library, (song, key)  => {
-          if ((song.title.toLowerCase()).indexOf(this.state.search.toLowerCase()) !== -1){
+		if (this.props.library.library.length !== 0) {
+      if (this.state.search !== '') {
+        return _.map(this.props.library.library, (song, key) => {
+          if ((song.title.toLowerCase()).indexOf(this.state.search.toLowerCase()) !== -1) {
             return (
-      				<li className="list-group-item li" key={key}>
+              <li className="list-group-item li" key={key}>
                 <input
                 name={key}
-                checked={_.includes(this.props.selectedPostIds,key) ? true : false}
+                checked={_.includes(this.props.selectedPostIds, key)}
                 type="checkbox"
                 onChange={this.handlePostSelect.bind(this, key)}
-                className="song-checkbox"/>
-                <Link to={"library/"+key}>
+                className="song-checkbox"
+                />
+                <Link to={`library/${key}`}>
                 <p className="text-center"><strong>{song.title}</strong></p>
                 </Link>
                 <p className="text-center">{song.scale.replace(/⋄/g, '')}</p>
               </li>
-      			);
+            );
           }
-          else {
             return (
-      				<li className="list-group-item li hidden" key={key}>
+              <li className="list-group-item li hidden" key={key}>
                 <input
                 name={key}
-                checked={_.includes(this.props.selectedPostIds,key) ? true : false}
+                checked={_.includes(this.props.selectedPostIds, key)}
                 type="checkbox"
-                onChange={this.handlePostSelect.bind(this, key)} />
+                onChange={this.handlePostSelect.bind(this, key)}
+                />
               </li>
-      			);
-          }
-    		});
+            );
+          });
       }
-		return _.map(this.props.library.library, (song, key)  => {
-			return (
+		return _.map(this.props.library.library, (song, key) => (
 				<li className="list-group-item li" key={key}>
           <input
           name={key}
-          checked={_.includes(this.props.selectedPostIds,key) ? true : false}
+          checked={_.includes(this.props.selectedPostIds, key)}
           type="checkbox"
           onChange={this.handlePostSelect.bind(this, key)}
-          className="song-checkbox"/>
-          <Link to={"library/"+key}>
+          className="song-checkbox"
+          />
+          <Link to={`library/${key}`}>
           <p className="text-center"><strong>{song.title}</strong></p>
           </Link>
           <p className="text-center">{song.scale.replace(/⋄/g, '')}</p>
         </li>
-			);
-		});
+		));
 	}
-  else {
-    return (
+  return (
       <div>{this.props.loading}</div>
-    )
-  }
+  );
 }
-else {
   return (
   <div>
     <strong>{this.props.empty}</strong>
   </div>
 );
 }
-
-}
   render() {
     return (
       <div>
-      <hr/>
+      <hr />
       <input
         type="text"
         className="center-block search-input"
         value={this.state.search}
         onChange={this.handleSearchChange.bind(this)}
-        placeholder={this.props.search} />
-      <hr/>
+        placeholder={this.props.search}
+      />
+      <hr />
       <ul className="list-group">
         {this.renderSongs()}
       </ul>
 
       <Modal
         show={this.props.help}
-        onHide={ ()=>{this.props.toggleHelp(false); this.setState({ emptyTrigger: false});} } >
+        onHide={() => { this.props.toggleHelp(false); this.setState({ emptyTrigger: false }); }}
+      >
           <Modal.Header closeButton>
-              <Modal.Title className='text-center' id='ModalHeader'>{this.props.language.dashboard.tutorialIndex}</Modal.Title>
+              <Modal.Title className='text-center' id='ModalHeader'>
+                {this.props.language.dashboard.tutorialIndex}
+              </Modal.Title>
             </Modal.Header>
           <Modal.Body>
-            <Link className='btn btn-info center-block dashboardButton' to='/new'>{this.props.language.dashboard.newButton}</Link>
+            <Link className='btn btn-info center-block dashboardButton' to='/new'>
+              {this.props.language.dashboard.newButton}
+            </Link>
             <div className='text-center'>{this.props.language.dashboard.tutorialNewButton}</div>
             <hr />
             <h2 className='text-center'>{this.props.language.dashboard.tutorialQuestion}</h2>
@@ -158,31 +159,30 @@ else {
             <br />
             <img className='img-tutorial-2' src={breakline} alt="breakline" />
             <div className='text-center'>{this.props.language.dashboard.tutorialBreakline}</div>
-            <br/>
+            <br />
             <img className='img-tutorial-2' src={erase} alt="erase" />
             <div className='text-center'>{this.props.language.dashboard.tutorialErase}</div>
-            <br/>
+            <br />
             <img className='img-tutorial-2' src={space} alt="space" />
             <div className='text-center'>{this.props.language.dashboard.tutorialSpace}</div>
-            <br/>
+            <br />
             <img className='img-tutorial-2' src={diamond} alt="diamond" />
             <div className='text-center'>{this.props.language.dashboard.tutorialDiamond}</div>
-            <hr/>
+            <hr />
             <img className='img-tutorial-3' src={riseup} alt="riseup" />
             <div className='text-center'>{this.props.language.dashboard.tutorialRiseUp}</div>
-            <br/>
+            <br />
             <img className='img-tutorial-3' src={risedown} alt="risedown" />
             <div className='text-center'>{this.props.language.dashboard.tutorialRiseDown}</div>
             <hr />
             <img className='img-tutorial-3' src={fetch} alt="fetch" />
             <div className='text-center'>{this.props.language.dashboard.tutorialFetch}</div>
 
-
-
-
            </Modal.Body>
            <Modal.Footer>
-             <Modal.Dismiss className='btn btn-default'>{this.props.language.new.buttons.cancel}</Modal.Dismiss>
+             <Modal.Dismiss className='btn btn-default'>
+               {this.props.language.new.buttons.cancel}
+             </Modal.Dismiss>
            </Modal.Footer>
       </Modal>
     </div>
@@ -198,7 +198,8 @@ function mapStateToProps(state) {
     selectedPostIds: state.library.selectedPostIds,
     language: state.library.language,
     help: state.library.help
-	}
+	};
 }
 
-export default connect(mapStateToProps, { fetchLibrary, selectPost, deselectPost, toggleHelp})(LibraryList);
+export default connect(mapStateToProps,
+  { fetchLibrary, selectPost, deselectPost, toggleHelp })(LibraryList);
