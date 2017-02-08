@@ -52,9 +52,13 @@ class Edit extends Component {
 
   onSubmit(props) {
     const trimProps = Object.assign({}, props);
-    if (trimProps.title && trimProps.scale) {
+    if (trimProps.title) {
     trimProps.title = trimProps.title.trim();
-    trimProps.scale = trimProps.scale.trim();
+    if (trimProps.scale) {
+      trimProps.scale = trimProps.scale.trim();
+    } else {
+      trimProps.scale = String.fromCharCode(8195);
+    }
     if (trimProps.content) {
     trimProps.content = trimProps.content.trim();
     } else {
@@ -298,9 +302,6 @@ class Edit extends Component {
             onDrop={title.onDrop}
             onFocus={title.onFocus}
           />
-          <div className="text-help">
-            {title.touched ? title.error : ''}
-          </div>
         </div>
 
         <div
@@ -320,10 +321,8 @@ class Edit extends Component {
             onChange={this.handleScaleChange.bind(this)}
             onDragStart={scale.onDragStart}
             onDrop={scale.onDrop}
+            readOnly="true"
           />
-          <div className="text-help">
-            {scale.touched ? scale.error : ''}
-          </div>
         </div>
 
         <div id="content" className="form-group">
@@ -343,9 +342,6 @@ class Edit extends Component {
             onDrop={content.onDrop}
             value={content.value}
           />
-          <div className="text-help">
-            {content.touched ? content.error : ''}
-          </div>
         </div>
 
       {/* Buttons */}
@@ -659,22 +655,6 @@ class Edit extends Component {
     }
     }
 
-function validate(values) {
-  const errors = {};
-
-  if (!values.title) {
-    errors.title = '';
-  }
-  if (!values.scale) {
-    errors.scale = '';
-  }
-  if (!values.content) {
-    errors.content = '';
-  }
-
-  return errors;
-}
-
 function mapStateToProps(state) {
   return {
     auth: state.auth.user,
@@ -686,6 +666,5 @@ function mapStateToProps(state) {
 
 export default reduxForm({
   form: 'NewForm',
-  fields: ['title', 'scale', 'content'],
-  validate
+  fields: ['title', 'scale', 'content']
 }, mapStateToProps, { updateSong, deleteSong, deselectPost })(Edit);

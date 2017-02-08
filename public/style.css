@@ -97,6 +97,11 @@
   text-align: center;
   font-size: 0.9em;
 }
+.x-search {
+  right: 25vw;
+  font-size: 1em;
+  top: .3em;
+}
 .li {
   width: 90% !important;
   margin-left: auto;
@@ -154,11 +159,20 @@
       width: 16vw !important;
       font-size: 2.3vw !important;
     }
+    .search-input {
+      font-size: 0.5em !important;
+    }
+    .x-search {
+      top: .1em;
+    }
 }
 @media only screen and (max-width: 1050px) {
   .fetch-label {
     padding: 1vw;
     width: 16vw;
     font-size: 1.5vw;
+  }
+  .search-input {
+    font-size: 0.75em;
   }
 }

@@ -25,8 +25,8 @@ export const english = {
     tutorialNewButton: 'You can start your library pressing this button',
     tutorialNewSong: 'This is the main interface for song making',
     tutorialFields:
-    'In this fields you can insert the title (*), musical scale (*), and content to the song',
-    tutorialRequiredFields: '(*) = This fields are required to save the song',
+    'In this fields you can insert the title (*), musical scale, and content to the song',
+    tutorialRequiredFields: '(*) = This field is required to save the song',
     tutorialButtons:
     'With these buttons buttons you\'ll can insert the characters on the fields' +
     ' "Scale" or "Content". These will insert automatically in the last selected ' +
@@ -187,8 +187,8 @@ export const spanish = {
     tutorialNewButton: 'Puede empezar su libreria presionando este boton',
     tutorialNewSong: 'Esta es la interfaz principal de creación de canciónes para la libreria',
     tutorialFields:
-    'En estos campos puedes insertarle el título (*), escala musical (*), y contenido a la canción',
-    tutorialRequiredFields: '(*) = Estos campos son necesarios para poder guardarse una canción',
+    'En estos campos puedes insertarle el título (*), escala musical, y contenido a la canción',
+    tutorialRequiredFields: '(*) = Este campo es necesario para poder guardarse una canción',
     tutorialButtons:
     'Con los siguientes botones podrás insertar los siguientes caracteres en los ' +
     'campos "Escala" o "Contenido". Estas se insertarán automáticamente en el ultimo ' +

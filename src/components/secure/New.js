@@ -39,9 +39,13 @@ class New extends Component {
 
   onSubmit(props) {
     const trimProps = Object.assign({}, props);
-    if (trimProps.title && trimProps.scale) {
+    if (trimProps.title) {
     trimProps.title = trimProps.title.trim();
-    trimProps.scale = trimProps.scale.trim();
+    if (trimProps.scale) {
+      trimProps.scale = trimProps.scale.trim();
+    } else {
+      trimProps.scale = String.fromCharCode(8195);
+    }
     if (trimProps.content) {
       trimProps.content = trimProps.content.trim();
     } else {
@@ -383,14 +387,12 @@ class New extends Component {
             onDrop={title.onDrop}
             onFocus={title.onFocus}
           />
-          <div className="text-help">
-            {title.touched ? title.error : ''}
-          </div>
         </div>
 
         <div
           id='scale'
           className={`form-group ${scale.touched && scale.value === '' ? 'has-error' : ''}`}
+          // className='form-group'
         >
           <label htmlFor='scale'>{language.scaleLabel}</label>
           <input
@@ -405,10 +407,8 @@ class New extends Component {
             onChange={scale.onChange}
             onDragStart={scale.onDragStart}
             onDrop={scale.onDrop}
+            readOnly="true"
           />
-          <div className="text-help">
-            {scale.touched ? scale.error : ''}
-          </div>
         </div>
 
         <div id='content' className='form-group'>
@@ -434,9 +434,6 @@ class New extends Component {
             onDragStart={content.onDragStart}
             onDrop={content.onDrop}
           />
-          <div className="text-help">
-            {content.touched ? content.error : ''}
-          </div>
         </div>
 
       {/* Buttons */}
@@ -784,22 +781,6 @@ class New extends Component {
     }
     }
 
-function validate(values) {
-  const errors = {};
-
-  if (!values.title) {
-    errors.title = '';
-  }
-  if (!values.scale) {
-    errors.scale = '';
-  }
-  if (!values.content) {
-    errors.content = '';
-  }
-
-  return errors;
-}
-
 function mapStateToProps(state) {
   return {
     auth: state.auth.user,
@@ -812,6 +793,5 @@ function mapStateToProps(state) {
 
 export default reduxForm({
   form: 'NewForm',
-  fields: ['title', 'scale', 'content'],
-  validate
+  fields: ['title', 'scale', 'content']
 }, mapStateToProps, { createSong, fetchLacuerda, fetchUltimateguitar, cleanApiFetch })(New);

@@ -155,14 +155,27 @@ class LibraryList extends Component {
     return (
       <div>
       <hr />
+      <span
+        className={
+          `${
+            this.state.search
+            ?
+            'glyphicon glyphicon-remove-circle pull-right x-search'
+            :
+            'hidden'
+          }`
+        }
+        aria-hidden="true"
+        onClick={() => this.setState({ search: '' })}
+      />
       <input
         type="text"
         className="center-block search-input"
         value={this.state.search}
         onChange={this.handleSearchChange.bind(this)}
         placeholder={this.props.search}
-        onClick={() => this.setState({ search: '' })}
       />
+
       <br />
       <div className="text-center">
         <a className="language" onClick={() => this.setState({ search: 'a' })}>A</a>&thinsp;
