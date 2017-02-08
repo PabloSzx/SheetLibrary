@@ -33,11 +33,14 @@ class Edit extends Component {
           thisSong = song;
         }
     });
-    this.props.fields.title.onChange(thisSong.title);
-    this.props.fields.scale.onChange(thisSong.scale);
-    this.props.fields.content.onChange(thisSong.content);
-
-    this.setState({ selection: thisSong.scale.length });
+    try {
+      this.props.fields.title.onChange(thisSong.title);
+      this.props.fields.scale.onChange(thisSong.scale);
+      this.props.fields.content.onChange(thisSong.content);
+      this.setState({ selection: thisSong.scale.length });
+    } catch (err) {
+      this.context.router.push('/dashboard');
+    }
 
     window.scrollTo(0, 0);
   }
@@ -376,7 +379,7 @@ class Edit extends Component {
             </div>
             <div className="col-xs-2">
             <div
-              className="btn btn-primary center-block btn-note"
+              className="btn btn-primary center-block btn-note btn-sort"
               onClick={() => this.Sort()}
             >
               {scaleSort}

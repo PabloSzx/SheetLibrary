@@ -470,7 +470,7 @@ class New extends Component {
             </div>
             <div className="col-xs-2">
             <div
-              className="btn btn-primary center-block btn-note"
+              className="btn btn-primary center-block btn-note btn-sort"
               onClick={() => this.Sort()}
             >
             {scaleSort}
