@@ -407,7 +407,6 @@ class New extends Component {
             onChange={scale.onChange}
             onDragStart={scale.onDragStart}
             onDrop={scale.onDrop}
-            readOnly="true"
           />
         </div>
 

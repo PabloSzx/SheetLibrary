@@ -321,7 +321,6 @@ class Edit extends Component {
             onChange={this.handleScaleChange.bind(this)}
             onDragStart={scale.onDragStart}
             onDrop={scale.onDrop}
-            readOnly="true"
           />
         </div>
 
