@@ -1,5 +1,5 @@
 * {
-  font-family: SanFrancisco;
+  font-family: SanFrancisco, Lucida-Unicode;
 }
 
 .logo {
@@ -137,6 +137,11 @@
 @font-face {
     font-family: SanFrancisco;
     src: url(SF.otf);
+}
+
+@font-face {
+  font-family: Lucida-Unicode;
+  src: url(lucida-unicode.ttf);
 }
 
 @media only screen and (max-width: 500px) {

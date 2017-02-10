@@ -74,6 +74,9 @@ class Edit extends Component {
   onRise(n) {
     if (this.props.fields.scale) {
       this.props.fields.scale.onChange(rise(this.props.fields.scale.value, n));
+      if (this.state.input === 'scale') {
+        this.setState({ selection: rise(this.props.fields.scale.value, n).length });
+      }
     }
     if (this.props.fields.content) {
       this.props.fields.content.onChange(rise(this.props.fields.content.value, n));

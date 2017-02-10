@@ -24,8 +24,9 @@ const reducer = combineReducers({
 
 //noinspection JSUnresolvedVariable
 
+/* eslint-disable no-underscore-dangle */
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-// const composeEnhancers = compose;
+/* eslint-enable */
 
 const store = createStore(
 	reducer,
