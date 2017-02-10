@@ -171,6 +171,7 @@
       top: .1em;
     }
 }
+
 @media only screen and (max-width: 1050px) {
   .fetch-label {
     padding: 1vw;
