@@ -2,7 +2,8 @@ import Firebase from 'firebase';
 import $ from 'jquery';
 import {
   FETCH_LIBRARY, FETCH_LACUERDA, FETCH_ULTIMATEGUITAR, CLEAN_APIFETCH,
-  SELECT_POST, DESELECT_POST, SELECT_LANGUAGE, FETCH_ERROR, TOGGLE_HELP
+  SELECT_POST, DESELECT_POST, SELECT_LANGUAGE, FETCH_ERROR, TOGGLE_HELP,
+  FETCH_SETTINGS
 } from './types';
 import { english, spanish } from './language';
 
@@ -143,5 +144,27 @@ export function toggleHelp(bool) {
       type: TOGGLE_HELP,
       payload: bool
     });
+  };
+}
+
+export function fetchSettings(id, language) {
+  return dispatch => {
+    Posts = Firebase.database().ref(`settings/${id}`);
+    Posts.on('value', snapshot => {
+      if (!snapshot.val()) {
+        Firebase.database().ref(`settings/${id}`).update({ lang: language });
+      }
+      dispatch({
+        type: FETCH_SETTINGS,
+        id,
+        payload: snapshot.val()
+      });
+    });
+  };
+}
+
+export function updateSettings(id, settings) {
+  return () => {
+    Firebase.database().ref(`settings/${id}`).update(settings);
   };
 }

@@ -1,4 +1,5 @@
 export const english = {
+  name: 'english',
   index: {
     welcome: 'Welcome to',
     register: 'You can register fast, easy and free',
@@ -158,6 +159,7 @@ export const english = {
 };
 
 export const spanish = {
+  name: 'spanish',
   index: {
     welcome: 'Bienvenido a',
     register: 'Puedes registrarte de forma rápida, fácil y gratuita',

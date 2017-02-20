@@ -8,13 +8,13 @@ export function login(user) {
 	return {
 		type: LOGIN,
 		user
-	}
+	};
 }
 
 export function logout() {
 	return {
 		type: LOGOUT
-	}
+	};
 }
 
 
@@ -22,12 +22,11 @@ export function setNext(next) {
 	return {
 		type: SET_NEXT,
 		next
-	}
+	};
 }
 
 export function resetNext() {
 	return {
 		type: RESET_NEXT
-	}
+	};
 }
-

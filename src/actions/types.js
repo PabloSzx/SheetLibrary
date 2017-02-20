@@ -11,3 +11,4 @@ export const DESELECT_POST = 'DESELECT_POST';
 export const SELECT_LANGUAGE = 'SELECT_LANGUAGE';
 export const FETCH_ERROR = 'FETCH_ERROR';
 export const TOGGLE_HELP = 'TOGGLE_HELP';
+export const FETCH_SETTINGS = 'FETCH_SETTINGS';

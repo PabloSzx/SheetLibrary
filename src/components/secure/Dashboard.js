@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { selectLanguage, toggleHelp } from '../../actions/index';
+import { selectLanguage, toggleHelp, updateSettings, fetchSettings } from '../../actions/index';
 import LibraryList from './LibraryList';
 
 
 class Dashboard extends Component {
+  componentWillMount() {
+    this.props.fetchSettings(this.props.auth.user.uid, this.props.langName);
+  }
   componentDidMount() {
     window.scrollTo(0, 0);
   }
+
 render() {
   const {
     searchPlaceholder, selectedButton, newButton, logout, contact,
@@ -33,11 +37,33 @@ render() {
       <h5 className="text-center">
         {language}
         <strong>
-          <a className="language" onClick={() => this.props.selectLanguage('spanish')}>{spanish}</a>
+          <a
+            className="language"
+            onClick={() => {
+              this.props.selectLanguage('spanish');
+              const user = this.props.auth.user.uid;
+              this.props.updateSettings(user,
+                { lang: 'spanish' }
+              );
+            }}
+          >
+          {spanish}
+          </a>
         </strong>
         /
         <strong>
-          <a className="language" onClick={() => this.props.selectLanguage('english')}>{english}</a>
+          <a
+            className="language"
+            onClick={() => {
+              this.props.selectLanguage('english');
+              const user = this.props.auth.user.uid;
+              this.props.updateSettings(user,
+                { lang: 'english' }
+              );
+            }}
+          >
+          {english}
+          </a>
         </strong>
         &thinsp;&thinsp;⋅&thinsp;&thinsp;
         <strong>
@@ -52,8 +78,13 @@ render() {
 
 function mapStateToProps(state) {
   return {
-    language: state.library.language.dashboard
+    language: state.library.language.dashboard,
+    auth: state.auth,
+    selectedPostIds: state.library.selectedPostIds,
+    langName: state.library.language.name,
+    settings: state.settings
   };
 }
 
-export default connect(mapStateToProps, { selectLanguage, toggleHelp })(Dashboard);
+export default connect(mapStateToProps,
+  { selectLanguage, toggleHelp, fetchSettings, updateSettings })(Dashboard);

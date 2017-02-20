@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import { Link } from 'react-router';
 import Modal from 'react-bootstrap-modal';
-import { fetchLibrary, selectPost, deselectPost, toggleHelp } from '../../actions/index';
+import
+{ fetchLibrary, selectPost, deselectPost, toggleHelp, updateSettings } from '../../actions/index';
 import img1 from '../../imgs/tutorial1.png';
 import fields from '../../imgs/fields.png';
 import buttons from '../../imgs/buttons.png';
@@ -38,6 +39,8 @@ class LibraryList extends Component {
 
   handlePostSelect(id, event) {
     const target = event.target;
+    const userId = this.props.auth.user.uid;
+    const settings = this.props.settings[userId];
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
 
@@ -47,8 +50,14 @@ class LibraryList extends Component {
 
     if (target.checked) {
       this.props.selectPost(name);
+      this.props.updateSettings(userId,
+        { ...settings, selected: [...(this.props.selectedPostIds), name] }
+      );
     } else {
       this.props.deselectPost(name);
+      this.props.updateSettings(userId,
+        { ...settings, selected: _.without(this.props.selectedPostIds, name) }
+      );
     }
   }
 
@@ -279,9 +288,10 @@ function mapStateToProps(state) {
     song: state.song,
     selectedPostIds: state.library.selectedPostIds,
     language: state.library.language,
-    help: state.library.help
+    help: state.library.help,
+    settings: state.settings
 	};
 }
 
 export default connect(mapStateToProps,
-  { fetchLibrary, selectPost, deselectPost, toggleHelp })(LibraryList);
+  { fetchLibrary, selectPost, deselectPost, toggleHelp, updateSettings })(LibraryList);

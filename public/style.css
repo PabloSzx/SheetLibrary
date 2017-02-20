@@ -4,6 +4,7 @@
 
 .logo {
   width: 95vmin;
+  /*width: 50em;*/
 }
 .formBody {
   padding-left: 10px;
@@ -57,7 +58,7 @@
 }
 .song-checkbox {
   position: absolute;
-  left: 7vmin;
+  left: 7vw;
   width: 30px;
   height: 20px;
   top: 50%;
@@ -115,7 +116,7 @@
 }
 
 .loginButton {
-  width: 38vh;
+  width: 48vmin;
 }
 
 .hide {
