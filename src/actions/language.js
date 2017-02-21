@@ -20,6 +20,7 @@ export const english = {
     spanish: 'Spanish',
     english: 'English',
     help: 'Help',
+    deselect: 'Deselect all',
 
     tutorialIndex: 'It seems you are new here',
     tutorialQuestion: '¿How does it work? ⇩⇩',
@@ -182,6 +183,7 @@ export const spanish = {
     spanish: 'Español',
     english: 'Inglés',
     help: 'Ayuda',
+    deselect: 'Deseleccionar todo',
 
 
     tutorialIndex: 'Al parecer eres nuevo aquí',

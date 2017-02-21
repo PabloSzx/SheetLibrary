@@ -2,7 +2,7 @@ import _ from 'lodash';
 import
 { FETCH_LIBRARY, FETCH_LACUERDA, FETCH_ULTIMATEGUITAR, CLEAN_APIFETCH,
   SELECT_POST, DESELECT_POST, SELECT_LANGUAGE, FETCH_ERROR, TOGGLE_HELP,
-  FETCH_SETTINGS
+  FETCH_SETTINGS, DESELECT_ALL
   }
 from '../actions/types.js';
 import { spanish, english } from '../actions/language';
@@ -46,6 +46,8 @@ export function library(state = INITIAL_STATE, action) {
           }
         }
       return { ...state, selectedPostIds: [] };
+    case DESELECT_ALL:
+      return { ...state, selectedPostIds: action.payload };
     default:
       return state;
   }
