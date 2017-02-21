@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { selectLanguage, toggleHelp, updateSettings, fetchSettings } from '../../actions/index';
+import
+{ selectLanguage, toggleHelp, updateSettings, fetchSettings, deselectAll }
+from '../../actions/index';
 import LibraryList from './LibraryList';
 
 
@@ -12,15 +14,40 @@ class Dashboard extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
   }
-
 render() {
   const {
     searchPlaceholder, selectedButton, newButton, logout, contact,
-    help, empty, loading, language, spanish, english
+    help, empty, loading, language, spanish, english, deselect
   } = this.props.language;
+  let selected = false;
+  try {
+    const settings = this.props.settings[this.props.auth.user.uid];
+    selected = settings.selected;
+  } catch (err) {
+    //continue
+  }
   return (
     <div className="formBody">
       <LibraryList search={searchPlaceholder} empty={empty} loading={loading} />
+      {
+        selected
+        ?
+        <div
+          className="btn btn-warning deselectAll"
+          onClick={() => {
+            const user = this.props.auth.user.uid;
+            this.props.deselectAll(user);
+            this.props.updateSettings(user, {
+              selected: []
+            });
+          }}
+        >
+          {deselect}
+        </div>
+        :
+        <div />
+      }
+
       <hr />
 			<br />
       <Link className='btn btn-success center-block dashboardButton view-button' to='/view'>
@@ -87,4 +114,4 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps,
-  { selectLanguage, toggleHelp, fetchSettings, updateSettings })(Dashboard);
+  { selectLanguage, toggleHelp, fetchSettings, updateSettings, deselectAll })(Dashboard);

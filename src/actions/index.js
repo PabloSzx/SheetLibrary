@@ -3,7 +3,7 @@ import $ from 'jquery';
 import {
   FETCH_LIBRARY, FETCH_LACUERDA, FETCH_ULTIMATEGUITAR, CLEAN_APIFETCH,
   SELECT_POST, DESELECT_POST, SELECT_LANGUAGE, FETCH_ERROR, TOGGLE_HELP,
-  FETCH_SETTINGS
+  FETCH_SETTINGS, DESELECT_ALL
 } from './types';
 import { english, spanish } from './language';
 
@@ -41,8 +41,6 @@ export function updateSong(key, song, id) {
 };
 }
 
-const zero = String.fromCharCode(8900);
-
 export function fetchLacuerda(name, artist) {
   return dispatch => {
   $.ajaxSetup({
@@ -51,16 +49,14 @@ export function fetchLacuerda(name, artist) {
       jqXHR.overrideMimeType('text/html; charset=ISO-8859-1');
     }
   });
-  $.get(`http://allorigins.us/get?method=raw&url=${encodeURIComponent(`http://acordes.lacuerda.net/${artist}/${name}.shtml`)}&callback=?`, (data) => {
+  $.get(`http://allorigins.us/get?method=raw&url=${encodeURIComponent(`http://acordes.lacuerda.net/${cleanAccent(artist)}/${cleanAccent(name)}.shtml`)}&callback=?`, (data) => {
       try {
       dispatch({
         type: FETCH_LACUERDA,
-        payload: (data.split('<PRE>')[1].split('</PRE>')[0]).replace(/<A>/g, zero)
-        .replace(/<\/A>/g, zero).replace(/<em>/g, '').replace(/<\/em>/g, '')
-        // payload: (data.contents.split('<PRE>')[1].split('</PRE>')[0])
+        payload:
+        cleanExtra(data.split('<PRE>')[1].split('</PRE>')[0])
       });
       } catch (err) {
-        console.log(err);
         dispatch({
           type: FETCH_ERROR,
           payload: 'lacuerda.net'
@@ -72,15 +68,12 @@ export function fetchLacuerda(name, artist) {
 
 export function fetchUltimateguitar(name, artist) {
   return dispatch => {
-    $.getJSON(`http://allorigins.us/get?url=${encodeURIComponent(`http://tabs.ultimate-guitar.com/${artist[0]}/${artist}/${name}_crd.htm`)}&callback=?`, (data) => {
+    $.getJSON(`http://allorigins.us/get?url=${encodeURIComponent(`http://tabs.ultimate-guitar.com/${artist[0]}/${cleanAccent(artist)}/${cleanAccent(name)}_crd.htm`)}&callback=?`, (data) => {
     try {
     dispatch({
       type: FETCH_ULTIMATEGUITAR,
       payload:
-      (data.contents.split('<pre class="js-tab-content">')[1].split('</pre>')[0])
-      .replace(/<span>/g, zero).replace(/<\/span>/g, zero)
-      .replace(/<em>/g, '').replace(/<\/em>/g, '')
-      // payload: (data.contents.split('<pre class="js-tab-content">')[1].split('</pre>')[0])
+      cleanExtra(data.contents.split('<pre class="js-tab-content">')[1].split('</pre>')[0])
     });
   } catch (err) {
       dispatch({
@@ -167,4 +160,37 @@ export function updateSettings(id, settings) {
   return () => {
     Firebase.database().ref(`settings/${id}`).update(settings);
   };
+}
+
+export function deselectAll(id) {
+  return dispatch => {
+    dispatch({
+      type: DESELECT_ALL,
+      id,
+      payload: []
+    });
+  };
+}
+
+const zero = String.fromCharCode(8900);
+
+function cleanAccent(string) {
+  return string
+  .replace(/á/gi, 'a')
+  .replace(/é/gi, 'e')
+  .replace(/í/gi, 'i')
+  .replace(/ó/gi, 'o')
+  .replace(/ú/gi, 'u')
+  .replace(/ñ/gi, 'n')
+  .replace(/´/gi, '');
+}
+
+function cleanExtra(string) {
+  return string
+  .replace(/<A>/g, zero)
+  .replace(/<\/A>/g, zero)
+  .replace(/<span>/g, zero)
+  .replace(/<\/span>/g, zero)
+  .replace(/<em>/g, '')
+  .replace(/<\/em>/g, '');
 }
