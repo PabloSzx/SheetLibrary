@@ -71,7 +71,11 @@ class LibraryList extends Component {
 		if (this.props.library.library.length !== 0) {
       if (_.find(alphabet, (value) => (this.state.search === value))) {
         return _.map(_.orderBy(library, (song) => song.title), (song) => {
-          if ((song.title.toLowerCase()).charAt(0) === this.state.search) {
+          if (
+            ((song.title.toLowerCase()).charAt(0) === this.state.search)
+            || 
+            ((song.artist.toLowerCase()).charAt(0) === this.state.search)
+          ) {
             return (
               <li className="list-group-item li" key={song.key}>
                 <input
@@ -84,6 +88,7 @@ class LibraryList extends Component {
                 <Link to={`library/${song.key}`}>
                 <p className="text-center"><strong>{song.title}</strong></p>
                 </Link>
+                <p className="text-center">{song.artist}</p>
                 <p className="text-center">{song.scale.replace(/⋄/g, '')}</p>
               </li>
             );
@@ -101,7 +106,11 @@ class LibraryList extends Component {
           });
       } else if (this.state.search !== '') {
         return _.map(_.orderBy(library, (song) => song.title), (song) => {
-          if ((song.title.toLowerCase()).indexOf(this.state.search.toLowerCase()) !== -1) {
+          if (
+            ((song.title.toLowerCase()).indexOf(this.state.search.toLowerCase()) !== -1)
+            ||
+            ((song.artist.toLowerCase()).indexOf(this.state.search.toLowerCase()) !== -1)
+          ) {
             return (
               <li className="list-group-item li" key={song.key}>
                 <input
@@ -114,6 +123,7 @@ class LibraryList extends Component {
                 <Link to={`library/${song.key}`}>
                 <p className="text-center"><strong>{song.title}</strong></p>
                 </Link>
+                <p className="text-center">{song.artist}</p>
                 <p className="text-center">{song.scale.replace(/⋄/g, '')}</p>
               </li>
             );
@@ -146,6 +156,7 @@ class LibraryList extends Component {
           <Link to={`library/${song.key}`}>
           <p className="text-center"><strong>{song.title}</strong></p>
           </Link>
+          <p className="text-center">{song.artist}</p>
           <p className="text-center">{song.scale.replace(/⋄/g, '')}</p>
         </li>
 		));

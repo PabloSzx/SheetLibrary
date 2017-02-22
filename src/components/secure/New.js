@@ -51,6 +51,11 @@ class New extends Component {
     } else {
       trimProps.content = '';
     }
+    if (this.state.fetchArtist) {
+      trimProps.artist = this.capitalizeFirstLetter(this.state.fetchArtist).trim();
+    } else {
+      trimProps.artist = '';
+    }
 
     if (this.props.fields.content.value === '⇄') {
       if (this.props.ultimateguitar) {
@@ -143,6 +148,17 @@ class New extends Component {
     this.props.fetchLacuerda(name, artist);
     //EN LA CUERDA LAS NOTAS ESTAN ENTRE LOS <A></A> PARA QUE ASI EL SISTEMA SEPA
     //QUE SON NOTAS Y NO SON PALABRAS, PENDIENTE HACER ALGO PARECIDO
+  }
+
+  capitalizeFirstLetter(string) {
+    const str = string.toLowerCase().split(' ');
+
+    for (let i = 0; i < str.length; i++) {
+      str[i] = str[i].split('');
+      str[i][0] = str[i][0].toUpperCase();
+      str[i] = str[i].join('');
+    }
+    return str.join(' ');
   }
 
   Change(value) {

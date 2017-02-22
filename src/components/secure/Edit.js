@@ -37,10 +37,12 @@ class Edit extends Component {
       this.props.fields.title.onChange(thisSong.title);
       this.props.fields.scale.onChange(thisSong.scale);
       this.props.fields.content.onChange(thisSong.content);
-      this.setState({ selection: thisSong.scale.length });
+      this.setState({ selection: thisSong.scale.length, fetchArtist: thisSong.artist });
     } catch (err) {
       this.context.router.push('/dashboard');
     }
+
+    this.context.youtubeCount = 0;
 
     window.scrollTo(0, 0);
   }
@@ -64,6 +66,11 @@ class Edit extends Component {
     } else {
       trimProps.content = '';
     }
+    if (this.state.fetchArtist) {
+      trimProps.artist = this.capitalizeFirstLetter(this.state.fetchArtist).trim();
+    } else {
+      trimProps.artist = '';
+    }
 
     const key = this.props.routing.locationBeforeTransitions.pathname.substring(8);
     this.props.updateSong(key, trimProps, this.props.auth.uid);
@@ -81,6 +88,17 @@ class Edit extends Component {
     if (this.props.fields.content) {
       this.props.fields.content.onChange(rise(this.props.fields.content.value, n));
     }
+  }
+
+  capitalizeFirstLetter(string) {
+    const str = string.toLowerCase().split(' ');
+
+    for (let i = 0; i < str.length; i++) {
+      str[i] = str[i].split('');
+      str[i][0] = str[i][0].toUpperCase();
+      str[i] = str[i].join('');
+    }
+    return str.join(' ');
   }
 
   removeSong() {
@@ -203,7 +221,16 @@ class Edit extends Component {
 
   YoutubeSearch(event) {
     // console.log(event);
-    this.setState({ video: { allow: this.state.video.allow, id: event[0].id.videoId } });
+
+    this.setState(
+      { video: { allow: this.state.video.allow, id: event[this.context.youtubeCount].id.videoId } }
+    );
+
+    if (this.context.youtubeCount !== 4) {
+      this.context.youtubeCount = this.context.youtubeCount + 1;
+    } else {
+      this.context.youtubeCount = 0;
+    }
   }
 
   toggleYoutube() {
@@ -216,7 +243,7 @@ class Edit extends Component {
     YTSearch({
        key: API_KEY,
        query: `${this.props.fields.title.value} ${artist}`,
-       maxResults: 1
+       maxResults: 5
      },
          this.YoutubeSearch.bind(this)
      );
