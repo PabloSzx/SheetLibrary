@@ -1,14 +1,30 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as firebase from 'firebase';
-import { login, logout, resetNext } from '../actions/auth';
 import { push } from 'react-router-redux';
+import { login, logout, resetNext } from '../actions/auth';
 
 class App extends React.Component {
 	state = {
 		loaded: false
 	};
-
+	componentWillMount() {
+		firebase.auth().onAuthStateChanged(user => {
+			if (user) {
+				this.props.onLogin(user);
+				this.props.onRedirect(this.props.next || '/dashboard');
+				this.props.onResetNext();
+			} else if (this.props.user) {
+					this.props.onRedirect('/');
+					this.props.onResetNext();
+				} else {
+					this.props.onLogout();
+				}
+			if (!this.state.loaded) {
+				this.setState({ loaded: true });
+			}
+		});
+	}
 	styles = {
 		app: {
 			fontFamily: [
@@ -23,33 +39,12 @@ class App extends React.Component {
 			fontWeight: 300
 		}
 	};
-
-	componentWillMount() {
-		firebase.auth().onAuthStateChanged(user => {
-			if (user) {
-				this.props.onLogin(user);
-				this.props.onRedirect(this.props.next || '/dashboard');
-				this.props.onResetNext();
-			} else {
-				if (this.props.user) {
-					this.props.onRedirect('/');
-					this.props.onResetNext();
-				} else {
-					this.props.onLogout();
-				}
-			}
-			if (!this.state.loaded) {
-				this.setState({ loaded: true });
-			}
-		});
-	}
-
 	render() {
 		return (
-			<div style={ this.styles.app }>
+			<div style={this.styles.app} className="app">
 				{ this.state.loaded ? this.props.children : null}
 			</div>
-		)
+		);
 	}
 }
 
