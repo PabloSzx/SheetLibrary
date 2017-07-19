@@ -1,10 +1,7 @@
 'use strict';
 
 exports.__esModule = true;
-exports['default'] = getDisplayName;
-
+exports.default = getDisplayName;
 function getDisplayName(Comp) {
   return Comp.displayName || Comp.name || 'Component';
 }
-
-module.exports = exports['default'];

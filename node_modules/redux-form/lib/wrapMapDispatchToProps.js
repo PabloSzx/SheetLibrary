@@ -13,27 +13,26 @@ var wrapMapDispatchToProps = function wrapMapDispatchToProps(mapDispatchToProps,
         return function (dispatch, ownProps) {
           return _extends({
             dispatch: dispatch
-          }, mapDispatchToProps(dispatch, ownProps), _redux.bindActionCreators(actionCreators, dispatch));
+          }, mapDispatchToProps(dispatch, ownProps), (0, _redux.bindActionCreators)(actionCreators, dispatch));
         };
       }
       return function (dispatch) {
         return _extends({
           dispatch: dispatch
-        }, mapDispatchToProps(dispatch), _redux.bindActionCreators(actionCreators, dispatch));
+        }, mapDispatchToProps(dispatch), (0, _redux.bindActionCreators)(actionCreators, dispatch));
       };
     }
     return function (dispatch) {
       return _extends({
         dispatch: dispatch
-      }, _redux.bindActionCreators(mapDispatchToProps, dispatch), _redux.bindActionCreators(actionCreators, dispatch));
+      }, (0, _redux.bindActionCreators)(mapDispatchToProps, dispatch), (0, _redux.bindActionCreators)(actionCreators, dispatch));
     };
   }
   return function (dispatch) {
     return _extends({
       dispatch: dispatch
-    }, _redux.bindActionCreators(actionCreators, dispatch));
+    }, (0, _redux.bindActionCreators)(actionCreators, dispatch));
   };
 };
 
-exports['default'] = wrapMapDispatchToProps;
-module.exports = exports['default'];
+exports.default = wrapMapDispatchToProps;

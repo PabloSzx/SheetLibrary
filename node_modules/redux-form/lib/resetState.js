@@ -5,7 +5,7 @@ exports.__esModule = true;
 var _fieldValue = require('./fieldValue');
 
 var reset = function reset(value) {
-  return _fieldValue.makeFieldValue(value === undefined || value && value.initial === undefined ? {} : { initial: value.initial, value: value.initial });
+  return (0, _fieldValue.makeFieldValue)(value === undefined || value && value.initial === undefined ? {} : { initial: value.initial, value: value.initial });
 };
 
 /**
@@ -16,10 +16,10 @@ var resetState = function resetState(values) {
     var value = values[key];
     if (Array.isArray(value)) {
       accumulator[key] = value.map(function (item) {
-        return _fieldValue.isFieldValue(item) ? reset(item) : resetState(item);
+        return (0, _fieldValue.isFieldValue)(item) ? reset(item) : resetState(item);
       });
     } else if (value) {
-      if (_fieldValue.isFieldValue(value)) {
+      if ((0, _fieldValue.isFieldValue)(value)) {
         accumulator[key] = reset(value);
       } else if (typeof value === 'object' && value !== null) {
         accumulator[key] = resetState(value);
@@ -31,5 +31,4 @@ var resetState = function resetState(values) {
   }, {}) : values;
 };
 
-exports['default'] = resetState;
-module.exports = exports['default'];
+exports.default = resetState;

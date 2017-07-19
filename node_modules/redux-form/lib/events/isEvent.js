@@ -5,5 +5,4 @@ var isEvent = function isEvent(candidate) {
   return !!(candidate && candidate.stopPropagation && candidate.preventDefault);
 };
 
-exports["default"] = isEvent;
-module.exports = exports["default"];
+exports.default = isEvent;

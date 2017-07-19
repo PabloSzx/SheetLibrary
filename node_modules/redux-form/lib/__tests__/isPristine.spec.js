@@ -1,7 +1,5 @@
 'use strict';
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
 var _expect = require('expect');
 
 var _expect2 = _interopRequireDefault(_expect);
@@ -10,9 +8,11 @@ var _isPristine = require('../isPristine');
 
 var _isPristine2 = _interopRequireDefault(_isPristine);
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var tryBothWays = function tryBothWays(aValue, bValue, result) {
-  _expect2['default'](_isPristine2['default'](aValue, bValue)).toBe(result);
-  _expect2['default'](_isPristine2['default'](bValue, aValue)).toBe(result);
+  (0, _expect2.default)((0, _isPristine2.default)(aValue, bValue)).toBe(result);
+  (0, _expect2.default)((0, _isPristine2.default)(bValue, aValue)).toBe(result);
 };
 
 describe('isPristine', function () {
@@ -20,9 +20,9 @@ describe('isPristine', function () {
     var aValue = { foo: 'bar' };
     var bValue = ['foo', 'baz'];
     var cValue = 7;
-    _expect2['default'](_isPristine2['default'](aValue, aValue)).toBe(true);
-    _expect2['default'](_isPristine2['default'](bValue, bValue)).toBe(true);
-    _expect2['default'](_isPristine2['default'](cValue, cValue)).toBe(true);
+    (0, _expect2.default)((0, _isPristine2.default)(aValue, aValue)).toBe(true);
+    (0, _expect2.default)((0, _isPristine2.default)(bValue, bValue)).toBe(true);
+    (0, _expect2.default)((0, _isPristine2.default)(cValue, cValue)).toBe(true);
   });
 
   it('should return false if one value is an object and the other is not', function () {

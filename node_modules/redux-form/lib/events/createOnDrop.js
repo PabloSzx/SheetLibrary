@@ -9,5 +9,4 @@ var createOnDrop = function createOnDrop(name, change) {
     change(name, event.dataTransfer.getData(_createOnDragStart.dataKey));
   };
 };
-exports['default'] = createOnDrop;
-module.exports = exports['default'];
+exports.default = createOnDrop;

@@ -6,5 +6,4 @@ var createOnFocus = function createOnFocus(name, focus) {
     return focus(name);
   };
 };
-exports["default"] = createOnFocus;
-module.exports = exports["default"];
+exports.default = createOnFocus;

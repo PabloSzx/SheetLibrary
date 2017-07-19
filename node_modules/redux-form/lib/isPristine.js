@@ -1,8 +1,7 @@
 'use strict';
 
 exports.__esModule = true;
-exports['default'] = isPristine;
-
+exports.default = isPristine;
 function isPristine(initial, data) {
   if (initial === data) {
     return true;
@@ -32,5 +31,3 @@ function isPristine(initial, data) {
   }
   return true;
 }
-
-module.exports = exports['default'];

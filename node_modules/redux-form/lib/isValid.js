@@ -1,8 +1,7 @@
 'use strict';
 
 exports.__esModule = true;
-exports['default'] = isValid;
-
+exports.default = isValid;
 function isValid(error) {
   if (Array.isArray(error)) {
     return error.reduce(function (valid, errorValue) {
@@ -16,5 +15,3 @@ function isValid(error) {
   }
   return !error;
 }
-
-module.exports = exports['default'];

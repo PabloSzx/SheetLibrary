@@ -29,5 +29,4 @@ var wrapMapStateToProps = function wrapMapStateToProps(mapStateToProps, getForm)
   };
 };
 
-exports['default'] = wrapMapStateToProps;
-module.exports = exports['default'];
+exports.default = wrapMapStateToProps;

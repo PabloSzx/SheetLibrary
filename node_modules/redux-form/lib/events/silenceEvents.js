@@ -2,11 +2,11 @@
 
 exports.__esModule = true;
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
 var _silenceEvent = require('./silenceEvent');
 
 var _silenceEvent2 = _interopRequireDefault(_silenceEvent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var silenceEvents = function silenceEvents(fn) {
   return function (event) {
@@ -14,9 +14,8 @@ var silenceEvents = function silenceEvents(fn) {
       args[_key - 1] = arguments[_key];
     }
 
-    return _silenceEvent2['default'](event) ? fn.apply(undefined, args) : fn.apply(undefined, [event].concat(args));
+    return (0, _silenceEvent2.default)(event) ? fn.apply(undefined, args) : fn.apply(undefined, [event].concat(args));
   };
 };
 
-exports['default'] = silenceEvents;
-module.exports = exports['default'];
+exports.default = silenceEvents;
