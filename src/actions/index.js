@@ -60,8 +60,8 @@ export function fetchLacuerda(name, artist) {
       }
     });
     $.get(
-      `http://allorigins.me/get?method=raw&url=${encodeURIComponent(
-        `http://acordes.lacuerda.net/${cleanAccent(artist)}/${cleanAccent(
+      `https://allorigins.me/get?method=raw&url=${encodeURIComponent(
+        `https://acordes.lacuerda.net/${cleanAccent(artist)}/${cleanAccent(
           name
         )}.shtml`
       )}&callback=?`,
@@ -85,8 +85,8 @@ export function fetchLacuerda(name, artist) {
 export function fetchUltimateguitar(name, artist) {
   return dispatch => {
     $.getJSON(
-      `http://allorigins.me/get?url=${encodeURIComponent(
-        `http://tabs.ultimate-guitar.com/${artist[0]}/${cleanAccent(
+      `https://allorigins.me/get?url=${encodeURIComponent(
+        `https://tabs.ultimate-guitar.com/${artist[0]}/${cleanAccent(
           artist
         )}/${cleanAccent(name)}_crd.htm`
       )}&callback=?`,
