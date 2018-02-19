@@ -1,8 +1,7 @@
 {
   "name": "react-redux-router-firebase",
   "version": "1.0.0",
-  "description":
-    "Boilerplate for React & Redux, integrated with Firebase authentication",
+  "description": "Boilerplate for React & Redux, integrated with Firebase authentication",
   "repository": {
     "type": "git",
     "url": "git://github.com/Cretezy/react-redux-router-firebase.git"
@@ -11,15 +10,15 @@
   "license": "MIT",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
+    "classnames": "^2.2.5",
     "css-loader": "^0.26.4",
-    "eslint-config-rallycoding": "^3.2.0",
     "firebase": "^3.9.0",
     "flexboxgrid": "^6.3.1",
-    "jquery": "^3.2.1",
-    "lodash": "^4.17.4",
+    "jquery": "^3.3.1",
+    "lodash": "^4.17.5",
     "npm": "^4.6.1",
     "react": "^15.6.2",
-    "react-bootstrap": "^0.30.10",
+    "react-bootstrap": "^0.32.1",
     "react-bootstrap-confirm": "^1.0.1",
     "react-bootstrap-modal": "^3.0.1",
     "react-confirm-bootstrap": "^3.1.4",
